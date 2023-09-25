@@ -17,7 +17,7 @@ public class SkillManager
 
 			if (_skills.Any(pool => pool.Value.Contains(newSkill)))
 			{
-				// ÀÌ¹Ì »õ ½ºÅ³À» ´©°¡ °¡Áö°í ÀÖÀ½
+				// ì´ë¯¸ ìƒˆ ìŠ¤í‚¬ì„ ëˆ„ê°€ ê°€ì§€ê³  ìˆìŒ
 				continue;
 			}
 
