@@ -17,15 +17,56 @@ public class GameManager : MonoBehaviour
         GameOver
     }
     public GameState State { get; private set; }
-
     public int CurrentRound { get; private set; } = 1;
+	public Player Player1 { get; private set; }
+	public Player Player2 { get; private set; }
+	public bool IsPlayer1Win { get; set; } = true;
 
-    #endregion
+	public int Player1HP
+	{
+		get
+		{
+			return _player1HP;
+		}
+		private set
+		{
+			_player1HP = value;
+			if(value < 0)
+			{
+				isPlayer1Defeat = true;
+				ChangeState(GameState.GameOver);
+			}
+		}
+	}
+	public int Player2HP
+	{
+		get
+		{
+			return _player2HP;
+		}
+		private set
+		{
+			_player2HP = value;
+			if(value < 0)
+			{
+				isPlayer1Defeat = false;
+				ChangeState(GameState.GameOver);
+			}
+		}
+	}
+
+	#endregion
 
 
-    #region private Variables
-    [SerializeField] private int totalRounds;
-
+	#region private Variables
+	[SerializeField] private int totalRounds;
+	private GameObject player1;
+	private GameObject player2;
+	[SerializeField] private Transform[] spawnPoints = new Transform[2];
+	private int _player1HP;
+	private int _player2HP;
+	private int[] roundDamage = {0, 0, 4, 8, 12, 20, 30, 30, 30, 30};
+	private bool isPlayer1Defeat = false;
     #endregion
 
 
@@ -72,13 +113,35 @@ public class GameManager : MonoBehaviour
             Destroy(this);
         }
         #endregion
+
         ChangeState(GameState.Title);
+		
+		PreparePlayer();
     }
 
-    private void OnTitle()
+	private void Update()
+	{
+		InputCheck();
+	}
+
+	private void InputCheck()
+	{
+
+	}
+
+	private void PreparePlayer()
+	{
+		player1 = Managers.Resource.Instantiate("Player1");
+		player2 = Managers.Resource.Instantiate("Player2");
+
+		Managers.Resource.Release(player1);
+		Managers.Resource.Release(player2);
+	}
+
+	private void OnTitle()
     {
         // something must do at title
-
+		
     }
 
     private void OnPickSkill()
@@ -102,29 +165,61 @@ public class GameManager : MonoBehaviour
 
     private void OnBattle()
     {
-        // change something
+		// change something
 
-        // battle start
-
+		PrepareBattle();
     }
 
     private void OnPostRound()
     {
-        // subtract lose player's HP
+		CalculateRoundDamage();
 
-        // check any player's HP is lower than zero <= maybe do it in property
+		// reset something
 
-        // save before round's winner
+		CurrentRound++;
 
-        // reset something
+		ChangeState(GameState.PickSkill);
     }
     
     private void OnGameOver()
     {
         // winner ui??
+		if (isPlayer1Defeat)
+		{
+			// player2 win
+		}
+		else
+		{
+			// player1 win
+		}
         // idea : how about save dealing amount of each skills, for each player skills they have
         
         // go to title, or quit <= maybe uimanager should do
     }
+
+	private void PrepareBattle()
+	{
+		Managers.Pool.Get("Player1");
+		player1.transform.position = spawnPoints[0].position;
+		Managers.Pool.Get("Player2");
+		player2.transform.position = spawnPoints[1].position;
+
+		// maybe ui guide
+
+		// turn on ai
+
+	}
+
+	private void CalculateRoundDamage()
+	{
+		if (IsPlayer1Win)
+		{
+			Player2HP -= roundDamage[CurrentRound]; // + 남은 체력 비례 데미지;
+		}
+		else
+		{
+			Player1HP -= roundDamage[CurrentRound]; // + 남은 체력 비례 데미지;
+		}
+	}
     #endregion
 }
