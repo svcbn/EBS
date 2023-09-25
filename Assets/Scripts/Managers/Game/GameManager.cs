@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -87,6 +88,7 @@ public class GameManager : MonoBehaviour
         // else, last round's winner is first
     }
 
+	
     private void OnPreRound()
     {
         // reset something
