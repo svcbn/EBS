@@ -61,3 +61,6 @@
 #*.PDF   diff=astextplain
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
+
+# Ignore Temporary to commit png.meta files of Asset: 118 Sprite Effects
+*.png.meta -text
