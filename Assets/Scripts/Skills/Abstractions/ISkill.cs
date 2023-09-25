@@ -27,6 +27,16 @@ public interface ISkill
 	bool IsRestricteMoving { get; }
 
 	/// <summary>
+	/// 스킬의 쿨타임이 끝났는지 여부
+	/// </summary>
+	bool IsCoolReady { get; }
+
+	/// <summary>
+	/// 스킬이 실행 중인지 여부
+	/// </summary>
+	bool IsActing { get; }
+
+	/// <summary>
 	/// 스킬의 쿨타임
 	/// </summary>
 	float Cooldown { get; }
