@@ -23,15 +23,8 @@ public class Execute : Action
 		if (_selectedSkill != null)
 		{
 			_selectedSkill.Execute();
-
-			if (_selectedSkill.IsRestricteMoving)
-			{
-				_character.WaitSkillDuration(_selectedSkill.Duration);
-			}
-			else
-			{ 
-				_character.WaitSkillDuration(_selectedSkill.Duration);
-			}
+			_character.CurrentSkill = _selectedSkill;
+			_character.CanUseSkills.Remove(_selectedSkill);
 
 			return TaskStatus.Success;
 		}
