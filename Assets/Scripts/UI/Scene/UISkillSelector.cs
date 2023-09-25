@@ -69,6 +69,9 @@ public class UISkillSelector : UIScene
 
 	private void InitializeSlots()
 	{
+		_currentIndex = -1;
+		_slots?.Clear();
+
 		if (_skillInfoList != null)
 		{
 			GameObject items = Get<GameObject>((int)Elements.Items);
@@ -81,6 +84,7 @@ public class UISkillSelector : UIScene
 				_slots.Add(slot);
 			}
 
+			_currentIndex = 0;
 			_slots.First().Select();
 		}
 	}
@@ -97,6 +101,11 @@ public class UISkillSelector : UIScene
 
 	private void Move(Direction direction)
 	{
+		if (_slots?.Any() is not true)
+		{
+			return;
+		}
+
 		int childCount = _slots.Count;
 		int row = _currentIndex / _columnCount;
 		int column = _currentIndex % _columnCount;
