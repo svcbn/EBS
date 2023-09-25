@@ -7,7 +7,7 @@ public class SkillManager
 {
 	private Dictionary<Character, List<ISkill>> _skills = new();
 
-	private Dictionary<Character, List<ISkill>> _dummySkills = new(); // for test
+	private static Dictionary<Character, List<ISkill>> _dummySkills = new(); // for test
 
 	private Dictionary<int, ISkill> _skillCache = new();
 
@@ -48,12 +48,16 @@ public class SkillManager
 	}
 
 
-	// for test
-	public void SetDummySkills()
+
+	static Character _dummyChar;
+	
+	public void SetDummySkills() // for test
 	{
 		Debug.Log("SetDummySkills");
 
-		_dummySkills.Add(new Character(), new List<ISkill>()
+
+		_dummyChar = new Character();
+		_dummySkills.Add(_dummyChar, new List<ISkill>()
 		{
 			new DummyFireballSkill(),
 			new DummyHealSkill(),
@@ -66,6 +70,31 @@ public class SkillManager
 			new DummyBarrierSkill(),
 			new DummySpeedBoostSkill()
 		});
+	}
 
+	public static List<ISkill> GetDummySkills()
+	{
+		Debug.Log("GetDummySkills");
+
+		return _dummySkills[_dummyChar];
+	}
+
+
+	public static ISkill GetHighPrioritySkill()
+	{
+		if( _dummySkills == null ) { return null; }
+
+		List<ISkill> skills = _dummySkills[_dummyChar];
+
+		foreach( ISkill skill in skills)
+		{
+			// find high priority skill
+			if (skill.Priority == 1)
+			{
+				return skill;
+			}
+		}
+
+		return null;
 	}
 }
