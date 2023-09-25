@@ -6,6 +6,8 @@ public abstract class SkillBase : ISkill
 {
 	private Character _owner;
 
+	public uint Id { get; }
+
 	public Character Owner
 	{
 		get => _owner;

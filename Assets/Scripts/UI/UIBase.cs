@@ -7,6 +7,13 @@ public abstract class UIBase : MonoBehaviour
 {
 	private readonly Dictionary<Type, UnityEngine.Object[]> _objects = new();
 
+	protected virtual void Start()
+	{
+		Init();
+	}
+
+	public abstract void Init();
+
 	public void RegisterEvent(Action<PointerEventData> handler, UIEventType eventType = UIEventType.Click)
 	{
 		var eventHandlerComponent = gameObject.GetOrAddComponent<UIEventHandler>();
@@ -27,15 +34,16 @@ public abstract class UIBase : MonoBehaviour
 		}
 	}
 
-	protected void Bind<T>(Type type)
-		where T : UnityEngine.Object
+	protected void Bind<TObject, TType>()
+		where TObject : UnityEngine.Object
+		where TType : Enum
 	{
-		string[] names = Enum.GetNames(typeof(T));
+		string[] names = Enum.GetNames(typeof(TType));
 		UnityEngine.Object[] objects = new UnityEngine.Object[names.Length];
-		_objects.Add(typeof(T), objects);
+		_objects.Add(typeof(TObject), objects);
 		for (int index = 0; index < names.Length; index++)
 		{
-			objects[index] = typeof(T) == typeof(GameObject) ? gameObject.FindChild(names[index], true) : gameObject.FindChild<T>(names[index], true);
+			objects[index] = typeof(TObject) == typeof(GameObject) ? gameObject.FindChild(names[index], true) : gameObject.FindChild<TObject>(names[index], true);
 
 			if (objects[index] == null)
 			{

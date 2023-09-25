@@ -7,6 +7,8 @@ public class SkillManager
 {
 	private Dictionary<Character, List<ISkill>> _skills = new();
 
+	private Dictionary<int, ISkill> _skillCache = new();
+
 	public List<ISkill> GeneratePool(int count)
 	{
 		List<ISkill> newSkillPool = new();
@@ -25,5 +27,21 @@ public class SkillManager
 		}
 
 		return newSkillPool;
+	}
+
+	public ISkill GetSkillById(int id)
+	{
+		if (!_skillCache.TryGetValue(id, out var skill))
+		{
+			skill = _skills.SelectMany(pool => pool.Value).FirstOrDefault(skill => skill.Id == id);
+			if (skill == null)
+			{
+				// TODO: 스킬을 보유하지 않은 경우 처리
+			}
+
+			_skillCache[id] = skill;
+		}
+
+		return skill;
 	}
 }

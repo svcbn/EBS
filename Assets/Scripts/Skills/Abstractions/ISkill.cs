@@ -4,6 +4,8 @@ using UnityEngine;
 
 public interface ISkill
 {
+	uint Id { get; }
+
 	/// <summary>
 	/// 스킬을 소유한 캐릭터
 	/// </summary>
