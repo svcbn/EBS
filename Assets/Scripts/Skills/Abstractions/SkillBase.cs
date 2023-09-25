@@ -1,5 +1,5 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class SkillBase : ISkill
@@ -15,7 +15,7 @@ public abstract class SkillBase : ISkill
 		{
 			if (_owner != null && _owner != value)
 			{
-				throw new System.InvalidOperationException($"Owner is already set. Owner: {_owner.name}");
+				throw new InvalidOperationException($"Owner is already set. Owner: {_owner.name}");
 			}
 
 			_owner = value;
@@ -36,12 +36,18 @@ public abstract class SkillBase : ISkill
 
 	public float AfterDelay { get; protected set; }
 
+	public bool IsCoolReady { get; protected set; }
+
+	public bool IsActing { get; protected set; }
+
 	public virtual void Init()
 	{
 	}
 
 	public virtual void Execute()
 	{
+		IsCoolReady = false;
+		IsActing = true;
 	}
 
 	public virtual bool CheckCanUse()
@@ -51,5 +57,26 @@ public abstract class SkillBase : ISkill
 
 	public virtual void OnDrawGizmos(Transform character)
 	{
+	}
+
+	protected virtual void CalculateCooltime()
+	{
+		Owner.StartCoroutine(CoCalculateTime(Cooldown, () => IsCoolReady = true));
+		float delay = BeforeDelay + Duration + AfterDelay;
+		Owner.StartCoroutine(CoCalculateTime(delay, () => IsActing = false));
+	}
+
+	private static IEnumerator CoCalculateTime(float time, Action onFinish)
+	{
+		const float waitTime = 0.1f;
+
+		float timer = 0;
+		while (timer < time)
+		{
+			yield return new WaitForSeconds(waitTime);
+			timer += waitTime;
+		}
+
+		onFinish?.Invoke();
 	}
 }
