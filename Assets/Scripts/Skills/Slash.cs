@@ -35,7 +35,8 @@ public class Slash : SkillBase
 	IEnumerator ExecuteCo()
 	{
 		// 애니메이션 재생
-		
+		_data.SpriteEffect.Play();
+
 		// 선딜
 		Debug.Log($"선딜 시작  {BeforeDelay}");
 		yield return new WaitForSeconds(BeforeDelay);
@@ -43,6 +44,7 @@ public class Slash : SkillBase
 		// 실제 피해
 		Debug.Log($"실제 피해 ");
 		Debug.Log($"시전 시간  {Duration}");
+
 
 		var boxes = Physics2D.OverlapBoxAll((Vector2)Owner.transform.right + _data.HitBoxCenter, _data.HitBoxSize, 0);
 		foreach (var box in boxes)

@@ -24,3 +24,4 @@ MonoBehaviour:
   _beforeDelay: 0.5
   _duration: 1
   _afterDelay: 0.5
+  _spriteEffect: {fileID: 0}

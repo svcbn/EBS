@@ -24,6 +24,8 @@ public class SlashData : ScriptableObject
     [SerializeField] private float     _duration;
     [SerializeField] private float     _afterDelay;
 
+    [SerializeField] private ParticleSystem _spriteEffect;
+
 
 	public Vector2 CheckBoxCenter => _checkBoxCenter;
 	public Vector2 CheckBoxSize   => _checkBoxSize;
@@ -39,6 +41,8 @@ public class SlashData : ScriptableObject
     public float     BeforeDelay       => _beforeDelay;
     public float     Duration          => _duration;
     public float     AfterDelay        => _afterDelay;
+
+    public ParticleSystem SpriteEffect => _spriteEffect;
 
 
 }
