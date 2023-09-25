@@ -5,63 +5,63 @@ using UnityEngine;
 public interface ISkill
 {
 	/// <summary>
-	/// ½ºÅ³À» ¼ÒÀ¯ÇÑ Ä³¸¯ÅÍ
+	/// ìŠ¤í‚¬ì„ ì†Œìœ í•œ ìºë¦­í„°
 	/// </summary>
 	Character Owner { get; set; }
 
 	/// <summary>
-	/// ½ºÅ³ÀÇ Å¸ÀÔ
+	/// ìŠ¤í‚¬ì˜ íƒ€ìž…
 	/// </summary>
 	SkillType Type { get; }
 
 	/// <summary>
-	/// ½ºÅ³ÀÇ ¿ì¼±¼øÀ§
+	/// ìŠ¤í‚¬ì˜ ìš°ì„ ìˆœìœ„
 	/// </summary>
 	int Priority { get; }
 
 	/// <summary>
-	/// ½ºÅ³ÀÌ Ä³¸¯ÅÍÀÇ ¿òÁ÷ÀÓÀ» Á¦¾àÇÏ´ÂÁö ¿©ºÎ
+	/// ìŠ¤í‚¬ì´ ìºë¦­í„°ì˜ ì›€ì§ìž„ì„ ì œì•½í•˜ëŠ”ì§€ ì—¬ë¶€
 	/// </summary>
 	bool IsRestricteMoving { get; }
 
 	/// <summary>
-	/// ½ºÅ³ÀÇ ÄðÅ¸ÀÓ
+	/// ìŠ¤í‚¬ì˜ ì¿¨íƒ€ìž„
 	/// </summary>
 	float Cooldown { get; }
 
 	/// <summary>
-	/// ½ºÅ³ÀÇ ¼± µô·¹ÀÌ
+	/// ìŠ¤í‚¬ì˜ ì„  ë”œë ˆì´
 	/// </summary>
 	float BeforeDelay { get; }
 
 	/// <summary>
-	/// ½ºÅ³ÀÇ »ç¿ë ½Ã°£
+	/// ìŠ¤í‚¬ì˜ ì‚¬ìš© ì‹œê°„
 	/// </summary>
 	float Duration { get; }
 
 	/// <summary>
-	/// ½ºÅ³ÀÇ ÈÄ µô·¹ÀÌ
+	/// ìŠ¤í‚¬ì˜ í›„ ë”œë ˆì´
 	/// </summary>
 	float AfterDelay { get; }
 
 	/// <summary>
-	/// ½ºÅ³ ÃÊ±âÈ­ ½Ã È£Ãâ
+	/// ìŠ¤í‚¬ ì´ˆê¸°í™” ì‹œ í˜¸ì¶œ
 	/// </summary>
 	void Init();
 
 	/// <summary>
-	/// ½ºÅ³À» »ç¿ëÇÒ ¼ö ÀÖ´ÂÁö ¿©ºÎ¸¦ ¹ÝÈ¯
+	/// ìŠ¤í‚¬ì„ ì‚¬ìš©í•  ìˆ˜ ìžˆëŠ”ì§€ ì—¬ë¶€ë¥¼ ë°˜í™˜
 	/// </summary>
-	/// <returns>½ºÅ³À» »ç¿ëÇÒ ¼ö ÀÖ´ÂÁö ¿©ºÎ</returns>
+	/// <returns>ìŠ¤í‚¬ì„ ì‚¬ìš©í•  ìˆ˜ ìžˆëŠ”ì§€ ì—¬ë¶€</returns>
 	bool CheckCanUse();
 
 	/// <summary>
-	/// ½ºÅ³À» ½ÇÇà
+	/// ìŠ¤í‚¬ì„ ì‹¤í–‰
 	/// </summary>
 	void Execute();
 
 	/// <summary>
-	/// ±âÁî¸ð¸¦ ±×¸²
+	/// ê¸°ì¦ˆëª¨ë¥¼ ê·¸ë¦¼
 	/// </summary>
 	/// <param name="character"></param>
 	void OnDrawGizmos(Transform character);
