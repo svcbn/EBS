@@ -7,6 +7,8 @@ public class SkillManager
 {
 	private Dictionary<Character, List<ISkill>> _skills = new();
 
+	private Dictionary<int, ISkill> _skillCache = new();
+
 	public List<ISkill> GeneratePool(int count)
 	{
 		List<ISkill> newSkillPool = new();
@@ -17,7 +19,7 @@ public class SkillManager
 
 			if (_skills.Any(pool => pool.Value.Contains(newSkill)))
 			{
-				// ÀÌ¹Ì »õ ½ºÅ³À» ´©°¡ °¡Áö°í ÀÖÀ½
+				// ì´ë¯¸ ìƒˆ ìŠ¤í‚¬ì„ ëˆ„ê°€ ê°€ì§€ê³  ìˆìŒ
 				continue;
 			}
 
@@ -25,5 +27,21 @@ public class SkillManager
 		}
 
 		return newSkillPool;
+	}
+
+	public ISkill GetSkillById(int id)
+	{
+		if (!_skillCache.TryGetValue(id, out var skill))
+		{
+			skill = _skills.SelectMany(pool => pool.Value).FirstOrDefault(skill => skill.Id == id);
+			if (skill == null)
+			{
+				// TODO: ìŠ¤í‚¬ì„ ë³´ìœ í•˜ì§€ ì•Šì€ ê²½ìš° ì²˜ë¦¬
+			}
+
+			_skillCache[id] = skill;
+		}
+
+		return skill;
 	}
 }

@@ -12,7 +12,7 @@ public class ResourceManager
 		if (usePool)
 		{
 			var poolable = Managers.Pool.Get(name);
-			poolable.transform.parent = parent;
+			poolable.transform.SetParent(parent);
 			return poolable.gameObject;
 		}
 		else

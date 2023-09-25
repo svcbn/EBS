@@ -48,4 +48,17 @@ public class Character : MonoBehaviour
 	{
 		_hp -= damage;
 	}
+
+	private IEnumerator CheckSkills()
+	{
+		while (true)
+		{
+			foreach (var skill in _skills)
+			{
+				// TODO : 쿨다운 체크
+			}
+
+			yield return new WaitForSeconds(0.2f);
+		}
+	}
 }
