@@ -12,11 +12,6 @@ public class UISkillSlot : UIBase
 
 	private SkillPresentationData _item;
 
-	private void Update()
-	{
-		
-	}
-
 	public override void Init()
 	{
 		Bind<GameObject, Elements>();
@@ -38,7 +33,7 @@ public class UISkillSlot : UIBase
 		if (iconRoot.TryGetComponent<Image>(out var icon))
 		{
 			// TODO : 아이콘 이미지 변경
-			icon.sprite = _item.Sprite;
+			icon.sprite = _item.Info.Sprite;
 		}
 	}
 }
