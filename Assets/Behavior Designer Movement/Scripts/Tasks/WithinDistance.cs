@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace BehaviorDesigner.Runtime.Tasks.Movement
 {
