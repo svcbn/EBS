@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Test : MonoBehaviour
 {
-	private void Start()
+	private void Awake()
 	{
 		var skillManager = new SkillManager();
 		skillManager.Init();
 		var selector = Managers.UI.ShowSceneUI<UISkillSelector>();
-		selector.SetItems(skillManager.GetSkills());
+		selector.SetItems(skillManager.GeneratePool(9));
 	}
 
 	private void Update()

@@ -14,42 +14,62 @@ public class UISkillSlot : UIBase
 
 	private static readonly Color s_UnselectedColor = new(1, 1, 1, 0.5f);
 
-	private static readonly float s_SelectedScale = 1.2f;
+	private static readonly float s_SelectedScale = 1.1f;
 
-	private SkillPresentationData _item;
+	private SkillInfo _info;
 
 	private Image _border;
 
-	protected override void Start()
+	private Coroutine _scaleHandler;
+
+	protected override void Awake()
 	{
-		base.Start();
+		base.Awake();
 
 		_border = GetComponent<Image>();
+		_border.color = s_UnselectedColor;
 	}
 
 	public override void Init()
 	{
 		Bind<GameObject, Elements>();
 
-		if (_item != null)
+		if (_info != null)
 		{
 			SetSkillInfo();
 		}
 	}
 
-	public void SetSkill(SkillPresentationData skill)
+	public void SetSkill(SkillInfo info)
 	{
-		_item = skill;
+		_info = info;
 	}
 
 	public void Select()
 	{
-		_border.color = s_UnselectedColor;
+		if (_scaleHandler != null)
+		{
+			Managers.Instance.StopCoroutine(_scaleHandler);
+			_scaleHandler = null;
+		}
+
+		if (_border != null)
+		{
+			_border.color = s_SelectedColor;
+		}
+		_scaleHandler = Utility.Lerp(Vector3.one, Vector3.one * s_SelectedScale, 0.1f, vector => transform.localScale = vector);
 	}
 
 	public void Unselect()
 	{
-		_border.color = s_SelectedColor;
+		if (_scaleHandler != null)
+		{
+			Managers.Instance.StopCoroutine(_scaleHandler);
+			_scaleHandler = null;
+		}
+
+		_border.color = s_UnselectedColor;
+		transform.localScale = Vector3.one;
 	}
 
 	private void SetSkillInfo()
@@ -58,9 +78,9 @@ public class UISkillSlot : UIBase
 		if (iconRoot.TryGetComponent<Image>(out var icon))
 		{
 			// TODO : 아이콘 이미지 변경
-			if (_item.Info != null)
+			if (_info != null)
 			{
-				icon.sprite = _item.Info.Sprite;
+				icon.sprite = _info.Sprite;
 			}
 		}
 	}

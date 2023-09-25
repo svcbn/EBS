@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UISkillSelector : UIScene
 {
@@ -9,7 +12,40 @@ public class UISkillSelector : UIScene
 		Items,
 	}
 
-	private List<ISkill> _skills;
+	private List<UISkillSlot> _slots = new();
+
+	private List<SkillInfo> _skillInfoList;
+
+	private int _currentIndex = -1;
+
+	private int _columnCount = 3;
+
+	private void Update()
+	{
+		Direction direction;
+		if (Input.GetKeyDown(KeyCode.W))
+		{
+			direction = Direction.Up;
+		}
+		else if (Input.GetKeyDown(KeyCode.A))
+		{
+			direction = Direction.Left;
+		}
+		else if (Input.GetKeyDown(KeyCode.S))
+		{
+			direction = Direction.Down;
+		}
+		else if (Input.GetKeyDown(KeyCode.D))
+		{
+			direction = Direction.Right;
+		}
+		else
+		{
+			return;
+		}
+
+		Move(direction);
+	}
 
 	public override void Init()
 	{
@@ -22,23 +58,82 @@ public class UISkillSelector : UIScene
 			Managers.Resource.Release(child.gameObject);
 		}
 
-		if (_skills != null)
+		InitializeSlots();
+	}
+
+	public void SetItems(List<SkillInfo> skills)
+	{
+		_skillInfoList = skills;
+		InitializeSlots();
+	}
+
+	private void InitializeSlots()
+	{
+		if (_skillInfoList != null)
 		{
-			foreach (var skill in _skills)
+			GameObject items = Get<GameObject>((int)Elements.Items);
+
+			foreach (var info in _skillInfoList)
 			{
-				GameObject go = Managers.Resource.Instantiate("UI/Scene/UISkillSlot", items.transform);
-				go.transform.localScale = Vector3.one;
-				var slot = go.GetOrAddComponent<UISkillSlot>();
-				slot.SetSkill(new()
-				{
-					Skill = skill,
-				});
+				var slot = CreateSlot(info);
+				slot.transform.SetParent(items.transform);
+				slot.transform.localScale = Vector3.one;
+				_slots.Add(slot);
 			}
+
+			_slots.First().Select();
 		}
 	}
 
-	public void SetItems(List<ISkill> skills)
+	private UISkillSlot CreateSlot(SkillInfo info)
 	{
-		_skills = skills;
+		GameObject go = Managers.Resource.Instantiate("UI/Scene/UISkillSlot");
+		
+		var slot = go.GetOrAddComponent<UISkillSlot>();
+		slot.SetSkill(info);
+		
+		return slot;
+	}
+
+	private void Move(Direction direction)
+	{
+		int childCount = _slots.Count;
+		int row = _currentIndex / _columnCount;
+		int column = _currentIndex % _columnCount;
+
+		switch (direction)
+		{
+			case Direction.Left:
+				column -= 1;
+				break;
+			case Direction.Right:
+				column += 1;
+				break;
+			case Direction.Up:
+				row -= 1;
+				break;
+			case Direction.Down:
+				row += 1;
+				break;
+			case Direction.None:
+				return;
+		}
+
+		// Check out of bounds
+		if (row < 0 || row >= childCount / (float)_columnCount || column < 0 || column >= _columnCount)
+		{
+			return;
+		}
+
+		// Check out of range
+		if (row * _columnCount + column >= childCount)
+		{
+			return;
+		}
+
+		_slots[_currentIndex].Unselect();
+
+		_currentIndex = row * _columnCount + column;
+		_slots[_currentIndex].Select();
 	}
 }

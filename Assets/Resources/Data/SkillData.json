@@ -4,8 +4,85 @@
       "Id": 1,
       "Name": "Slash",
       "Description": "Slash the enemy with your sword.",
-      "SpriteName": "Slash",
-      "Sprite": { "instanceID": 0 }
+      "SpriteName": "Slash"
+    },
+    {
+      "Id": 2,
+      "Name": "Fireball",
+      "Description": "Shoot a fireball at the enemy.",
+      "SpriteName": "Fireball"
+    },
+    {
+      "Id": 3,
+      "Name": "Heal",
+      "Description": "Heal yourself.",
+      "SpriteName": "Heal"
+    },
+    {
+      "Id": 4,
+      "Name": "Lightning",
+      "Description": "Strike the enemy with lightning.",
+      "SpriteName": "Lightning"
+    },
+    {
+      "Id": 5,
+      "Name": "Ice",
+      "Description": "Freeze the enemy.",
+      "SpriteName": "Ice"
+    },
+    {
+      "Id": 6,
+      "Name": "Poison",
+      "Description": "Poison the enemy.",
+      "SpriteName": "Poison"
+    },
+    {
+      "Id": 7,
+      "Name": "Bite",
+      "Description": "Bite the enemy.",
+      "SpriteName": "Bite"
+    },
+    {
+      "Id": 8,
+      "Name": "Bark",
+      "Description": "Bark at the enemy.",
+      "SpriteName": "Bark"
+    },
+    {
+      "Id": 9,
+      "Name": "Howl",
+      "Description": "Howl at the enemy.",
+      "SpriteName": "Howl"
+    },
+    {
+      "Id": 10,
+      "Name": "Sting",
+      "Description": "Sting the enemy.",
+      "SpriteName": "Sting"
+    },
+    {
+      "Id": 11,
+      "Name": "Web",
+      "Description": "Trap the enemy in a web.",
+      "SpriteName": "Web"
+    },
+    {
+      "Id": 12,
+      "Name": "Punch",
+      "Description": "Punch the enemy.",
+      "SpriteName": "Punch"
+    },
+    {
+      "Id": 13,
+      "Name": "Kick",
+      "Description": "Kick the enemy.",
+      "SpriteName": "Kick"
+    },
+    {
+      "Id": 14,
+      "Name": "Headbutt",
+      "Description": "Headbutt the enemy.",
+      "SpriteName": "Headbutt"
     }
   ]
 }
