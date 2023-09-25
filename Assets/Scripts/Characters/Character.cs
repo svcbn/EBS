@@ -34,6 +34,9 @@ public class Character : MonoBehaviour
 
 	private void Start()
 	{
+		// test
+		SkillManager.SetDummySkills();
+		GetHighPrioritySkill();
 	}
 
 	private void Update()

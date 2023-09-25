@@ -51,7 +51,7 @@ public class SkillManager
 
 	static Character _dummyChar;
 	
-	public void SetDummySkills() // for test
+	public static void SetDummySkills() // for test
 	{
 		Debug.Log("SetDummySkills");
 

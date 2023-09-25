@@ -8,24 +8,14 @@ public class Execute : Action
 
 	private ISkill _selectedSkill;
 
-	private void Awake()
+	public override void OnAwake()
 	{
 		_character = GetComponent<Character>();
 	}
 
-	private void Start()
+	public override void OnStart()
 	{
-		//_selectedSkill = SelectRandomSkill(_character.CanUseSkills);
-		//test
-		List<ISkill> dummyList = new List<ISkill>();
-		dummyList.Add(new DummyFireballSkill());
-		//dummyList.Add(new DummyHealSkill());
-		//dummyList.Add(new DummyStunSkill());
-		//dummyList.Add(new DummyDashSkill());
-		//dummyList.Add(new DummyLightningSkill());
-		//dummyList.Add(new DummyIceSkill());
-		_selectedSkill = SelectRandomSkill(dummyList);
-		//test end
+		_selectedSkill = SelectRandomSkill(_character.GetHighPrioritySkill());
 	}
 
 	public override TaskStatus OnUpdate()
