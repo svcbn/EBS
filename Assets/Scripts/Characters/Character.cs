@@ -1,4 +1,5 @@
 using BehaviorDesigner.Runtime;
+using BehaviorDesigner.Runtime.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,8 +7,8 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-	public bool IsActing { get; set; } 
-	public List<ISkill> CanUseSkills { get; private set; }
+	public bool IsActing { get; set; }
+	public List<ISkill> CanUseSkills;
 
 
 	[SerializeField]
@@ -33,6 +34,9 @@ public class Character : MonoBehaviour
 
 	private void Start()
 	{
+		// test
+		SkillManager.SetDummySkills();
+		GetHighPrioritySkill();
 	}
 
 	private void Update()
@@ -84,7 +88,7 @@ public class Character : MonoBehaviour
 		var direction = _target.transform.position - transform.position;
 		var distance = direction.magnitude;
 
-		if (CanUseSkills.Count > 0)
+		if (CanUseSkills != null && CanUseSkills.Count > 0)
 			_moveBehavior.SetVariableValue("CanUseSkill", true);
 		else
 			_moveBehavior.SetVariableValue("CanUseSkill", false);
@@ -108,5 +112,33 @@ public class Character : MonoBehaviour
 
 		yield return new WaitForSeconds(skillDuration);
 		IsActing = false;
+	}
+
+	public List<ISkill> GetHighPrioritySkill()
+	{
+		List<ISkill> _dummySkills = SkillManager.GetDummySkills();
+		Debug.Log( $"GetHighPrioritySkill Count {_dummySkills.Count}" );
+		CanUseSkills = _dummySkills; // for test
+		
+
+		int highPriority = int.MaxValue;
+		List<ISkill> _tmpSkills = new List<ISkill>();
+		
+		foreach( ISkill skill in CanUseSkills)
+		{
+			if (skill.Priority < highPriority)
+			{
+				highPriority = skill.Priority;
+			}
+		}
+
+		foreach( ISkill skill in CanUseSkills)
+		{
+			if (skill.Priority == highPriority)
+			{
+				_tmpSkills.Add(skill);
+			}
+		}
+		return _tmpSkills;
 	}
 }

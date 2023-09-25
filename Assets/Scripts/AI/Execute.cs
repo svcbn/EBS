@@ -8,14 +8,14 @@ public class Execute : Action
 
 	private ISkill _selectedSkill;
 
-	private void Awake()
+	public override void OnAwake()
 	{
 		_character = GetComponent<Character>();
 	}
 
-	private void Start()
+	public override void OnStart()
 	{
-		_selectedSkill = SelectRandomSkill(_character.CanUseSkills);
+		_selectedSkill = SelectRandomSkill(_character.GetHighPrioritySkill());
 	}
 
 	public override TaskStatus OnUpdate()
@@ -23,7 +23,15 @@ public class Execute : Action
 		if (_selectedSkill != null)
 		{
 			_selectedSkill.Execute();
-			_character.WaitSkillDuration(_selectedSkill.Duration);
+
+			if (_selectedSkill.IsRestricteMoving)
+			{
+				_character.WaitSkillDuration(_selectedSkill.Duration);
+			}
+			else
+			{ 
+				_character.WaitSkillDuration(_selectedSkill.Duration);
+			}
 
 			return TaskStatus.Success;
 		}
