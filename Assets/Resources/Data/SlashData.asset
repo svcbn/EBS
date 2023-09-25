@@ -9,10 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 2698a13292a2ec94b99b92b99e223c07, type: 3}
   m_Name: SlashData
   m_EditorClassIdentifier: Assembly-CSharp::SlashData
-  _checkBoxCenter: {x: 0, y: 0}
-  _checkBoxSize: {x: 0, y: 0}
-  _hitBoxCenter: {x: 1.5, y: 0.5}
-  _hitBoxSize: {x: 1, y: 2}

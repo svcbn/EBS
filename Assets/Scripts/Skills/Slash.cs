@@ -31,7 +31,7 @@ public class Slash : SkillBase
 			}
 
 			character.TakeDamage(1);
-			Debug.Log(character.name + "¿¡°Ô µ¥¹ÌÁö¸¦ ÀÔÇû½À´Ï´Ù.");
+			Debug.Log(character.name + "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 		}
 	}
 
@@ -39,9 +39,9 @@ public class Slash : SkillBase
 	{
 		base.OnDrawGizmos(character);
 
-		var data = Resources.Load<SlashData>("Data/SlashData");
-		Gizmos.color = Color.red;
-		Gizmos.DrawCube((Vector2)character.position + data.HitBoxCenter, data.HitBoxSize);
+		// var data = Resources.Load<SlashData>("Data/SlashData");
+		// Gizmos.color = Color.red;
+		//Gizmos.DrawCube((Vector2)character.position + data.HitBoxCenter, data.HitBoxSize);
 	}
 }
 
