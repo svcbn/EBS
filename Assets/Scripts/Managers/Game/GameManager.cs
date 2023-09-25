@@ -1,6 +1,7 @@
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -67,11 +68,16 @@ public class GameManager : MonoBehaviour
 	private int _player2HP;
 	private int[] roundDamage = {0, 0, 4, 8, 12, 20, 30, 30, 30, 30};
 	private bool isPlayer1Defeat = false;
-    #endregion
+
+	private KeyCode[] _registeredKeys =
+	{ KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.Space,
+		KeyCode.UpArrow, KeyCode.LeftArrow, KeyCode.DownArrow, KeyCode.RightArrow, KeyCode.Return };
+
+	#endregion
 
 
-    #region public Method
-    public void ChangeState(GameState _state)
+	#region public Method
+	public void ChangeState(GameState _state)
     {
         State = _state;
         switch (_state)
@@ -126,7 +132,36 @@ public class GameManager : MonoBehaviour
 
 	private void InputCheck()
 	{
+		var keys = _registeredKeys.Where(key => Input.GetKeyDown(key));
+		keys.ToList().ForEach(HandleInput);
+	}
 
+	private void HandleInput(KeyCode key)
+	{
+		switch (key)
+		{
+			case KeyCode.W:
+				break;
+			case KeyCode.A:
+				break;
+			case KeyCode.S:
+				break;
+			case KeyCode.D:
+				break;
+			case KeyCode.Space:
+				break;
+
+			case KeyCode.UpArrow:
+				break;
+			case KeyCode.LeftArrow:
+				break;
+			case KeyCode.DownArrow:
+				break;
+			case KeyCode.RightArrow:
+				break;
+			case KeyCode.Return:
+				break;
+		}
 	}
 
 	private void PreparePlayer()
