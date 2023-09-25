@@ -1,0 +1,11 @@
+{
+  "Skills": [
+    {
+      "Id": 1,
+      "Name": "Slash",
+      "Description": "Slash the enemy with your sword.",
+      "SpriteName": "Slash",
+      "Sprite": { "instanceID": 0 }
+    }
+  ]
+}

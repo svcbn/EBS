@@ -5,12 +5,16 @@ using UnityEngine;
 public class SkillPresentationData
 {
 	[SerializeField]
-	private Sprite _sprite;
+	private SkillInfo _info;
 
 	[SerializeField]
 	private ISkill _skill;
 
-	public Sprite Sprite => _sprite;
+	public SkillInfo Info
+	{
+		get => _info;
+		set => _info = value;
+	}
 
 	public ISkill Skill
 	{

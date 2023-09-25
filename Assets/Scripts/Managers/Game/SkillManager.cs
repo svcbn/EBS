@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,9 +6,21 @@ using UnityEngine;
 
 public class SkillManager
 {
+	private readonly Dictionary<uint, ISkill> _allSkills = new();
+
+	private SkillData _skillData;
+
 	private Dictionary<Character, List<ISkill>> _skills = new();
 
 	private Dictionary<int, ISkill> _skillCache = new();
+
+	public void Init()
+	{
+		GetAllSkills();
+		_skillData = Managers.Data.Load<SkillData>();
+	}
+
+	public List<ISkill> GetSkills() => _allSkills.Values.ToList();
 
 	public List<ISkill> GeneratePool(int count)
 	{
@@ -43,5 +56,18 @@ public class SkillManager
 		}
 
 		return skill;
+	}
+
+	private void GetAllSkills()
+	{
+		var skillTypes = AppDomain.CurrentDomain.GetAssemblies().
+			SelectMany(s => s.GetTypes()).
+			Where(type => typeof(ISkill).IsAssignableFrom(type) && type.IsClass && !type.IsAbstract);
+
+		foreach (var type in skillTypes)
+		{
+			ISkill skill = Activator.CreateInstance(type) as ISkill;
+			_allSkills.Add(skill.Id, skill);
+		}
 	}
 }
