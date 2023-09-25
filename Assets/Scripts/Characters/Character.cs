@@ -93,4 +93,20 @@ public class Character : MonoBehaviour
 		_moveBehavior.SetVariableValue("Distance", distance);
 		_moveBehavior.SetVariableValue("IsActing", IsActing);
 	}
+
+	public void WaitSkillDuration(float skillDuration)
+	{
+		IsActing = true;
+
+		StartCoroutine(nameof(OutSkillDuration), skillDuration);
+	}
+
+	IEnumerator OutSkillDuration(float skillDuration)
+	{
+		if (IsActing == false)
+			yield break;
+
+		yield return new WaitForSeconds(skillDuration);
+		IsActing = false;
+	}
 }

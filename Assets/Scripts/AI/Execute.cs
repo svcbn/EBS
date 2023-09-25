@@ -23,7 +23,7 @@ public class Execute : Action
 		if (_selectedSkill != null)
 		{
 			_selectedSkill.Execute();
-
+			_character.WaitSkillDuration(_selectedSkill.Duration);
 
 			return TaskStatus.Success;
 		}
