@@ -6,6 +6,10 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
+	public bool IsActing { get; set; } 
+	public List<ISkill> CanUseSkills { get; private set; }
+
+
 	[SerializeField]
 	private int _hp;
 
@@ -19,8 +23,8 @@ public class Character : MonoBehaviour
 		new Slash(),
 	};
 
+	
 	private ISkill _currentSkill;
-	private bool _canUseSkill = true;
 
 	private void Awake()
 	{
@@ -29,17 +33,11 @@ public class Character : MonoBehaviour
 
 	private void Start()
 	{
-		_moveBehavior.SetVariableValue("CanUseSkill", _canUseSkill);
-		
 	}
 
 	private void Update()
 	{
-		var direction = _target.transform.position - transform.position;
-		var distance = direction.magnitude;
-
-		_moveBehavior.SetVariableValue("Direction", direction);
-		_moveBehavior.SetVariableValue("Distance", distance);
+		SetMoveBTVariables();
 
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
@@ -79,5 +77,20 @@ public class Character : MonoBehaviour
 
 			yield return new WaitForSeconds(0.2f);
 		}
+	}
+
+	private void SetMoveBTVariables()
+	{
+		var direction = _target.transform.position - transform.position;
+		var distance = direction.magnitude;
+
+		if (CanUseSkills.Count > 0)
+			_moveBehavior.SetVariableValue("CanUseSkill", true);
+		else
+			_moveBehavior.SetVariableValue("CanUseSkill", false);
+
+		_moveBehavior.SetVariableValue("Direction", direction);
+		_moveBehavior.SetVariableValue("Distance", distance);
+		_moveBehavior.SetVariableValue("IsActing", IsActing);
 	}
 }
