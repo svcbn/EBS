@@ -10,6 +10,8 @@ public class Managers : MonoBehaviour
 
 	private ResourceManager _resource = new();
 
+	private UIManager _ui = new();
+
 	public static Managers Instance
 	{
 		get
@@ -24,6 +26,8 @@ public class Managers : MonoBehaviour
 	public static PoolManager Pool => Instance._pool;
 
 	public static ResourceManager Resource => Instance._resource;
+
+	public static UIManager UI => Instance._ui;
 
 	private static void Init()
 	{
