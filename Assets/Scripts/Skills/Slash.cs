@@ -11,6 +11,16 @@ public class Slash : SkillBase
 		base.Init();
 
 		_data = Managers.Resource.Load<SlashData>("Data/SlashData");
+
+		Id                = _data.Id;
+		Type              = _data.Type;
+		Priority          = _data.Priority;
+		IsRestricteMoving = _data.IsRestricteMoving;
+
+		Cooldown          = _data.Cooldown;
+		BeforeDelay       = _data.BeforeDelay;
+		Duration          = _data.Duration;
+		AfterDelay        = _data.AfterDelay;
 	}
 
 	public override void Execute()
@@ -25,14 +35,17 @@ public class Slash : SkillBase
 	IEnumerator ExecuteCo()
 	{
 		// 애니메이션 재생
-		
+		_data.SpriteEffect.Play();
 
-		
 		// 선딜
+		Debug.Log($"선딜 시작  {BeforeDelay}");
 		yield return new WaitForSeconds(BeforeDelay);
 
-
 		// 실제 피해
+		Debug.Log($"실제 피해 ");
+		Debug.Log($"시전 시간  {Duration}");
+
+
 		var boxes = Physics2D.OverlapBoxAll((Vector2)Owner.transform.right + _data.HitBoxCenter, _data.HitBoxSize, 0);
 		foreach (var box in boxes)
 		{
@@ -46,6 +59,7 @@ public class Slash : SkillBase
 		}
 
 		// 후딜
+		Debug.Log($"후딜 시작  {AfterDelay}");
 		yield return new WaitForSeconds(AfterDelay);
 
 

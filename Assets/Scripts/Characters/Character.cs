@@ -49,11 +49,18 @@ public class Character : MonoBehaviour
 
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
-			CurrentSkill = _skills.FirstOrDefault();
+			// CurrentSkill = _skills.FirstOrDefault();
+
+			CurrentSkill = new Slash(); // for Test
+			
 			CurrentSkill.Init();
 			CurrentSkill.Owner = this;
 			CurrentSkill.Execute();
+
+
 		}
+
+
 	}
 
 	//private void OnDrawGizmos()
