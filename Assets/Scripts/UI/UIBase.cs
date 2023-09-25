@@ -7,7 +7,7 @@ public abstract class UIBase : MonoBehaviour
 {
 	private readonly Dictionary<Type, UnityEngine.Object[]> _objects = new();
 
-	protected virtual void Start()
+	protected virtual void Awake()
 	{
 		Init();
 	}
