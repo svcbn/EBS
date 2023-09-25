@@ -21,7 +21,7 @@ public class Move : Action
 	[SerializeField]
 	private MoveType _moveType;
 
-	private float _moveSpeed = 2; 
+	private float _moveSpeed = 10; 
 
 	public override TaskStatus OnUpdate()
 	{
@@ -53,10 +53,10 @@ public class Move : Action
 		switch (moveType)
 		{ 
 			case MoveType.Move:
-				transform.position += (Vector3)directionToTarget * Time.deltaTime * _moveSpeed;
+				transform.position += (Vector3)directionToTarget.normalized * Time.deltaTime * _moveSpeed;
 				break;
 			case MoveType.Flee:
-				transform.position -= (Vector3)directionToTarget * Time.deltaTime * _moveSpeed;
+				transform.position -= (Vector3)directionToTarget.normalized * Time.deltaTime * _moveSpeed;
 				break;
 
 		}

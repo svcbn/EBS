@@ -22,6 +22,8 @@ public class Character : MonoBehaviour
 	{
 		//new Slash(),
 		new DummyFireballSkill(),
+		new DummyFireballSkill1(),
+		new DummyFireballSkill2(),
 	};
 
 	private bool _hasCooldowmSkill;
@@ -79,6 +81,7 @@ public class Character : MonoBehaviour
 		while (true)
 		{
 			CanUseSkills.Clear();
+			_hasCooldowmSkill = false;
 
 			foreach (var skill in _skills)
 			{
@@ -113,9 +116,9 @@ public class Character : MonoBehaviour
 
 
 			if (CurrentSkill.IsRestricteMoving == true)
-				_moveBehavior.SetVariableValue("CanMove", true);
-			else
 				_moveBehavior.SetVariableValue("CanMove", false);
+			else
+				_moveBehavior.SetVariableValue("CanMove", true);
 		}
 		else
 		{ 
