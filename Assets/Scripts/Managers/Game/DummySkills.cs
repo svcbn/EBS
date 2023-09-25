@@ -9,7 +9,7 @@ public class DummySkills
     
 }
 
-public class DummyFireballSkill : SkillBase
+public class DummyFireballSkill : SkillBase, IActiveSkill
 {
 
 	public DummyFireballSkill()
@@ -32,13 +32,13 @@ public class DummyFireballSkill : SkillBase
 	}
 }
 
-public class DummyHealSkill : SkillBase
+public class DummyHealSkill : SkillBase, IActiveSkill
 {
     
     public DummyHealSkill()
     {
         Id                = 2;
-        Type              = SkillType.Defence;
+        Type              = SkillType.General;
         Priority          = 2;
         IsRestricteMoving = false;
         Cooldown          = 10f;
@@ -48,7 +48,7 @@ public class DummyHealSkill : SkillBase
     }
 }
 
-public class DummyStunSkill : SkillBase
+public class DummyStunSkill : SkillBase, IActiveSkill
 {
     public DummyStunSkill()
     {
@@ -63,12 +63,12 @@ public class DummyStunSkill : SkillBase
     }
 }
 
-public class DummyShieldSkill : SkillBase
+public class DummyShieldSkill : SkillBase, IActiveSkill
 {
     public DummyShieldSkill()
     {
         Id                = 4;
-        Type              = SkillType.Defence;
+        Type              = SkillType.General;
         Priority          = 1;
         IsRestricteMoving = false;
         Cooldown          = 15f;
@@ -78,7 +78,7 @@ public class DummyShieldSkill : SkillBase
     }
 }
 
-public class DummyDashSkill : SkillBase
+public class DummyDashSkill : SkillBase, IActiveSkill
 {
     public DummyDashSkill()
     {
@@ -93,7 +93,7 @@ public class DummyDashSkill : SkillBase
     }
 }
 
-public class DummyLightningSkill : SkillBase
+public class DummyLightningSkill : SkillBase, IActiveSkill
 {
     public DummyLightningSkill()
     {
@@ -108,7 +108,7 @@ public class DummyLightningSkill : SkillBase
     }
 }
 
-public class DummyIceSkill : SkillBase
+public class DummyIceSkill : SkillBase, IActiveSkill
 {
     public DummyIceSkill()
     {
@@ -123,7 +123,7 @@ public class DummyIceSkill : SkillBase
     }
 }
 
-public class DummyStealthSkill : SkillBase
+public class DummyStealthSkill : SkillBase, IActiveSkill
 {
     public DummyStealthSkill()
     {
@@ -138,12 +138,12 @@ public class DummyStealthSkill : SkillBase
     }
 }
 
-public class DummyBarrierSkill : SkillBase
+public class DummyBarrierSkill : SkillBase, IActiveSkill
 {
     public DummyBarrierSkill()
     {
         Id                = 9;
-        Type              = SkillType.Defence;
+        Type              = SkillType.General;
         Priority          = 3;
         IsRestricteMoving = false;
         Cooldown          = 12f;
@@ -153,7 +153,7 @@ public class DummyBarrierSkill : SkillBase
     }
 }
 
-public class DummySpeedBoostSkill : SkillBase
+public class DummySpeedBoostSkill : SkillBase, IActiveSkill
 {
     public DummySpeedBoostSkill()
     {
