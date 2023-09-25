@@ -71,10 +71,4 @@ public interface ISkill
 	/// 스킬을 실행
 	/// </summary>
 	void Execute();
-
-	/// <summary>
-	/// 기즈모를 그림
-	/// </summary>
-	/// <param name="character"></param>
-	void OnDrawGizmos(Transform character);
 }

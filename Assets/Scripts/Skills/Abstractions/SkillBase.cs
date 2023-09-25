@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public abstract class SkillBase : ISkill
+public abstract class SkillBase : MonoBehaviour, ISkill
 {
 	private Character _owner;
 
@@ -58,10 +58,6 @@ public abstract class SkillBase : ISkill
 			return true;
 		else 
 			return false;
-	}
-
-	public virtual void OnDrawGizmos(Transform character)
-	{
 	}
 
 	protected virtual void CalculateCooltime()
