@@ -15,7 +15,17 @@ public class Execute : Action
 
 	private void Start()
 	{
-		_selectedSkill = SelectRandomSkill(_character.CanUseSkills);
+		//_selectedSkill = SelectRandomSkill(_character.CanUseSkills);
+		//test
+		List<ISkill> dummyList = new List<ISkill>();
+		dummyList.Add(new DummyFireballSkill());
+		//dummyList.Add(new DummyHealSkill());
+		//dummyList.Add(new DummyStunSkill());
+		//dummyList.Add(new DummyDashSkill());
+		//dummyList.Add(new DummyLightningSkill());
+		//dummyList.Add(new DummyIceSkill());
+		_selectedSkill = SelectRandomSkill(dummyList);
+		//test end
 	}
 
 	public override TaskStatus OnUpdate()
@@ -23,7 +33,15 @@ public class Execute : Action
 		if (_selectedSkill != null)
 		{
 			_selectedSkill.Execute();
-			_character.WaitSkillDuration(_selectedSkill.Duration);
+
+			if (_selectedSkill.IsRestricteMoving)
+			{
+				_character.WaitSkillDuration(_selectedSkill.Duration);
+			}
+			else
+			{ 
+				_character.WaitSkillDuration(_selectedSkill.Duration);
+			}
 
 			return TaskStatus.Success;
 		}

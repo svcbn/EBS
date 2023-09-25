@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-	public bool IsActing { get; set; } 
-	public List<ISkill> CanUseSkills { get; private set; }
+	public bool IsActing { get; set; }
+	public List<ISkill> CanUseSkills;
 
 
 	[SerializeField]
@@ -84,7 +84,7 @@ public class Character : MonoBehaviour
 		var direction = _target.transform.position - transform.position;
 		var distance = direction.magnitude;
 
-		if (CanUseSkills.Count > 0)
+		if (CanUseSkills != null && CanUseSkills.Count > 0)
 			_moveBehavior.SetVariableValue("CanUseSkill", true);
 		else
 			_moveBehavior.SetVariableValue("CanUseSkill", false);
