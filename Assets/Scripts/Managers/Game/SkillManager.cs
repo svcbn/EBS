@@ -86,15 +86,15 @@ public class SkillManager
 		_dummySkills.Add(_dummyChar, new List<ISkill>()
 		{
 			new DummyFireballSkill(),
-			new DummyHealSkill(),
-			new DummyStunSkill(),
-			new DummyShieldSkill(),
-			new DummyDashSkill(),
-			new DummyLightningSkill(),
-			new DummyIceSkill(),
-			new DummyStealthSkill(),
-			new DummyBarrierSkill(),
-			new DummySpeedBoostSkill()
+			//new DummyHealSkill(),
+			//new DummyStunSkill(),
+			//new DummyShieldSkill(),
+			//new DummyDashSkill(),
+			//new DummyLightningSkill(),
+			//new DummyIceSkill(),
+			//new DummyStealthSkill(),
+			//new DummyBarrierSkill(),
+			//new DummySpeedBoostSkill()
 		});
 	}
 

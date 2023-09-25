@@ -36,7 +36,7 @@ public abstract class SkillBase : ISkill
 
 	public float AfterDelay { get; protected set; }
 
-	public bool IsCoolReady { get; protected set; }
+	public bool IsCoolReady { get; protected set; } = true;
 
 	public bool IsActing { get; protected set; }
 
@@ -48,11 +48,16 @@ public abstract class SkillBase : ISkill
 	{
 		IsCoolReady = false;
 		IsActing = true;
+
+		CalculateCooltime();
 	}
 
 	public virtual bool CheckCanUse()
 	{
-		return true;
+		if (IsCoolReady == true)	
+			return true;
+		else 
+			return false;
 	}
 
 	public virtual void OnDrawGizmos(Transform character)

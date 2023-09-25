@@ -11,7 +11,8 @@ public class DummySkills
 
 public class DummyFireballSkill : SkillBase
 {
-    public DummyFireballSkill()
+
+	public DummyFireballSkill()
     {
         Id                = 1;
         Type              = SkillType.Attack;
@@ -22,6 +23,13 @@ public class DummyFireballSkill : SkillBase
         Duration          = 2f;
         AfterDelay        = 0.5f;
     }
+
+	public override void Execute()
+	{ 
+		base.Execute();
+
+		Debug.Log($"DummyFireballSkill is used");
+	}
 }
 
 public class DummyHealSkill : SkillBase
