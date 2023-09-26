@@ -8,6 +8,8 @@ public class UISkillDescriptor : UIPopup
 	private enum Elements
 	{
 		Name,
+		SkillType,
+		Cooldown,
 		Description
 	}
 
@@ -45,6 +47,8 @@ public class UISkillDescriptor : UIPopup
 		}
 
 		Get<TextMeshProUGUI>((int)Elements.Name).text = _skillInfo.Name;
+		Get<TextMeshProUGUI>((int)Elements.SkillType).text = _skillInfo.SkillType;
+		Get<TextMeshProUGUI>((int)Elements.Cooldown).text = $"쿨타임: {_skillInfo.CoolDown}초";
 		Get<TextMeshProUGUI>((int)Elements.Description).text = _skillInfo.Description;
 	}
 }

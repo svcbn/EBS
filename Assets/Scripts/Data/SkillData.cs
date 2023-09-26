@@ -12,6 +12,7 @@ public class SkillData
 [Serializable]
 public class SkillInfo : ISerializationCallbackReceiver
 {
+	// Required Data //
 	public uint Id;
 
 	public string Name;
@@ -20,7 +21,14 @@ public class SkillInfo : ISerializationCallbackReceiver
 
 	public string SpriteName;
 
+	// Optional Data (overwrite by serializer) //
+	public string SkillType;
+
+	public float CoolDown;
+
 	public Sprite Sprite;
+
+	public ActiveSkillData Data;
 
 	public void OnBeforeSerialize()
 	{
@@ -29,5 +37,15 @@ public class SkillInfo : ISerializationCallbackReceiver
 	public void OnAfterDeserialize()
 	{
 		Sprite = Managers.Resource.Load<Sprite>($"Sprites/{SpriteName}");
+		Data = Managers.Resource.Load<ActiveSkillData>($"Data/{SpriteName}Data");
+		if (Data != null)
+		{
+			SkillType = "Active";
+			CoolDown = Data.Cooldown;
+		}
+		else
+		{
+			SkillType = "Passive";
+		}
 	}
 }

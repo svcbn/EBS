@@ -39,9 +39,14 @@ public abstract class SkillBase : MonoBehaviour, ISkill
 
 	public float RequireMP { get; protected set; }
 
-	public bool IsCoolReady { get; protected set; } = true;
+	public bool IsCoolReady { get; protected set; }
 
 	public bool IsActing { get; protected set; }
+
+	protected virtual void Awake()
+	{
+		IsCoolReady = true;
+	}
 
 	public virtual void Init()
 	{
