@@ -13,15 +13,19 @@ MonoBehaviour:
   m_Name: TeleportBackData
   m_EditorClassIdentifier: 
   _checkBoxCenter: {x: 0, y: 0}
-  _checkBoxSize: {x: 0, y: 0}
+  _checkBoxSize: {x: 20, y: 20}
   _hitBoxCenter: {x: 0, y: 0}
-  _hitBoxSize: {x: 0, y: 0}
+  _hitBoxSize: {x: 4, y: 4}
   _id: 1
   _type: 0
   _priority: 1
-  _isRestricteMoving: 1
+  _isRestrictMoving: 0
   _cooldown: 3
   _beforeDelay: 0.5
   _duration: 0.1
   _afterDelay: 0.1
-  _spriteEffect: {fileID: 0}
+  _requireMP: 0
+  _effect: {fileID: 0}
+  teleportEffect: {fileID: 0}
+  postEffect: {fileID: 0}
+  telpoDistance: 20

@@ -22,9 +22,10 @@ public class Character : MonoBehaviour
 	private BehaviorTree _moveBehavior;
 
 	private List<ISkill> _skills = new();
-
+	
 	private bool _hasCooldowmSkill;
 	private bool _canMove;
+
 
 	private void Awake()
 	{
@@ -55,8 +56,10 @@ public class Character : MonoBehaviour
 	{
 		SetMoveBTVariables();
 
-		if (Input.GetKeyDown(KeyCode.Space))
+		if (Input.GetKeyDown(KeyCode.Space)) // for test
 		{
+
+			if( name != "Capsule A") { return; } 
 			// CurrentSkill = _skills.FirstOrDefault();
 
 			//CurrentSkill = new Slash(); // for Test
