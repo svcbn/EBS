@@ -191,7 +191,7 @@ public class UISkillSelector : UIPopup
 			return;
 		}
 
-		_descriptor = Managers.UI.ShowPopupUI<UISkillDescriptor>();
+		_descriptor = Managers.UI.ShowPopupUI<UISkillDescriptor>(usePool: true);
 		var card = _descriptor.gameObject.FindChild("Card");
 		if (!card.TryGetComponent<RectTransform>(out var child))
 		{
