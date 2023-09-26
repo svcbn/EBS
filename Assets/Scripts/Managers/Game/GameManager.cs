@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
         PickSkill,
         PreRound,
         Battle,
-        PostRound,
+        RoundOver,
         GameOver
     }
     public GameState State { get; private set; }
@@ -60,6 +60,8 @@ public class GameManager : MonoBehaviour
 
 
 	#region private Variables
+	private Character _winner;
+	
 	[SerializeField]
 	private SkillSelectorInput _player1Input;
 	
@@ -107,8 +109,8 @@ public class GameManager : MonoBehaviour
             case GameState.Battle:
                 OnBattle();
                 break;
-            case GameState.PostRound:
-                OnPostRound();
+            case GameState.RoundOver:
+                OnRoundOver();
                 break;
             case GameState.GameOver:
                 OnGameOver();
@@ -116,6 +118,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+	public void SetWinner(Character winner)
+	{
+		_winner = winner;
+	}
     #endregion
 
 
@@ -135,9 +141,8 @@ public class GameManager : MonoBehaviour
 
 		_skill.Init();
 
-        ChangeState(GameState.Title);
-		
 		PreparePlayer();
+        ChangeState(GameState.Title);
     }
 
 	private void Update()
@@ -146,6 +151,8 @@ public class GameManager : MonoBehaviour
 		{
 			_ui.ShowMenu();
 		}
+		
+		//_ui.UpdateTimer();
 	}
 
 	public void StartGame()
@@ -168,12 +175,16 @@ public class GameManager : MonoBehaviour
 	private void OnTitle()
     {
         // something must do at title
+        InitPlayerStartingPoint();
 		_ui.ShowTitle(StartGame);
     }
 
     private void OnPickSkill()
     {
-		Character winner = _isPlayer1Defeat ? player2 : player1;
+	    InitPlayerStartingPoint();
+	    
+	    // TODO: 라운드별 승자 처리
+	    Character winner = _winner;
 		// if round1, player1 is first
 		// else, last round's winner is first
 		_currentPicker = CurrentRound == 1 ? player1 : winner;
@@ -250,12 +261,12 @@ public class GameManager : MonoBehaviour
     private void OnBattle()
     {
 		// change something
-
-		PrepareBattle();
+		StartBattle();
     }
 
-    private void OnPostRound()
+    private void OnRoundOver()
     {
+	    InitPlayerStartingPoint();
 		CalculateRoundDamage();
 
 		// reset something
@@ -281,15 +292,30 @@ public class GameManager : MonoBehaviour
         // go to title, or quit <= maybe uimanager should do
     }
 
-	private void PrepareBattle()
+	private void InitPlayerStartingPoint()
 	{
+		player1.gameObject.SetActive(true);
+		player2.gameObject.SetActive(true);
+		
+		player1.BehaviorTree.enabled = false;
+		player2.BehaviorTree.enabled = false;
+
+		player1.GetComponent<CharacterMovement>().PlayerInput = Vector2.zero;
+		player2.GetComponent<CharacterMovement>().PlayerInput = Vector2.zero;
+		
 		player1.transform.position = spawnPoints[0].position;
 		player2.transform.position = spawnPoints[1].position;
 
 		// maybe ui guide
 
 		// turn on ai
-
+		Managers.Stat.SoftResetStats();
+	}
+	
+	private void StartBattle()
+	{
+		player1.BehaviorTree.enabled = true;
+		player2.BehaviorTree.enabled = true;
 	}
 
 	private void CalculateRoundDamage()
@@ -311,6 +337,5 @@ public class GameManager : MonoBehaviour
 			Debug.LogWarning($"{nameof(spawnPoints)} is not assigned.");
 		}
 	}
-
 	#endregion
 }

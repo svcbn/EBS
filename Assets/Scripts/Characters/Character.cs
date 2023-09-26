@@ -31,6 +31,8 @@ public class Character : MonoBehaviour
 
 	public IReadOnlyList<ISkill> Skills => _skills;
 
+	public BehaviorTree BehaviorTree => _moveBehavior;
+
 	public event NotifyCollectionChangedEventHandler CollectionChanged
 	{
 		add => _skills.CollectionChanged += value;
