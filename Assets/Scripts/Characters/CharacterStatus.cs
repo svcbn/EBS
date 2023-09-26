@@ -199,7 +199,7 @@ public class CharacterStatus : MonoBehaviour
 
 	private IEnumerator CR_BlinkEffect()
 	{
-		float _blinkTime = 0.15f;
+		float _blinkTime = 0.3f;
 
 		foreach (var renderer in _spriteRenderers) 
 		{

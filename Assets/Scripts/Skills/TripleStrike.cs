@@ -59,7 +59,7 @@ public class TripleStrike : SkillBase, IActiveSkill
 				}
 
 				// Todo : statmanager 쪽에 연산 요청
-				Debug.Log("damaged");
+				Managers.Stat.GiveDamage(1 - Owner.playerIndex, _data.Damage);
 			}
 
 			yield return new WaitForSeconds(_data.DelayBetween);

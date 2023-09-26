@@ -60,12 +60,13 @@ public class SoulStrike : SkillBase, IActiveSkill
 				}
 
 				// Todo : statmanager 쪽에 연산 요청
-				Debug.Log("damaged");
+				Managers.Stat.GiveDamage(1 - Owner.playerIndex, _data.Damage);
 
 				// Todo : playerStatus 쪽에 스턴 요청
 				Owner.Target.GetComponent<CharacterStatus>().SetFaintEffect(3);
 
 				// Todo : statmanager 쪽에 마나 뺏기 요청
+
 			}
 
 		}
