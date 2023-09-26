@@ -1,8 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using UnityEngine;
 
 public class SkillSelector
 {
@@ -12,6 +10,8 @@ public class SkillSelector
 	}
 
 	public event Action<SkillInfo> SkillSelected;
+
+	public SkillSelectorInput Input { get; set; }
 
 	public IReadOnlyList<SkillInfo> Skills { get; private set; }
 

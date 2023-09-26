@@ -1,8 +1,6 @@
-﻿using UnityEngine;
-
-namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject
+﻿namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject
 {
-    [TaskCategory("Unity/GameObject")]
+	[TaskCategory("Unity/GameObject")]
     [TaskDescription("Sends a message to the target GameObject. Returns Success.")]
     public class SendMessage : Action
     {

@@ -1,8 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class SkillManager
@@ -51,9 +49,9 @@ public class SkillManager
 		return newSkillPool;
 	}
 
-	public SkillInfo GetInfo(ISkill skill)
+	public SkillInfo GetInfo(uint id)
 	{
-		return _skillData.Skills.FirstOrDefault(info => info.Id == skill.Id);
+		return _skillData.Skills.Find(skill => skill.Id == id);
 	}
 
 	public bool TryFindSkillTypeById(uint id, out Type type)

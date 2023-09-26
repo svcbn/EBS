@@ -1,8 +1,6 @@
-using UnityEngine;
-
 namespace BehaviorDesigner.Runtime.Tasks.Unity.SharedVariables
 {
-    [TaskCategory("Unity/SharedVariable")]
+	[TaskCategory("Unity/SharedVariable")]
     [TaskDescription("Gets the GameObject from the Transform component. Returns Success.")]
     public class SharedTransformToGameObject : Action
     {

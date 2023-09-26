@@ -1,9 +1,4 @@
-using Sirenix.OdinInspector;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -63,6 +58,14 @@ public class GameManager : MonoBehaviour
 
 
 	#region private Variables
+	[SerializeField]
+	private SkillSelectorInput _player1Input;
+	
+	[SerializeField]
+	private SkillSelectorInput _player2Input;
+
+	private SkillSelector _selector;
+	private GameUIManager _ui = new();
 	private Character _currentPicker;
 	[SerializeField]
 	private List<int> _pickCountList;
@@ -140,45 +143,6 @@ public class GameManager : MonoBehaviour
 		PreparePlayer();
     }
 
-	private void Update()
-	{
-		//InputCheck();
-	}
-
-	//private void InputCheck()
-	//{
-	//	var keys = _registeredKeys.Where(key => Input.GetKeyDown(key));
-	//	keys.ToList().ForEach(HandleInput);
-	//}
-
-	//private void HandleInput(KeyCode key)
-	//{
-	//	switch (key)
-	//	{
-	//		case KeyCode.W:
-	//			break;
-	//		case KeyCode.A:
-	//			break;
-	//		case KeyCode.S:
-	//			break;
-	//		case KeyCode.D:
-	//			break;
-	//		case KeyCode.Space:
-	//			break;
-
-	//		case KeyCode.UpArrow:
-	//			break;
-	//		case KeyCode.LeftArrow:
-	//			break;
-	//		case KeyCode.DownArrow:
-	//			break;
-	//		case KeyCode.RightArrow:
-	//			break;
-	//		case KeyCode.Return:
-	//			break;
-	//	}
-	//}
-
 	private void PreparePlayer()
 	{
 		player1 = Managers.Resource.Instantiate("Character/Player 1").GetOrAddComponent<Character>();
@@ -198,22 +162,29 @@ public class GameManager : MonoBehaviour
     {
 		_pickCountIndex = 0;
 		_pickCount = _pickCountList[_pickCountIndex];
+
 		var skillPool = _skill.GeneratePool(_skillPickCount);
-		SkillSelector selector = new(skillPool);
-		_selectorUI = Managers.UI.ShowPopupUI<UISkillSelector>();
-		selector.SkillSelected += PickSkill;
-		_selectorUI.SetSelector(selector);
+		_selector = new(skillPool)
+		{
+			Input = _isPlayer1Pick ? _player1Input : _player2Input
+		};
+		_selector.SkillSelected += PickSkill;
+		_ui.ShowSkillSelector(_selector);
+
 		// if round1, player1 is first
-		Character winner = player1;
+		Character winner = GetWinner();
 		// else, last round's winner is first
 		_currentPicker = CurrentRound == 1 ? player1 : winner;
 	}
 
-	private UISkillSelector _selectorUI;
+	private Character GetWinner()
+	{
+		return player1;
+	}
 
 	private void PickSkill(SkillInfo skillInfo)
 	{
-		if (_skill.TryFindSkillTypeById(skillInfo.Id, out var skillType))
+		if (!_skill.TryFindSkillTypeById(skillInfo.Id, out var skillType))
 		{
 			Debug.LogError($"Undefined skill type. ID: {skillInfo.Id}, Name: {skillInfo.Name}");
 			return;
@@ -224,6 +195,7 @@ public class GameManager : MonoBehaviour
 		if (--_pickCount <= 0)
 		{
 			_currentPicker = _isPlayer1Pick ? player2 : player1;
+			_selector.Input = _isPlayer1Pick ? _player2Input : _player1Input;
 			_isPlayer1Pick = !_isPlayer1Pick;
 			
 			if (_pickCountIndex < _pickCountList.Count - 1)
@@ -233,7 +205,9 @@ public class GameManager : MonoBehaviour
 			else
 			{
 				// pick end
-				Managers.UI.ClosePopupUI(_selectorUI);
+				_ui.HideSkillSelector();
+				_selector.SkillSelected -= PickSkill;
+				_selector = null;
 				ChangeState(GameState.PreRound);
 			}
 		}

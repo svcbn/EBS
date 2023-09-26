@@ -1,12 +1,10 @@
 using BehaviorDesigner.Runtime;
-using BehaviorDesigner.Runtime.Tasks;
-using BehaviorDesigner.Runtime.Tasks.Unity.UnityRigidbody;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
-using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 public class Character : MonoBehaviour
 {
@@ -21,11 +19,17 @@ public class Character : MonoBehaviour
 	private BehaviorTree _moveBehavior;
 	private Rigidbody2D _rigidbody2;
 
-	private List<ISkill> _skills = new();
+	private readonly ObservableCollection<ISkill> _skills = new();
 	
 	private bool _hasCooldowmSkill;
 
+	public IReadOnlyList<ISkill> Skills => _skills;
 
+	public event NotifyCollectionChangedEventHandler CollectionChanged
+	{
+		add => _skills.CollectionChanged += value;
+		remove => _skills.CollectionChanged -= value;
+	}
 
 	private void Awake()
 	{

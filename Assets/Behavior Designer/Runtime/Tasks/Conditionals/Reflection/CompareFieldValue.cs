@@ -1,10 +1,8 @@
 using UnityEngine;
-using System;
-using System.Reflection;
 
 namespace BehaviorDesigner.Runtime.Tasks
 {
-    [TaskDescription("Compares the field value to the value specified. Returns success if the values are the same.")]
+	[TaskDescription("Compares the field value to the value specified. Returns success if the values are the same.")]
     [TaskCategory("Reflection")]
     [TaskIcon("{SkinColor}ReflectionIcon.png")]
     public class CompareFieldValue : Conditional

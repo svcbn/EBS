@@ -1,8 +1,6 @@
-using UnityEngine;
-
 namespace BehaviorDesigner.Runtime.Tasks.Unity.SharedVariables
 {
-    [TaskCategory("Unity/SharedVariable")]
+	[TaskCategory("Unity/SharedVariable")]
     [TaskDescription("Returns success if the variable value is equal to the compareTo value.")]
     public class CompareSharedGameObject : Conditional
     {
