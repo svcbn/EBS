@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
 
 
 	#region private Variables
-	private Character _winner;
+	private Character _roundWinner;
 	
 	[SerializeField]
 	private SkillSelectorInput _player1Input;
@@ -118,9 +118,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-	public void SetWinner(Character winner)
+	public void SetRoundWinner(Character winner)
 	{
-		_winner = winner;
+		_roundWinner = winner;
+		IsPlayer1Win = _roundWinner == player1;
 	}
     #endregion
 
@@ -158,6 +159,7 @@ public class GameManager : MonoBehaviour
 	public void StartGame()
 	{
 		CurrentRound = 1;
+		_skill.SetCharacters(player1, player2);
 		ChangeState(GameState.PickSkill);
 	}
 
@@ -184,11 +186,11 @@ public class GameManager : MonoBehaviour
 	    InitPlayerStartingPoint();
 	    
 	    // TODO: 라운드별 승자 처리
-	    Character winner = _winner;
+	    Character winner = _roundWinner;
 		// if round1, player1 is first
 		// else, last round's winner is first
 		_currentPicker = CurrentRound == 1 ? player1 : winner;
-		_isPlayer1Pick = winner == player1;
+		_isPlayer1Pick = CurrentRound == 1 || winner == player1;
 
 		_pickCountIndex = 0;
 		_pickCount = _pickCountList[_pickCountIndex];
