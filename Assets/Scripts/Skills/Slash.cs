@@ -21,6 +21,7 @@ public class Slash : SkillBase, IActiveSkill
 		BeforeDelay       = _data.BeforeDelay;
 		Duration          = _data.Duration;
 		AfterDelay        = _data.AfterDelay;
+		
 	}
 
 	public override void Execute()

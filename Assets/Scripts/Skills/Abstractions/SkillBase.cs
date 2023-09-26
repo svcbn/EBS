@@ -37,6 +37,8 @@ public abstract class SkillBase : MonoBehaviour, ISkill
 
 	public float AfterDelay { get; protected set; }
 
+	public float RequireMP { get; protected set; }
+
 	public bool IsCoolReady { get; protected set; } = true;
 
 	public bool IsActing { get; protected set; }

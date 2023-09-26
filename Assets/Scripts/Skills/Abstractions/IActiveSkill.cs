@@ -44,4 +44,9 @@ public interface IActiveSkill : ISkill
 	/// 스킬의 후 딜레이
 	/// </summary>
 	float AfterDelay { get; }
+
+	/// <summary>
+	/// 스킬 사용에 필요한 mp
+	/// </summary>
+	float RequireMP { get; }
 }
