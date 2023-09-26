@@ -31,6 +31,50 @@ public class DummyFireballSkill : SkillBase, IActiveSkill
 		Debug.Log($"DummyFireballSkill is used");
 	}
 }
+public class DummyFireballSkill1 : SkillBase
+{
+
+	public DummyFireballSkill1()
+    {
+        Id                = 1;
+        Type              = SkillType.Attack;
+        Priority          = 1;
+        IsRestricteMoving = false;
+        Cooldown          = 4f;
+        BeforeDelay       = 0.5f;
+        Duration          = 0.5f;
+        AfterDelay        = 0.5f;
+    }
+
+	public override void Execute()
+	{ 
+		base.Execute();
+
+		Debug.Log($"DummyFireballSkill is used");
+	}
+}
+public class DummyFireballSkill2 : SkillBase
+{
+
+	public DummyFireballSkill2()
+    {
+        Id                = 1;
+        Type              = SkillType.Attack;
+        Priority          = 1;
+        IsRestricteMoving = false;
+        Cooldown          = 5f;
+        BeforeDelay       = 0.1f;
+        Duration          = 0.9f;
+        AfterDelay        = 0.2f;
+    }
+
+	public override void Execute()
+	{ 
+		base.Execute();
+
+		Debug.Log($"DummyFireballSkill is used");
+	}
+}
 
 public class DummyHealSkill : SkillBase, IActiveSkill
 {
