@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class Character : MonoBehaviour
 {
@@ -83,7 +84,7 @@ public class Character : MonoBehaviour
 		}
 	}
 
-	private void SetMoveBTVariables()
+	public void SetMoveBTVariables()
 	{
 		var direction = _target.transform.position - transform.position;
 		var distance = direction.magnitude;

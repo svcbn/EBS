@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class CharactorJump : MonoBehaviour
 {
 	public float jumpSpeed;
+	public Vector3 velocity;
 	
 	CharacterGround _charaterGround;
 	CharactorMovementData _charactorMovementData;
@@ -22,7 +23,7 @@ public class CharactorJump : MonoBehaviour
 		_body = GetComponent<Rigidbody2D>();
 	}
 
-	public void OnJump(InputAction.CallbackContext context)
+	public void OnJump(Vector2 lookDir)
 	{
 
 		//Create the jump, provided we are on the ground, in coyote time, or have a double jump available
@@ -31,26 +32,17 @@ public class CharactorJump : MonoBehaviour
 			//Determine the power of the jump, based on our gravity and stats
 			jumpSpeed = Mathf.Sqrt(-2f * Physics2D.gravity.y * _body.gravityScale * _charactorMovementData.JumpHeight);
 
-			//If Kit is moving up or down when she jumps (such as when doing a double jump), change the jumpSpeed;
-			//This will ensure the jump is the exact same strength, no matter your velocity.
-			//if (velocity.y > 0f)
-			//{
-			//	jumpSpeed = Mathf.Max(jumpSpeed - velocity.y, 0f);
-			//}
-			//else if (velocity.y < 0f)
-			//{
-			//	jumpSpeed += Mathf.Abs(body.velocity.y);
-			//}
+			if (velocity.y > 0f)
+			{
+				jumpSpeed = Mathf.Max(jumpSpeed - velocity.y, 0f);
+			}
+			else if (velocity.y < 0f)
+			{
+				jumpSpeed += Mathf.Abs(_body.velocity.y);
+			}
 
-			////Apply the new jumpSpeed to the velocity. It will be sent to the Rigidbody in FixedUpdate;
-			//velocity.y += jumpSpeed;
-			//currentlyJumping = true;
-
-			//if (juice != null)
-			//{
-			//	//Apply the jumping effects on the juice script
-			//	juice.jumpEffects();
-			//}
+			//Apply the new jumpSpeed to the velocity. It will be sent to the Rigidbody in FixedUpdate;
+			velocity.y += jumpSpeed;
 		}
 	}
 
