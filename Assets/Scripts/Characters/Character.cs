@@ -34,7 +34,24 @@ public class Character : MonoBehaviour
 	}
 
 	private void Awake()
-	{		
+
+	{
+		//temp
+		_skills.Add(gameObject.AddComponent<Slash>());
+		_skills.Add(gameObject.AddComponent<TripleStrike>());
+		_skills.Add(gameObject.AddComponent<TeleportBack>());
+		_skills.Add(gameObject.AddComponent<Block>());
+		_skills.Add(gameObject.AddComponent<ManaShower>());
+		_skills.Add(gameObject.AddComponent<HeavyStrike>());
+		_skills.Add(gameObject.AddComponent<MagicMissile>());
+
+
+		foreach (var skill in _skills)
+		{
+			skill.Init();
+			skill.Owner = this;
+		}
+		
 		_moveBehavior = GetComponent<BehaviorTree>();
 		_rigidbody2 = GetComponent<Rigidbody2D>();
 		_status = GetComponent<CharacterStatus>();
@@ -44,7 +61,10 @@ public class Character : MonoBehaviour
 	{
 		StartCoroutine(CheckSkills());
 
+
+
 		// test
+		GameManager.Skill.GetSkill(1, this);
 		foreach (var skill in _skills)
 		{ 
 			skill.Owner = this;	
@@ -128,7 +148,8 @@ public class Character : MonoBehaviour
 
 		// CanUseSkill Control
 		if (CanUseSkills != null && CanUseSkills.Count > 0
-			&& _status.CurrentStatus[StatusType.Faint] == false)
+			&& _status.CurrentStatus[StatusType.Faint] == false
+			&& _status.CurrentStatus[StatusType.Knockback] == false)
 		{ 
 			_moveBehavior.SetVariableValue("CanUseSkill", true);
 		}
@@ -141,17 +162,20 @@ public class Character : MonoBehaviour
 			_moveBehavior.SetVariableValue("IsActing", true);
 
 
-			if (CurrentSkill.IsRestrictMoving == true || _status.CurrentStatus[StatusType.Faint] == true)
+			if (CurrentSkill.IsRestrictMoving == true 
+				|| _status.CurrentStatus[StatusType.Faint] == true
+				|| _status.CurrentStatus[StatusType.Knockback] == true)
 				_moveBehavior.SetVariableValue("CanMove", false);
 			else
 				_moveBehavior.SetVariableValue("CanMove", true);
 		}
 		else
 		{ 
-			_moveBehavior.SetVariableValue("IsActing", true);
+			_moveBehavior.SetVariableValue("IsActing", false);
 
 
-			if (_status.CurrentStatus[StatusType.Faint] == true)
+			if (_status.CurrentStatus[StatusType.Faint] == true
+				|| _status.CurrentStatus[StatusType.Knockback] == true)
 				_moveBehavior.SetVariableValue("CanMove", false);
 			else
 				_moveBehavior.SetVariableValue("CanMove", true);

@@ -10,8 +10,10 @@ public class Move : Action
 
 	[SerializeField]
 	private SharedGameObject _target;
-	//private SharedVector3 _directionToTarget;
-	
+
+	[SerializeField]
+	private SharedBool _canMove;
+
 	private CharacterMovement _movement;
 
 	public override void OnAwake()
@@ -28,7 +30,8 @@ public class Move : Action
 
 	public override TaskStatus OnUpdate()
 	{
-		if (Vector2.Distance(_target.Value.transform.position, transform.position) > _arriveDistance.Value)
+		if (Vector2.Distance(_target.Value.transform.position, transform.position) > _arriveDistance.Value
+			&& _canMove.Value == true)
 		{
 			var directionToTarget = _target.Value.transform.position - transform.position;
 

@@ -54,7 +54,7 @@ public class ResourceManager
 
 	public void Release(GameObject go)
 	{
-		if (go == null)
+		if (go is null)
 		{
 			return;
 		}

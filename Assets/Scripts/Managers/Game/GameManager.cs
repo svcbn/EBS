@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -29,7 +31,7 @@ public class GameManager : MonoBehaviour
 		private set
 		{
 			_player1HP = value;
-			if(value < 0)
+			if (value < 0)
 			{
 				isPlayer1Defeat = true;
 				ChangeState(GameState.GameOver);
@@ -84,11 +86,6 @@ public class GameManager : MonoBehaviour
 	private int[] roundDamage = {0, 0, 4, 8, 12, 20, 30, 30, 30, 30};
 	private bool isPlayer1Defeat = false;
 	private bool _isPlayer1Pick = false;
-
-	private KeyCode[] _registeredKeys =
-	{ KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.Space,
-		KeyCode.UpArrow, KeyCode.LeftArrow, KeyCode.DownArrow, KeyCode.RightArrow, KeyCode.Return };
-
 	#endregion
 
 
@@ -143,28 +140,38 @@ public class GameManager : MonoBehaviour
 		PreparePlayer();
     }
 
+	private void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Escape))
+		{
+			_ui.ShowMenu();
+		}
+	}
+
+	public void StartGame()
+	{
+		CurrentRound = 1;
+		ChangeState(GameState.PickSkill);
+	}
+
 	private void PreparePlayer()
 	{
 		player1 = GameObject.Find("Player 1").GetOrAddComponent<Character>();
 		player2 = GameObject.Find("Player 2").GetOrAddComponent<Character>();
 
-		//player1 = Managers.Resource.Instantiate("Character/Player 1").GetOrAddComponent<Character>();
-		//player2 = Managers.Resource.Instantiate("Character/Player 2").GetOrAddComponent<Character>();
-
 		_ui.ShowSkillList(player1, player2);
-
-		//Managers.Resource.Release(player1.gameObject);
-		//Managers.Resource.Release(player2.gameObject);
 	}
 
 	private void OnTitle()
     {
         // something must do at title
-		
+		_ui.ShowTitle(StartGame);
     }
 
     private void OnPickSkill()
     {
+		Time.timeScale = 0f;
+
 		// if round1, player1 is first
 		Character winner = GetWinner();
 		// else, last round's winner is first
@@ -185,6 +192,7 @@ public class GameManager : MonoBehaviour
 
 	private Character GetWinner()
 	{
+		// TODO: 승자 처리
 		return player1;
 	}
 
@@ -197,26 +205,34 @@ public class GameManager : MonoBehaviour
 		}
 		
 		ISkill skill = _currentPicker.gameObject.AddComponent(skillType) as ISkill;
+		if (skill == null)
+		{
+			Debug.LogError($"Can't add skill to {_currentPicker}. Id: {skillInfo.Id}, Name: {skillInfo.Name}");
+			return;
+		}
+		
 		skill.Init();
 		_currentPicker.AddSkill(skill);
-		if (--_pickCount <= 0)
+		if (--_pickCount > 0 && _selector.CanSelect)
 		{
-			_currentPicker = _isPlayer1Pick ? player2 : player1;
-			_selector.Input = _isPlayer1Pick ? _player2Input : _player1Input;
-			_isPlayer1Pick = !_isPlayer1Pick;
+			return;
+		}
+
+		_currentPicker = _isPlayer1Pick ? player2 : player1;
+		_selector.Input = _isPlayer1Pick ? _player2Input : _player1Input;
+		_isPlayer1Pick = !_isPlayer1Pick;
 			
-			if (_pickCountIndex < _pickCountList.Count - 1)
-			{
-				_pickCount = _pickCountList[++_pickCountIndex];
-			}
-			else
-			{
-				// pick end
-				_ui.HideSkillSelector();
-				_selector.SkillSelected -= PickSkill;
-				_selector = null;
-				ChangeState(GameState.PreRound);
-			}
+		if (_pickCountIndex < _pickCountList.Count - 1 && _selector.CanSelect)
+		{
+			_pickCount = _pickCountList[++_pickCountIndex];
+		}
+		else
+		{
+			// pick end
+			_ui.HideSkillSelector();
+			_selector.SkillSelected -= PickSkill;
+			_selector = null;
+			ChangeState(GameState.PreRound);
 		}
 	}
 
@@ -236,6 +252,7 @@ public class GameManager : MonoBehaviour
 		// change something
 
 		PrepareBattle();
+		Time.timeScale = 1f;
     }
 
     private void OnPostRound()
@@ -287,5 +304,14 @@ public class GameManager : MonoBehaviour
 			Player1HP -= roundDamage[CurrentRound]; // + 남은 체력 비례 데미지;
 		}
 	}
-    #endregion
+
+	private void OnValidate()
+	{
+		if (spawnPoints?.Any() is not true)
+		{
+			Debug.LogWarning($"{nameof(spawnPoints)} is not assigned.");
+		}
+	}
+
+	#endregion
 }
