@@ -19,7 +19,6 @@ public class TeleportBack : SkillBase, IActiveSkill
 
 		Cooldown		  = _data.Cooldown;
 		BeforeDelay       = _data.BeforeDelay;
-		Duration          = _data.Duration;
 		AfterDelay        = _data.AfterDelay;
 
 	}
