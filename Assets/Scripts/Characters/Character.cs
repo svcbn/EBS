@@ -31,12 +31,12 @@ public class Character : MonoBehaviour
 	{
 		//temp
 		_skills.Add(gameObject.AddComponent<Slash>());
+		_skills.Add(gameObject.AddComponent<TripleStrike>());
 		foreach (var skill in _skills)
 		{
 			skill.Init();
 			skill.Owner = this;
 		}
-		//_skills.Add(gameObject.AddComponent<TripleStrike>());
 		
 		_moveBehavior = GetComponent<BehaviorTree>();
 	}
@@ -149,6 +149,7 @@ public class Character : MonoBehaviour
 		_moveBehavior.SetVariableValue("Direction", direction);
 		_moveBehavior.SetVariableValue("Distance", distance);
 		_moveBehavior.SetVariableValue("HasCooldownSkill", _hasCooldowmSkill);
+		_moveBehavior.SetVariableValue("Target", _target);
 	}
 
 	public List<IActiveSkill> GetHighPrioritySkill()
