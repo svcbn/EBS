@@ -7,9 +7,18 @@ public class SkillManager
 {
 	private SkillData _skillData;
 
-	private Dictionary<Character, List<ISkill>> _skills = new();
+	private Dictionary<Character, IReadOnlyList<ISkill>> _skills = new();
 
 	private Dictionary<uint, Type> _skillCache = new();
+
+	public void SetCharacters(params Character[] characters)
+	{
+		_skills.Clear();
+		foreach (var character in characters)
+		{
+			_skills.Add(character, character.Skills);
+		}
+	}
 
 	public void Init()
 	{
