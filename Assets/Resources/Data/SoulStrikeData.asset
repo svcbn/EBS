@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78fed774d1198ae44900d0ab34cd9b0c, type: 3}
+  m_Name: SoulStrikeData
+  m_EditorClassIdentifier: 
+  _id: 9
+  _type: 1
+  _cooldown: 25
+  _priority: 1
+  _isRestrictMoving: 1
+  _beforeDelay: 0
+  _afterDelay: 0.5
+  _requireMP: 5
+  _effect: {fileID: 0}
+  _checkBoxCenter: {x: 0, y: 0}
+  _checkBoxSize: {x: 3, y: 3}
+  _hitBoxCenter: {x: 0, y: 0}
+  _hitBoxSize: {x: 5, y: 5}
+  _damage: 5
+  _amount: 40
