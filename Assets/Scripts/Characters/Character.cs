@@ -15,9 +15,11 @@ public class Character : MonoBehaviour
 	[SerializeField]
 	private GameObject _target;
 	
+	public GameObject Target => _target;
 
 	private BehaviorTree _moveBehavior;
 	private Rigidbody2D _rigidbody2;
+	private CharacterStatus _status;
 
 	private readonly ObservableCollection<ISkill> _skills = new();
 	
@@ -35,6 +37,7 @@ public class Character : MonoBehaviour
 	{		
 		_moveBehavior = GetComponent<BehaviorTree>();
 		_rigidbody2 = GetComponent<Rigidbody2D>();
+		_status = GetComponent<CharacterStatus>();
 	}
 
 	private void Start()
@@ -118,31 +121,41 @@ public class Character : MonoBehaviour
 		var direction = _target.transform.position - transform.position;
 		var distance = direction.magnitude;
 
-		if (CanUseSkills != null && CanUseSkills.Count > 0)
+		_moveBehavior.SetVariableValue("Direction", direction);
+		_moveBehavior.SetVariableValue("Distance", distance);
+		_moveBehavior.SetVariableValue("HasCooldownSkill", _hasCooldowmSkill);
+		_moveBehavior.SetVariableValue("Target", _target);
+
+		// CanUseSkill Control
+		if (CanUseSkills != null && CanUseSkills.Count > 0
+			&& _status.CurrentStatus[StatusType.Faint] == false)
+		{ 
 			_moveBehavior.SetVariableValue("CanUseSkill", true);
+		}
 		else
 			_moveBehavior.SetVariableValue("CanUseSkill", false);
 
+		// IsAction and CanMove Control
 		if (CurrentSkill != null)
 		{
 			_moveBehavior.SetVariableValue("IsActing", true);
 
 
-			if (CurrentSkill.IsRestrictMoving == true)
+			if (CurrentSkill.IsRestrictMoving == true || _status.CurrentStatus[StatusType.Faint] == true)
 				_moveBehavior.SetVariableValue("CanMove", false);
 			else
 				_moveBehavior.SetVariableValue("CanMove", true);
 		}
 		else
 		{ 
-			_moveBehavior.SetVariableValue("IsActing", false);
-			_moveBehavior.SetVariableValue("CanMove", true);
-		}
+			_moveBehavior.SetVariableValue("IsActing", true);
 
-		_moveBehavior.SetVariableValue("Direction", direction);
-		_moveBehavior.SetVariableValue("Distance", distance);
-		_moveBehavior.SetVariableValue("HasCooldownSkill", _hasCooldowmSkill);
-		_moveBehavior.SetVariableValue("Target", _target);
+
+			if (_status.CurrentStatus[StatusType.Faint] == true)
+				_moveBehavior.SetVariableValue("CanMove", false);
+			else
+				_moveBehavior.SetVariableValue("CanMove", true);
+		}
 	}
 
 	public List<IActiveSkill> GetHighPrioritySkill()

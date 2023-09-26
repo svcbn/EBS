@@ -12,13 +12,13 @@ public class Move : Action
 	private SharedGameObject _target;
 	//private SharedVector3 _directionToTarget;
 	
-	private CharactorMovement _movement;
+	private CharacterMovement _movement;
 
 	public override void OnAwake()
 	{
 		base.OnAwake();
 
-		_movement =  GetComponent<CharactorMovement>();
+		_movement =  GetComponent<CharacterMovement>();
 	}
 
 	public override void OnStart()
