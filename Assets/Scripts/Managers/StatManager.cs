@@ -17,7 +17,13 @@ public class StatManager
 
 	public void Init()
 	{
+		for (int i = 0; i < 2; i++)
+		{
+			_maxHpModifiers[i] = new List<int>();
+			_maxMpModifiers[i] = new List<int>();
+		}
 		LoadData();
+		HardResetStats();
 	}
 
 	public void SoftResetStats()
@@ -43,6 +49,7 @@ public class StatManager
 			_baseMaxMps[i] = _data.startingMaxMp;
 		}
 
+		CalculateFinalHps();
 		SoftResetStats();
 	}
 
@@ -82,6 +89,20 @@ public class StatManager
 	private void LoadData()
 	{
 		_data = Managers.Resource.Load<StatData>("Data/StatData");
+	}
+
+	private void CalculateFinalHps()
+	{
+		for (int i = 0; i < 2; i++)
+		{
+			int totalLowModifier = 0;
+			for(int j = 0; j < _maxHpModifiers[i].Count; j++)
+			{
+				totalLowModifier += _maxHpModifiers[i][j];
+			}
+			_finalMaxHps[i] = _baseMaxHps[i] + totalLowModifier;
+			Debug.Log(_finalMaxHps[i]);
+		}
 	}
 
 
