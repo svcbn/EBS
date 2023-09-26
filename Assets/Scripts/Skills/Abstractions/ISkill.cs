@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public interface ISkill
 {
 	/// <summary>
@@ -35,4 +37,5 @@ public interface ISkill
 	/// 스킬을 실행
 	/// </summary>
 	void Execute();
+
 }
