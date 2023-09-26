@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = nameof(TeleportBackData), menuName = "ScriptableObjects/ActiveSkills/" + nameof(TeleportBackData))]
-public class TeleportBackData : ActiveSkillData
+[CreateAssetMenu(fileName = nameof(TeleportEvacuateData), menuName = "ScriptableObjects/ActiveSkills/" + nameof(TeleportEvacuateData))]
+public class TeleportEvacuateData : ActiveSkillData
 {
 
     public ParticleSystem beforeEffect; // Prefab/Particle/Teleport_blue 1

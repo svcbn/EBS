@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class TeleportEvacuate : SkillBase, IActiveSkill
 {
-	private TeleportBackData _data;
+	private TeleportEvacuateData _data;
 
 	public override void Init()
 	{
 		base.Init();
 
-		_data = Managers.Resource.Load<TeleportBackData>("Data/TeleportBackData");
-		if (_data == null){ Debug.LogWarning($"Fail load Data/TeleportBackData"); return; }
+		_data = Managers.Resource.Load<TeleportEvacuateData>("Data/TeleportEvacuateData");
+		if (_data == null){ Debug.LogWarning($"Fail load Data/TeleportEvacuateData"); return; }
 
 		Id                = _data.Id;
 		Type              = _data.Type;
