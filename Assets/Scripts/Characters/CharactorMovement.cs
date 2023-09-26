@@ -9,6 +9,7 @@ public class CharactorMovement : MonoBehaviour
 {
 	[SerializeField]
 	public CharactorMovementData ChractorMovementData;
+	public float CurrentSpeed { get; set; }
 
 	public Vector2 LookDirction;
 
@@ -23,9 +24,14 @@ public class CharactorMovement : MonoBehaviour
 
 	Vector3 _velocity;
 
+	private void Start()
+	{
+		CurrentSpeed = ChractorMovementData.MaxSpeed;
+	}
+
 	private void FixedUpdate()
 	{
-		Vector3 desiredVelocity = new Vector3(PlayerInput.x, 0, 0) * ChractorMovementData.MaxSpeed;
+		Vector3 desiredVelocity = new Vector3(PlayerInput.x, 0, 0) * CurrentSpeed;
 		float maxSpeedChange = ChractorMovementData.MaxAcceleration * Time.deltaTime;
 
 		_velocity.x = Mathf.MoveTowards(_velocity.x, desiredVelocity.x, maxSpeedChange);

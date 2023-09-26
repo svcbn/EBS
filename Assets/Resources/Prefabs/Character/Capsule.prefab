@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 2600167445854114987}
   - component: {fileID: 7938086108849869976}
   - component: {fileID: 2678114488670651944}
+  - component: {fileID: 239680156102441635}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -235,6 +236,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocity: {x: 0, y: 0, z: 0}
+--- !u!114 &239680156102441635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2600167445854114994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee3995857ae707b42b852b30bc8a3d12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7229418541085744145
 GameObject:
   m_ObjectHideFlags: 0
