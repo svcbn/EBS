@@ -72,19 +72,24 @@ public class GameManager : MonoBehaviour
 	private GameUIManager _ui = new();
 	private Character _currentPicker;
 	[SerializeField]
-	private List<int> _pickCountList;
+	private List<int> _firstPickCountList;
+	
+	[SerializeField]
+	private List<int> _otherPickCountList;
+	
 	private int _pickCount;
 	private int _pickCountIndex;
 
 	private SkillManager _skill = new();
+	[SerializeField]
 	private int _skillPickCount = 9;
 
 	[SerializeField] private int totalRounds;
 	private Character player1;
 	private Character player2;
 	[SerializeField] private Transform[] spawnPoints = new Transform[2];
-	private int _player1HP;
-	private int _player2HP;
+	private int _player1HP = 10;
+	private int _player2HP = 10;
 	private int[] roundDamage = {0, 0, 4, 8, 12, 20, 30, 30, 30, 30};
 	private bool _isPlayer1Defeat = false;
 	private bool _isPlayer1Pick = false;
@@ -193,7 +198,8 @@ public class GameManager : MonoBehaviour
 		_isPlayer1Pick = CurrentRound == 1 || winner == player1;
 
 		_pickCountIndex = 0;
-		_pickCount = _pickCountList[_pickCountIndex];
+		var list = CurrentRound == 1 ? _firstPickCountList : _otherPickCountList;
+		_pickCount = list[_pickCountIndex];
 
 		var skillPool = _skill.GeneratePool(_skillPickCount);
 		_selector = new(skillPool)
@@ -231,13 +237,14 @@ public class GameManager : MonoBehaviour
 			return;
 		}
 
+		var list = CurrentRound == 1 ? _firstPickCountList : _otherPickCountList;
 		_currentPicker = _isPlayer1Pick ? player2 : player1;
 		_selector.Input = _isPlayer1Pick ? _player2Input : _player1Input;
 		_isPlayer1Pick = !_isPlayer1Pick;
 			
-		if (_pickCountIndex < _pickCountList.Count - 1 && _selector.CanSelect)
+		if (_pickCountIndex < list.Count - 1 && _selector.CanSelect)
 		{
-			_pickCount = _pickCountList[++_pickCountIndex];
+			_pickCount = list[++_pickCountIndex];
 		}
 		else
 		{
@@ -275,11 +282,16 @@ public class GameManager : MonoBehaviour
 
 		CurrentRound++;
 
-		ChangeState(GameState.PickSkill);
+		if (State != GameState.GameOver)
+		{
+			ChangeState(GameState.PickSkill);
+		}
     }
     
     private void OnGameOver()
     {
+	    Debug.Log(CurrentRound);
+	    _ui.ShowTitle(StartGame);
         // winner ui??
 		if (_isPlayer1Defeat)
 		{
