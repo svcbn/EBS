@@ -19,6 +19,9 @@ public class SkillSelectorInput
 	[SerializeField]
 	private KeyCode _select;
 
+	[SerializeField]
+	private string _owner;
+
 	public KeyCode Up => _up;
 
 	public KeyCode Down => _down;
@@ -28,4 +31,6 @@ public class SkillSelectorInput
 	public KeyCode Right => _right;
 
 	public KeyCode Select => _select;
+	
+	public string Owner => _owner;
 }

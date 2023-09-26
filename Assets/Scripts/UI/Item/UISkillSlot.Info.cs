@@ -35,7 +35,7 @@ public partial class UISkillSlot
 
 		if (_border != null)
 		{
-			_border.color = s_SelectedColor;
+			_border.color = _selectedColor;
 		}
 		_scaleHandler = Utility.Lerp(Vector3.one, Vector3.one * s_SelectedScale, 0.1f, vector =>
 		{

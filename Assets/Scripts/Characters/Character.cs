@@ -60,15 +60,6 @@ public class Character : MonoBehaviour
 	private void Start()
 	{
 		StartCoroutine(CheckSkills());
-
-
-
-		// test
-		GameManager.Skill.GetSkill(1, this);
-		foreach (var skill in _skills)
-		{ 
-			skill.Owner = this;	
-		}
 	}
 
 	public void AddSkill(ISkill skill)
@@ -80,23 +71,6 @@ public class Character : MonoBehaviour
 	private void Update()
 	{
 		SetMoveBTVariables();
-
-		if (Input.GetKeyDown(KeyCode.Space)) // for test
-		{
-
-			if( name != "Capsule A") { return; } 
-
-			CurrentSkill.Init();
-			CurrentSkill.Owner = this;
-			CurrentSkill.Execute();
-		}
-
-		if (Input.GetKeyDown(KeyCode.UpArrow))
-		{
-			//AddForce
-		}
-
-
 	}
 
 	//private void OnDrawGizmos()
