@@ -27,8 +27,6 @@ public class TeleportBack : SkillBase, IActiveSkill
 	{
 		if (_data == null){ Debug.LogWarning($"Fail load Data/TeleportBackData"); return;  }
 		
-		if( !CheckCanUse() ){ return; }
-		
 		base.Execute();
 
 		Owner.StartCoroutine(ExecuteCo());
