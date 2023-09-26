@@ -214,7 +214,7 @@ public class KnockbackEffect
 
 	private float _originDuration;
 
-	private const float Angle = 5f;
+	private const float Angle = 30f;
 
 
 	public KnockbackEffect(float duration, float knockbackPower, Rigidbody2D rigidbody2D, Vector2 myPos, Vector2 enemyPos)

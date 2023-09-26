@@ -15,12 +15,15 @@ public class Move : Action
 	private SharedBool _canMove;
 
 	private CharacterMovement _movement;
+	private CharactorJump _jump;
+
 
 	public override void OnAwake()
 	{
 		base.OnAwake();
 
 		_movement =  GetComponent<CharacterMovement>();
+		_jump = GetComponent<CharactorJump>();
 	}
 
 	public override void OnStart()
@@ -36,10 +39,27 @@ public class Move : Action
 			var directionToTarget = _target.Value.transform.position - transform.position;
 
 			_movement.PlayerInput = directionToTarget.normalized;
+
+			if (GetProbabilitySuccess(1f))
+				_jump.OnJump(_movement.PlayerInput);
+
 			return TaskStatus.Running;
 		}
 
 		_movement.PlayerInput = Vector2.zero;
 		return TaskStatus.Success;
+	}
+
+	public override void OnEnd()
+	{
+		_movement.PlayerInput = (_target.Value.transform.position - transform.position).normalized;
+	}
+
+	private bool GetProbabilitySuccess(float probability)
+	{
+		if (Random.Range(0, 100f) < probability)
+			return true;
+		else
+			return false;
 	}
 }

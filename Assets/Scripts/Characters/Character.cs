@@ -12,6 +12,8 @@ public class Character : MonoBehaviour
 	public IActiveSkill CurrentSkill;
 	public int playerIndex;
 	public bool CanMove { get; private set; } = true;
+	public CharacterStatus Status { get; private set; }
+
 
 	[SerializeField]
 	private GameObject _target;
@@ -20,7 +22,6 @@ public class Character : MonoBehaviour
 
 	private BehaviorTree _moveBehavior;
 	private Rigidbody2D _rigidbody2;
-	private CharacterStatus _status;
 
 	private readonly ObservableCollection<ISkill> _skills = new();
 	
@@ -44,7 +45,7 @@ public class Character : MonoBehaviour
 		
 		_moveBehavior = GetComponent<BehaviorTree>();
 		_rigidbody2 = GetComponent<Rigidbody2D>();
-		_status = GetComponent<CharacterStatus>();
+		Status = GetComponent<CharacterStatus>();
 	}
 
 	private void Start()
@@ -112,8 +113,8 @@ public class Character : MonoBehaviour
 
 		// CanUseSkill Control
 		if (CanUseSkills != null && CanUseSkills.Count > 0
-			&& _status.CurrentStatus[StatusType.Faint] == false
-			&& _status.CurrentStatus[StatusType.Knockback] == false)
+			&& Status.CurrentStatus[StatusType.Faint] == false
+			&& Status.CurrentStatus[StatusType.Knockback] == false)
 		{
 			_moveBehavior.SetVariableValue("CanUseSkill", true);
 		}
@@ -136,8 +137,8 @@ public class Character : MonoBehaviour
 		if (CurrentSkill != null)
 		{
 			if (CurrentSkill.IsRestrictMoving == true
-				|| _status.CurrentStatus[StatusType.Faint] == true
-				|| _status.CurrentStatus[StatusType.Knockback] == true)
+				|| Status.CurrentStatus[StatusType.Faint] == true
+				|| Status.CurrentStatus[StatusType.Knockback] == true)
 			{
 				CanMove = false;
 				_moveBehavior.SetVariableValue("CanMove", false);
@@ -150,8 +151,8 @@ public class Character : MonoBehaviour
 		}
 		else
 		{
-			if (_status.CurrentStatus[StatusType.Faint] == true
-				|| _status.CurrentStatus[StatusType.Knockback] == true)
+			if (Status.CurrentStatus[StatusType.Faint] == true
+				|| Status.CurrentStatus[StatusType.Knockback] == true)
 			{
 				CanMove = false;
 				_moveBehavior.SetVariableValue("CanMove", false);

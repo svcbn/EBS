@@ -56,7 +56,7 @@ public class HeavyStrike : SkillBase, IActiveSkill
 			// Todo : statmanager 쪽에 데미지 연산 요청
 
 			// Todo : Charactorstatus 쪽에 스턴 요청
-
+			character.Status.SetKnockbackEffect(2, 50, transform.position);
 		}
 
 		// 후딜
