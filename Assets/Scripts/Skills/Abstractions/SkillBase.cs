@@ -37,7 +37,7 @@ public abstract class SkillBase : MonoBehaviour, ISkill
 
 	public float AfterDelay { get; protected set; }
 
-	public float RequireMP { get; protected set; }
+	public int RequireMP { get; protected set; }
 
 	public bool IsCoolReady { get; protected set; } = true;
 
@@ -73,6 +73,13 @@ public abstract class SkillBase : MonoBehaviour, ISkill
 		var boxes = Physics2D.OverlapBoxAll(centerInWorld, size, 0);
 		bool flag = boxes.Length != 0;
 		return boxes.Any(box => box.TryGetComponent<Character>(out var character) && character != Owner);
+	}
+
+	protected virtual bool CheckEnoughMP(int _mp)
+	{
+		// float mp = owner의 mp 얻어오기
+		// _mp와 owner의 현재 mp 비교
+		return true;
 	}
 
 	private static IEnumerator CoCalculateTime(float time, Action onFinish)

@@ -48,5 +48,5 @@ public interface IActiveSkill : ISkill
 	/// <summary>
 	/// 스킬 사용에 필요한 mp
 	/// </summary>
-	float RequireMP { get; }
+	int RequireMP { get; }
 }
