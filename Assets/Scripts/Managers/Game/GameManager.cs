@@ -146,10 +146,12 @@ public class GameManager : MonoBehaviour
 	private void PreparePlayer()
 	{
 		player1 = Managers.Resource.Instantiate("Character/Player 1").GetOrAddComponent<Character>();
-		player2 = Managers.Resource.Instantiate("Character/Player 1").GetOrAddComponent<Character>();
+		player2 = Managers.Resource.Instantiate("Character/Player 2").GetOrAddComponent<Character>();
 
-		Managers.Resource.Release(player1.gameObject);
-		Managers.Resource.Release(player2.gameObject);
+		_ui.ShowSkillList(player1, player2);
+
+		//Managers.Resource.Release(player1.gameObject);
+		//Managers.Resource.Release(player2.gameObject);
 	}
 
 	private void OnTitle()
@@ -160,6 +162,12 @@ public class GameManager : MonoBehaviour
 
     private void OnPickSkill()
     {
+		// if round1, player1 is first
+		Character winner = GetWinner();
+		// else, last round's winner is first
+		_currentPicker = CurrentRound == 1 ? player1 : winner;
+		_isPlayer1Pick = _currentPicker == player1;
+
 		_pickCountIndex = 0;
 		_pickCount = _pickCountList[_pickCountIndex];
 
@@ -170,11 +178,6 @@ public class GameManager : MonoBehaviour
 		};
 		_selector.SkillSelected += PickSkill;
 		_ui.ShowSkillSelector(_selector);
-
-		// if round1, player1 is first
-		Character winner = GetWinner();
-		// else, last round's winner is first
-		_currentPicker = CurrentRound == 1 ? player1 : winner;
 	}
 
 	private Character GetWinner()
@@ -191,6 +194,7 @@ public class GameManager : MonoBehaviour
 		}
 		
 		ISkill skill = _currentPicker.gameObject.AddComponent(skillType) as ISkill;
+		skill.Init();
 		_currentPicker.AddSkill(skill);
 		if (--_pickCount <= 0)
 		{
@@ -260,8 +264,6 @@ public class GameManager : MonoBehaviour
 
 	private void PrepareBattle()
 	{
-		player1 = Managers.Resource.Instantiate("Character/Player 1").GetOrAddComponent<Character>();
-		player2 = Managers.Resource.Instantiate("Character/Player 1").GetOrAddComponent<Character>();
 		player1.transform.position = spawnPoints[0].position;
 		player2.transform.position = spawnPoints[1].position;
 

@@ -16,6 +16,11 @@ public interface ISkill
 	float Cooldown { get; }
 
 	/// <summary>
+	/// 스킬의 현재 쿨타임
+	/// </summary>
+	float CurrentCooldown { get; }
+
+	/// <summary>
 	/// 스킬 초기화 시 호출
 	/// </summary>
 	void Init();
