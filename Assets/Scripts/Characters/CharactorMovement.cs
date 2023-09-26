@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class CharactorMovement : MonoBehaviour
 {
@@ -23,11 +25,10 @@ public class CharactorMovement : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		Vector3 desiredVelocity = new Vector3(PlayerInput.x, 0f, PlayerInput.y) * ChractorMovementData.MaxSpeed;
+		Vector3 desiredVelocity = new Vector3(PlayerInput.x, 0, 0) * ChractorMovementData.MaxSpeed;
 		float maxSpeedChange = ChractorMovementData.MaxAcceleration * Time.deltaTime;
 
 		_velocity.x = Mathf.MoveTowards(_velocity.x, desiredVelocity.x, maxSpeedChange);
-		_velocity.z = Mathf.MoveTowards(_velocity.z, desiredVelocity.z, maxSpeedChange);
 
 		Vector3 displacement = _velocity * Time.deltaTime;
 		transform.localPosition += displacement;
