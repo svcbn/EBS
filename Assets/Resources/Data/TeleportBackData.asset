@@ -19,12 +19,13 @@ MonoBehaviour:
   _id: 1
   _type: 0
   _priority: 1
-  _isRestrictMoving: 0
+  _isRestrictMoving: 1
   _cooldown: 3
   _beforeDelay: 0.5
   _duration: 0.1
   _afterDelay: 0.1
   _requireMP: 0
+  _damage: 0
   _effect: {fileID: 0}
   teleportEffect: {fileID: 0}
   postEffect: {fileID: 0}

@@ -19,8 +19,8 @@ public class GameManager : MonoBehaviour
     }
     public GameState State { get; private set; }
     public int CurrentRound { get; private set; } = 1;
-	public Player Player1 { get; private set; }
-	public Player Player2 { get; private set; }
+	//public Player Player1 { get; private set; }
+	//public Player Player2 { get; private set; }
 	public bool IsPlayer1Win { get; set; } = true;
 
 	public int Player1HP
