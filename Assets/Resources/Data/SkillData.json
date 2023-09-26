@@ -170,8 +170,8 @@
     },
     {
       "Id": 29,
-      "Name": "마나 샤워",
-      "Description": "짧게 정신을 집중해 다량의 마나를 회복한다.",
+      "Name": "치유의 손길",
+      "Description": "정신을 집중해 체력을 회복한다.",
       "SpriteName": "ManaShower"
     },
     {

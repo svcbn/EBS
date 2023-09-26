@@ -10,7 +10,7 @@ public class SoulStrike : SkillBase, IActiveSkill
 	{
 		base.Init();
 
-		_data = Managers.Resource.Load<SoulStrikeData>("Data/SoulStrike");
+		_data = Managers.Resource.Load<SoulStrikeData>($"Data/{nameof(SoulStrikeData)}");
 		if (_data == null) { Debug.LogWarning($"Fail load Data/SoulStrike"); return; }
 
 		Id = _data.Id;
@@ -47,7 +47,7 @@ public class SoulStrike : SkillBase, IActiveSkill
 		for (int i = 0; i < 3; i++)
 		{
 			// 실제 피해
-
+			yield return new WaitForSeconds(0);
 			Vector2 centerInWorld = (Vector2)Owner.transform.position + new Vector2(x * _data.HitBoxCenter.x, _data.HitBoxCenter.y);
 			var boxes = Physics2D.OverlapBoxAll(centerInWorld, _data.HitBoxSize, 0);
 			foreach (var box in boxes)
@@ -58,8 +58,10 @@ public class SoulStrike : SkillBase, IActiveSkill
 				}
 
 				// Todo : statmanager 쪽에 연산 요청
+				Debug.Log("damaged");
 
 				// Todo : playerStatus 쪽에 스턴 요청
+				Owner.Target.GetComponent<CharacterStatus>().SetFaintEffect(3);
 
 				// Todo : statmanager 쪽에 마나 뺏기 요청
 			}

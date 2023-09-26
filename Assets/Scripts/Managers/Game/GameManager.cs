@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
         PickSkill,
         PreRound,
         Battle,
-        PostRound,
+        RoundOver,
         GameOver
     }
     public GameState State { get; private set; }
@@ -60,6 +60,8 @@ public class GameManager : MonoBehaviour
 
 
 	#region private Variables
+	private Character _roundWinner;
+	
 	[SerializeField]
 	private SkillSelectorInput _player1Input;
 	
@@ -107,8 +109,8 @@ public class GameManager : MonoBehaviour
             case GameState.Battle:
                 OnBattle();
                 break;
-            case GameState.PostRound:
-                OnPostRound();
+            case GameState.RoundOver:
+                OnRoundOver();
                 break;
             case GameState.GameOver:
                 OnGameOver();
@@ -116,6 +118,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+	public void SetRoundWinner(Character winner)
+	{
+		_roundWinner = winner;
+		IsPlayer1Win = _roundWinner == player1;
+	}
     #endregion
 
 
@@ -135,9 +142,8 @@ public class GameManager : MonoBehaviour
 
 		_skill.Init();
 
-        ChangeState(GameState.Title);
-		
 		PreparePlayer();
+        ChangeState(GameState.Title);
     }
 
 	private void Update()
@@ -146,11 +152,14 @@ public class GameManager : MonoBehaviour
 		{
 			_ui.ShowMenu();
 		}
+		
+		//_ui.UpdateTimer();
 	}
 
 	public void StartGame()
 	{
 		CurrentRound = 1;
+		_skill.SetCharacters(player1, player2);
 		ChangeState(GameState.PickSkill);
 	}
 
@@ -158,6 +167,9 @@ public class GameManager : MonoBehaviour
 	{
 		player1 = GameObject.Find("Player 1").GetOrAddComponent<Character>();
 		player2 = GameObject.Find("Player 2").GetOrAddComponent<Character>();
+		
+		_ui.SetSkillPresenter(player1);
+		_ui.SetSkillPresenter(player2);
 
 		_ui.ShowSkillList(player1, player2);
 	}
@@ -165,16 +177,20 @@ public class GameManager : MonoBehaviour
 	private void OnTitle()
     {
         // something must do at title
+        InitPlayerStartingPoint();
 		_ui.ShowTitle(StartGame);
     }
 
     private void OnPickSkill()
     {
-		Character winner = _isPlayer1Defeat ? player2 : player1;
+	    InitPlayerStartingPoint();
+	    
+	    // TODO: 라운드별 승자 처리
+	    Character winner = _roundWinner;
 		// if round1, player1 is first
 		// else, last round's winner is first
 		_currentPicker = CurrentRound == 1 ? player1 : winner;
-		_isPlayer1Pick = winner == player1;
+		_isPlayer1Pick = CurrentRound == 1 || winner == player1;
 
 		_pickCountIndex = 0;
 		_pickCount = _pickCountList[_pickCountIndex];
@@ -247,12 +263,12 @@ public class GameManager : MonoBehaviour
     private void OnBattle()
     {
 		// change something
-
-		PrepareBattle();
+		StartBattle();
     }
 
-    private void OnPostRound()
+    private void OnRoundOver()
     {
+	    InitPlayerStartingPoint();
 		CalculateRoundDamage();
 
 		// reset something
@@ -278,15 +294,30 @@ public class GameManager : MonoBehaviour
         // go to title, or quit <= maybe uimanager should do
     }
 
-	private void PrepareBattle()
+	private void InitPlayerStartingPoint()
 	{
+		player1.gameObject.SetActive(true);
+		player2.gameObject.SetActive(true);
+		
+		player1.BehaviorTree.enabled = false;
+		player2.BehaviorTree.enabled = false;
+
+		player1.GetComponent<CharacterMovement>().PlayerInput = Vector2.zero;
+		player2.GetComponent<CharacterMovement>().PlayerInput = Vector2.zero;
+		
 		player1.transform.position = spawnPoints[0].position;
 		player2.transform.position = spawnPoints[1].position;
 
 		// maybe ui guide
 
 		// turn on ai
-
+		Managers.Stat.SoftResetStats();
+	}
+	
+	private void StartBattle()
+	{
+		player1.BehaviorTree.enabled = true;
+		player2.BehaviorTree.enabled = true;
 	}
 
 	private void CalculateRoundDamage()
@@ -308,6 +339,5 @@ public class GameManager : MonoBehaviour
 			Debug.LogWarning($"{nameof(spawnPoints)} is not assigned.");
 		}
 	}
-
 	#endregion
 }

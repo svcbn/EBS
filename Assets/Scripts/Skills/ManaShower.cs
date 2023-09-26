@@ -46,8 +46,7 @@ public class ManaShower : SkillBase, IActiveSkill
 		}
 
 		// Todo : statmanager 쪽에 마나 회복 요청
-
-
+		Managers.Stat.GiveHeal(Owner.playerIndex, _data.Amount);
 		// 후딜
 		yield return new WaitForSeconds(AfterDelay);
 

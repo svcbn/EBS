@@ -41,8 +41,8 @@ public class Slash : SkillBase, IActiveSkill
 			effect.transform.position = Owner.transform.position;
 		}
 
+		yield return new WaitForSeconds(0);
 		// 실제 피해
-
 		Vector2 centerInWorld = (Vector2)Owner.transform.position + new Vector2(x * _data.HitBoxCenter.x, _data.HitBoxCenter.y);
 		var boxes = Physics2D.OverlapBoxAll(centerInWorld, _data.HitBoxSize, 0);
 		foreach (var box in boxes)

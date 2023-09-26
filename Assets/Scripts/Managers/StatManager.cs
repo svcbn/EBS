@@ -85,6 +85,8 @@ public class StatManager
 			//죽음 체크
 			if (_currentHps[playerIndex] <= 0)
 			{
+				GameManager.Instance.SetRoundWinner(characters[(playerIndex + 1) % 2]);
+				GameManager.Instance.ChangeState(GameManager.GameState.RoundOver);
 				Debug.Log($"Player {playerIndex} died.");
 			}
 		}

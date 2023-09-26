@@ -6,6 +6,8 @@ public class GameUIManager
 
 	private UIMenu _menu;
 
+	private UITimer _timer;
+
 	public void ShowSkillSelector(SkillSelector selector)
 	{
 		if (_skillSelector != null)
@@ -47,5 +49,21 @@ public class GameUIManager
 		}
 
 		_menu = Managers.UI.ShowPopupUI<UIMenu>();
+	}
+	
+	public void SetSkillPresenter(Character character)
+	{
+		var presenter = Managers.UI.ShowSceneUI<UISkillPresenter>();
+		presenter.SetSkill(character);
+	}
+
+	public void UpdateTimer(float seconds)
+	{
+		if (_timer == null)
+		{
+			_timer = Managers.UI.ShowSceneUI<UITimer>();			
+		}
+		
+		_timer.SetTimerText($"{seconds:00.00}");
 	}
 }
