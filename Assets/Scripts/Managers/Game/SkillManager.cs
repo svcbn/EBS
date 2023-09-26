@@ -54,7 +54,7 @@ public class SkillManager
 		return _skillData.Skills.Find(skill => skill.Id == id);
 	}
 
-	public bool TryFindSkillTypeById(uint id, out Type type)
+	public bool TryFindSkillTypeById(uint id, out Type type) 
 	{
 		return _skillCache.TryGetValue(id, out type);
 	}
@@ -70,6 +70,8 @@ public class SkillManager
 		}
 
 		var skill = owner.gameObject.AddComponent(skillType) as ISkill;
+		skill.Owner = owner;
+		skill.Init();
 		owner.AddSkill(skill);
 
 		return skill;

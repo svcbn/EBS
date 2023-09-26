@@ -44,7 +44,10 @@ public class Character : MonoBehaviour
 	{
 		StartCoroutine(CheckSkills());
 
+
+
 		// test
+		GameManager.Skill.GetSkill(1, this);
 		foreach (var skill in _skills)
 		{ 
 			skill.Owner = this;	
@@ -148,7 +151,7 @@ public class Character : MonoBehaviour
 		}
 		else
 		{ 
-			_moveBehavior.SetVariableValue("IsActing", true);
+			_moveBehavior.SetVariableValue("IsActing", false);
 
 
 			if (_status.CurrentStatus[StatusType.Faint] == true)
