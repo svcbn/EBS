@@ -34,7 +34,24 @@ public class Character : MonoBehaviour
 	}
 
 	private void Awake()
-	{		
+
+	{
+		//temp
+		_skills.Add(gameObject.AddComponent<Slash>());
+		_skills.Add(gameObject.AddComponent<TripleStrike>());
+		_skills.Add(gameObject.AddComponent<TeleportBack>());
+		_skills.Add(gameObject.AddComponent<Block>());
+		_skills.Add(gameObject.AddComponent<ManaShower>());
+		_skills.Add(gameObject.AddComponent<HeavyStrike>());
+		_skills.Add(gameObject.AddComponent<MagicMissile>());
+
+
+		foreach (var skill in _skills)
+		{
+			skill.Init();
+			skill.Owner = this;
+		}
+		
 		_moveBehavior = GetComponent<BehaviorTree>();
 		_rigidbody2 = GetComponent<Rigidbody2D>();
 		_status = GetComponent<CharacterStatus>();
