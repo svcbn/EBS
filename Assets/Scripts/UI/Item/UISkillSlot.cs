@@ -107,7 +107,6 @@ public class UISkillSlot : UIBase
 		var iconRoot = Get<GameObject>((int)Elements.Icon);
 		if (iconRoot.TryGetComponent<Image>(out var icon))
 		{
-			// TODO : 아이콘 이미지 변경
 			if (_info != null)
 			{
 				icon.sprite = _info.Sprite;

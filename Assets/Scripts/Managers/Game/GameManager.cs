@@ -1,4 +1,5 @@
 using Sirenix.OdinInspector;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -211,7 +212,13 @@ public class GameManager : MonoBehaviour
 
 	private void PickSkill(SkillInfo skillInfo)
 	{
-		ISkill skill = _skill.GetSkillById(skillInfo.Id);
+		if (_skill.TryFindSkillTypeById(skillInfo.Id, out var skillType))
+		{
+			Debug.LogError($"Undefined skill type. ID: {skillInfo.Id}, Name: {skillInfo.Name}");
+			return;
+		}
+		
+		ISkill skill = _currentPicker.gameObject.AddComponent(skillType) as ISkill;
 		_currentPicker.AddSkill(skill);
 		if (--_pickCount <= 0)
 		{
