@@ -30,7 +30,8 @@ public class UISkillSelector : UIPopup
 			if (slot.enabled)
 			{
 				_selector.SelectSkill(_currentIndex);
-				slot.enabled = false;
+				slot.ShowChoiceEffect();
+				slot.Disable();
 			}
 		}
 

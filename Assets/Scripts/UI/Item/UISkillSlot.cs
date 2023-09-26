@@ -7,7 +7,8 @@ public class UISkillSlot : UIBase
 {
 	private enum Elements
 	{
-		Icon
+		Icon,
+		Dim
 	}
 
 	private static readonly Color s_SelectedColor = new(1, 0, 0, 0.5f);
@@ -37,6 +38,7 @@ public class UISkillSlot : UIBase
 		{
 			_border.color = s_UnselectedColor;
 		}
+		Get<GameObject>((int)Elements.Dim).SetActive(false);
 	}
 
 	public override void Init()
@@ -53,6 +55,20 @@ public class UISkillSlot : UIBase
 	{
 		_info = info;
 		SetSkillInfo();
+	}
+
+	public void Disable()
+	{
+		enabled = false;
+		Get<GameObject>((int)Elements.Dim).SetActive(true);
+	}
+
+	public void ShowChoiceEffect()
+	{
+		Vector3 scale = transform.localScale;
+		Vector3 targetScale = Vector3.one * 0.95f;
+		System.Action callback = () => _scaleHandler = Utility.Lerp(targetScale, scale, 0.1f, vector2 => transform.localScale = vector2);
+		_scaleHandler = Utility.Lerp(scale, targetScale, 0.1f, vector => transform.localScale = vector, callback);
 	}
 
 	public void Select()
