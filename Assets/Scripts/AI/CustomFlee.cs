@@ -16,6 +16,9 @@ public class CustomFlee : Action
 	[SerializeField]
 	private LayerMask _layerMask;
 
+	[SerializeField]
+	private SharedBool _canMove;
+
 	private SharedVector3 _selectedTarget;
 
 	private CharacterMovement _movement;
@@ -38,7 +41,8 @@ public class CustomFlee : Action
 
 	public override TaskStatus OnUpdate()
 	{
-		if (Vector2.Distance(_target.Value.transform.position, transform.position) < _fleeDistance.Value)
+		if (Vector2.Distance(_target.Value.transform.position, transform.position) < _fleeDistance.Value
+			&& _canMove.Value == true)
 		{
 			_movement.PlayerInput = (_selectedTarget.Value - transform.position).normalized;
 			_jump.OnJump(_movement.PlayerInput);

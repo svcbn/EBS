@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public enum StatusType
 { 
@@ -41,6 +42,7 @@ public class CharacterStatus : MonoBehaviour
 	private void Update()
 	{
 		ApplySlowEffect();
+		ApplyFaintEffect();
 	}
 
 	#region Slow Effect
@@ -93,7 +95,7 @@ public class CharacterStatus : MonoBehaviour
 
 	private void ApplyFaintEffect()
 	{
-		if (_currentFaintEffect == null)
+		if (_currentFaintEffect == null || _currentFaintEffect.IsEffectActive() == false)
 		{
 			CurrentStatus[StatusType.Faint] = false;
 			return;
@@ -107,7 +109,7 @@ public class CharacterStatus : MonoBehaviour
 			var currentSkill = (SkillBase)_character.CurrentSkill;
 			if (currentSkill != null && currentSkill.IsBeforeDelay == true)
 			{
-				currentSkill.StopCoroutine(currentSkill.UsingSkillCo);
+				currentSkill.CancelInvoke();
 			}
 		}
 	}

@@ -10,7 +10,7 @@ public class UIMenu : UIPopup
 		ButtonPanel,
 	}
 
-	private string[] _menuNames = new string[] { "Restart", "Exit" };
+	private string[] _menuNames = new string[] { "다시하기", "그만하기" };
 
 	public override void Init()
 	{

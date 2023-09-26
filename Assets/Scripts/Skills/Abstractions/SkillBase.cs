@@ -121,6 +121,9 @@ public abstract class SkillBase : MonoBehaviour, ISkill
 		onFinish?.Invoke();
 	}
 
-
+	public void CancelExecute()
+	{
+		CancelInvoke("ExecuteImpl");
+	}
 
 }

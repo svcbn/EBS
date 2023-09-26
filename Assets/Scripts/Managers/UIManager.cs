@@ -22,6 +22,11 @@ public class UIManager
 		}
 	}
 
+	public void Init()
+	{
+		_popupStack.Clear();
+	}
+
 	public void SetCanvas(GameObject gameObject, bool sort = true)
 	{
 		Canvas canvas = gameObject.GetOrAddComponent<Canvas>();
