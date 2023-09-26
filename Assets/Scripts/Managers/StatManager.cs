@@ -18,8 +18,12 @@ public class StatManager
 	private float[] _invincibleTimers = new float[2];
 	private Coroutine _invincibleCR;
 
-	public delegate void OnBlockDamage(int blockerIndex);
-	public OnBlockDamage onBlockDamage;
+	private Character[] characters = new Character[2];
+
+	public delegate void OnCharacterEvent(int actorIndex);
+	public event OnCharacterEvent onBlockDamage;
+	public event OnCharacterEvent onTakeDamage;
+
 
 	public void Init()
 	{
@@ -77,6 +81,7 @@ public class StatManager
 			_currentHps[playerIndex] -= finalDamage;
 			_currentHps[playerIndex] = Mathf.Clamp(_currentHps[playerIndex], 0, _finalMaxHps[playerIndex]);
 			Debug.Log($"Player {playerIndex} took total {finalDamage} damage.");
+			onTakeDamage?.Invoke(playerIndex);
 			//죽음 체크
 			if (_currentHps[playerIndex] <= 0)
 			{

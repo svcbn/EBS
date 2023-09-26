@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: SoulStrikeData
   m_EditorClassIdentifier: 
   _id: 9
-  _type: 1
   _cooldown: 25
+  _effect: {fileID: 2068385400978660933, guid: 1bea30a78bdd01a4daec2934038b56f5, type: 3}
   _priority: 1
+  _type: 1
   _isRestrictMoving: 1
   _beforeDelay: 0
   _afterDelay: 0.5
   _requireMP: 5
-  _effect: {fileID: 0}
   _checkBoxCenter: {x: 0, y: 0}
   _checkBoxSize: {x: 3, y: 3}
   _hitBoxCenter: {x: 0, y: 0}

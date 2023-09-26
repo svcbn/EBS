@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: BloodStrikeData
   m_EditorClassIdentifier: 
   _id: 12
-  _type: 1
   _cooldown: 17
+  _effect: {fileID: 5547178872104827699, guid: 193fa2328d817404a8ee54454c30da6a, type: 3}
   _priority: 1
+  _type: 1
   _isRestrictMoving: 1
   _beforeDelay: 0.5
   _afterDelay: 0.5
   _requireMP: 15
-  _effect: {fileID: 0}
   _checkBoxCenter: {x: 0, y: 0}
   _checkBoxSize: {x: 20, y: 20}
   _hitBoxCenter: {x: 0, y: 0}
