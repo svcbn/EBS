@@ -22,7 +22,8 @@ public class DummyFireballSkill : SkillBase, IActiveSkill
         BeforeDelay       = 0.5f;
         Duration          = 2f;
         AfterDelay        = 0.5f;
-    }
+		RequireMP		  = 0f;
+	}
 
 	public override void Execute()
 	{ 
@@ -44,7 +45,8 @@ public class DummyFireballSkill1 : SkillBase
         BeforeDelay       = 0.5f;
         Duration          = 0.5f;
         AfterDelay        = 0.5f;
-    }
+		RequireMP = 0f;
+	}
 
 	public override void Execute()
 	{ 
@@ -66,7 +68,8 @@ public class DummyFireballSkill2 : SkillBase
         BeforeDelay       = 0.1f;
         Duration          = 0.9f;
         AfterDelay        = 0.2f;
-    }
+		RequireMP		  = 0f;
+	}
 
 	public override void Execute()
 	{ 
@@ -89,7 +92,8 @@ public class DummyHealSkill : SkillBase, IActiveSkill
         BeforeDelay       = 0f;
         Duration          = 1f;
         AfterDelay        = 0f;
-    }
+		RequireMP		  = 0f;
+	}
 }
 
 public class DummyStunSkill : SkillBase, IActiveSkill
@@ -104,7 +108,8 @@ public class DummyStunSkill : SkillBase, IActiveSkill
         BeforeDelay       = 0.2f;
         Duration          = 1.5f;
         AfterDelay        = 0.2f;
-    }
+		RequireMP		  = 0f;
+	}
 }
 
 public class DummyShieldSkill : SkillBase, IActiveSkill
@@ -119,7 +124,8 @@ public class DummyShieldSkill : SkillBase, IActiveSkill
         BeforeDelay       = 0f;
         Duration          = 4f;
         AfterDelay        = 0f;
-    }
+		RequireMP		  = 0f;
+	}
 }
 
 public class DummyDashSkill : SkillBase, IActiveSkill
@@ -134,7 +140,8 @@ public class DummyDashSkill : SkillBase, IActiveSkill
         BeforeDelay       = 0f;
         Duration          = 0.5f;
         AfterDelay        = 0f;
-    }
+		RequireMP		  = 0f;
+	}
 }
 
 public class DummyLightningSkill : SkillBase, IActiveSkill
@@ -149,7 +156,8 @@ public class DummyLightningSkill : SkillBase, IActiveSkill
         BeforeDelay       = 0.1f;
         Duration          = 1.2f;
         AfterDelay        = 0.3f;
-    }
+		RequireMP		  = 0f;
+	}
 }
 
 public class DummyIceSkill : SkillBase, IActiveSkill
@@ -164,7 +172,8 @@ public class DummyIceSkill : SkillBase, IActiveSkill
         BeforeDelay       = 0.4f;
         Duration          = 2.5f;
         AfterDelay        = 0.4f;
-    }
+		RequireMP		  = 0f;
+	}
 }
 
 public class DummyStealthSkill : SkillBase, IActiveSkill
@@ -179,7 +188,8 @@ public class DummyStealthSkill : SkillBase, IActiveSkill
         BeforeDelay       = 0f;
         Duration          = 5f;
         AfterDelay        = 0f;
-    }
+		RequireMP		  = 0f;
+	}
 }
 
 public class DummyBarrierSkill : SkillBase, IActiveSkill
@@ -194,7 +204,8 @@ public class DummyBarrierSkill : SkillBase, IActiveSkill
         BeforeDelay       = 0f;
         Duration          = 3f;
         AfterDelay        = 0f;
-    }
+		RequireMP		  = 0f;
+	}
 }
 
 public class DummySpeedBoostSkill : SkillBase, IActiveSkill
@@ -209,5 +220,6 @@ public class DummySpeedBoostSkill : SkillBase, IActiveSkill
         BeforeDelay       = 0f;
         Duration          = 2f;
         AfterDelay        = 0f;
-    }
+		RequireMP		  = 0f;
+	}
 }

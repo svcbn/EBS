@@ -16,7 +16,7 @@ public class TripleStrike : SkillBase, IActiveSkill
 		Id = _data.Id;
 		Type = _data.Type;
 		Priority = _data.Priority;
-		IsRestricteMoving = _data.IsRestricteMoving;
+		IsRestricteMoving = _data.IsRestrictMoving;
 
 		Cooldown = _data.Cooldown;
 		BeforeDelay = _data.BeforeDelay;
