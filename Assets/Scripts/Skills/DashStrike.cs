@@ -12,6 +12,8 @@ public class DashStrike : SkillBase, IActiveSkill
 
 		_data = Managers.Resource.Load<DashStrikeData>("Data/DashStrikeData");
 
+		if (_data == null) { Debug.LogWarning($"Fail load Data/DashStrikeData"); return; }
+
 		Id = _data.Id;
 		Type = _data.Type;
 		Priority = _data.Priority;
@@ -25,13 +27,10 @@ public class DashStrike : SkillBase, IActiveSkill
 
 	public override void Execute()
 	{
-		if (_data == null) { Debug.LogWarning($"Fail load Data/DashStrikeData"); return; }
-
 		base.Execute();
-		Owner.StartCoroutine(ExecuteCo());
 	}
 
-	IEnumerator ExecuteCo()
+	public override IEnumerator ExecuteImplCo()
 	{
 		// 선딜
 		yield return new WaitForSeconds(BeforeDelay);
@@ -45,6 +44,14 @@ public class DashStrike : SkillBase, IActiveSkill
 			effect = Managers.Resource.Instantiate("Skills/" + _data.Effect.name);
 			effect.transform.localScale = new Vector3(x, Owner.transform.localScale.y, Owner.transform.localScale.z);
 			effect.transform.position = Owner.transform.position;
+		}
+
+		// 이동
+		Vector2 dir = (Owner.Target.transform.position - Owner.transform.position).normalized;
+		transform.position += new Vector3(dir.x, dir.y, 0) * 4f;
+		if(Owner.transform.position.y < 1f)
+		{
+			Owner.transform.position = new Vector3(Owner.transform.position.x, 1f, Owner.transform.position.z);
 		}
 
 		// 실제 피해
