@@ -1,5 +1,6 @@
 using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CustomFlee : Action
@@ -41,17 +42,27 @@ public class CustomFlee : Action
 
 	public override TaskStatus OnUpdate()
 	{
+		if (Vector3.Distance(_selectedTarget.Value, transform.position) < _fleeDistance.Value/2)
+			return TaskStatus.Success;
+
 		if (Vector2.Distance(_target.Value.transform.position, transform.position) < _fleeDistance.Value
 			&& _canMove.Value == true)
 		{
 			_movement.PlayerInput = (_selectedTarget.Value - transform.position).normalized;
-			_jump.OnJump(_movement.PlayerInput);
+			
+			if (GetProbabilitySuccess(1f))
+				_jump.OnJump(_movement.PlayerInput);
 
 			return TaskStatus.Running;
 		}
 
 		_movement.PlayerInput = Vector2.zero;
 		return TaskStatus.Success;
+	}
+
+	public override void OnEnd()
+	{
+		_movement.PlayerInput = (_target.Value.transform.position - transform.position).normalized;
 	}
 
 	private SharedVector3 SelectFleeTarget()
@@ -79,5 +90,13 @@ public class CustomFlee : Action
 		}
 
 		return selectedTarget;
+	}
+
+	private bool GetProbabilitySuccess(float probability)
+	{ 
+		if (Random.Range(0, 100f) < probability)
+			return true;
+		else 
+			return false;
 	}
 }
