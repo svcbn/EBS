@@ -27,19 +27,15 @@ public class TeleportEvacuate : SkillBase, IActiveSkill
 	public override void Execute()
 	{		
 		base.Execute();
-		//StartCoroutine(PlayTelepotEffect(Owner.transform)); // TBD: 이펙트 재생 위치 및 시간 고려필요
 
-		if (_data.beforeEffect != null) { StartCoroutine(PlayEffect("Teleport_Before")); }
-
+		if (_data.beforeEffect != null) { PlayEffect("Teleport_Before", 1f ); }
 	}
 
 	public override IEnumerator ExecuteImplCo()
 	{
 		Owner.transform.position = CalcTeleportPos();
 
-		//StartCoroutine(PlayPostEffect(Owner.transform));
-
-		if (_data.afterEffect != null) { StartCoroutine(PlayEffect("Teleport_After")); }
+		if (_data.afterEffect != null) { PlayEffect("Teleport_After", 1f); }
 
 		yield return new WaitForSeconds(AfterDelay);
 	}
@@ -70,50 +66,7 @@ public class TeleportEvacuate : SkillBase, IActiveSkill
 		return destV;
 	}
 
-	// IEnumerator PlayTelepotEffect(Transform pos)
-	// {
-	// 	if (_data.beforeEffect != null)
-	// 	{
-	// 		string effName = "Teleport_Before";
 
-	// 		Transform parent = Owner.transform;
-	// 		GameObject effect = Managers.Resource.Instantiate("Skills/"+effName, parent ); // paraent를 character.gameObject로
-	// 		effect.transform.localPosition = Vector3.zero;
-
-	// 		yield return new WaitForSeconds(0.5f); // 이펙트 재생 시간
-	// 		Managers.Resource.Release(effect);
-	// 	}
-	// }
-
-	// // 이놈을 아예 플레이어의 child로 만들어놓기
-	// IEnumerator PlayPostEffect(Transform pos)
-	// {
-	// 	if (_data.afterEffect != null)
-	// 	{
-	// 		string effName = "Teleport_After";
-
-	// 		Transform parent = Owner.transform;
-	// 		GameObject effect = Managers.Resource.Instantiate("Skills/"+effName, parent ); // paraent를 character.gameObject로
-	// 		effect.transform.localPosition = Vector3.zero;
-
-	// 		yield return new WaitForSeconds(1f); // 이펙트 재생 시간
-	// 		Managers.Resource.Release(effect);
-	// 	}
-
-		
-	// }
-	IEnumerator PlayEffect(string effName)
-	{
-
-		Transform parent = Owner.transform;
-		GameObject effect = Managers.Resource.Instantiate("Skills/"+effName, parent ); // paraent를 character.gameObject로
-		effect.transform.localPosition = Vector3.zero;
-
-		yield return new WaitForSeconds(1f); // 이펙트 재생 시간
-		Managers.Resource.Release(effect);
-		
-	}
-    
 	
 	void OnDrawGizmos() 
 	{
