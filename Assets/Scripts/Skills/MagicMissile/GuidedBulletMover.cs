@@ -57,8 +57,15 @@ public class GuidedBulletMover : Mover
 
     private void FindNewTarget()
     {
-        LayerMask mask = LayerMask.GetMask("EnemyMJ");// attacker.damageLayer;
+        LayerMask mask = LayerMask.GetMask("Player");// attacker.playerLayer;
         Collider2D[] t = Physics2D.OverlapCircleAll(transform.position, refindRadius, mask);
+
+        if( t == null)
+        {
+            Debug.Log("GuidedBulletMover: t is null");
+            Destroy(gameObject);
+            return;
+        }
 
 
         List<Collider2D> validTargets = new List<Collider2D>();

@@ -32,7 +32,7 @@ public class ArrowShoot : SkillBase, IActiveSkill
 	public override IEnumerator ExecuteImplCo()
 	{
         int colCount = 0;
-        Collider2D[] cols = Physics2D.OverlapCircleAll(Owner.transform.position, _data.range, _data.damageLayer);
+        Collider2D[] cols = Physics2D.OverlapCircleAll(Owner.transform.position, _data.range, _data.targetLayer);
         if (cols.Length == 0) // 타겟이 없을때 
         {
             for (int i = 0; i < _data.missileCount; i++)
@@ -57,7 +57,6 @@ public class ArrowShoot : SkillBase, IActiveSkill
 			//if (col.gameObject != Owner.gameObject) // Owner is the self gameObject
 			if (col.GetComponent<Character>() != Owner)
 			{
-				Debug.Log($"ArrowShoot: {col.gameObject.name}");
 				validTargets.Add(col);
 			}
 		}
@@ -69,9 +68,22 @@ public class ArrowShoot : SkillBase, IActiveSkill
 			for(int i = 0; i < _data.missileCount; i++)
 			{
 				if (i%validTargets.Count==0) { colCount = 0; }
+
+				if(_data == null){
+					Debug.LogWarning("_data is null");
+				}
+				if(_data.missilePrefab == null){
+					Debug.LogWarning("_data.missilePrefab is null");
+				}
+
 				GuidedBulletMover g = Instantiate(_data.missilePrefab, Owner.transform.position, Quaternion.identity);
-				g.GetComponent<TriggerAttacker>().owner = Owner;
-				g.GetComponent<TriggerAttacker>().damage = _data.Damage;
+
+				if(g == null){
+					Debug.LogWarning("g is null");
+				}
+
+				g.GetComponent<TriggerAttackerSlow>().owner = Owner;
+				g.GetComponent<TriggerAttackerSlow>().damage = _data.Damage;
 
 				g.target = validTargets[colCount].transform;
 				g.bezierDelta  = _data.bezierDelta;  // 상대 원

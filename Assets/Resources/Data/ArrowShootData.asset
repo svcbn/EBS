@@ -27,9 +27,9 @@ MonoBehaviour:
   _hitBoxSize: {x: 1, y: 1}
   _damage: 1
   missilePrefab: {fileID: 1941211119430951607, guid: 96898d6cec7f3dd45b40548a32379d22, type: 3}
-  damageLayer:
+  targetLayer:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 256
   duration: 1
   missileCount: 1
   range: 20
