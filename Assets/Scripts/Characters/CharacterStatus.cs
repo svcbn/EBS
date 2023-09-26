@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -28,14 +29,19 @@ public class CharacterStatus : MonoBehaviour
 	private Character _character;
 	private CharacterMovement _movement;
 	private Rigidbody2D _rigidbody2;
+	private List<SpriteRenderer> _spriteRenderers = new();
+	private List<Color> _originalColors = new();
 
 	private float _originSpeed;
+
+	private Coroutine _blinkCR;
 
 	private void Awake()
 	{
 		_movement = GetComponent<CharacterMovement>();
 		_character = GetComponent<Character>();
 		_rigidbody2 = GetComponent<Rigidbody2D>();
+		GetRenderers();
 	}
 
 	private void Start()
@@ -46,11 +52,28 @@ public class CharacterStatus : MonoBehaviour
 		CurrentStatus.Add(StatusType.Faint, false);
 	}
 
+	private void OnEnable()
+	{
+		Managers.Stat.onTakeDamage -= SetBlinkEffect;
+		Managers.Stat.onTakeDamage += SetBlinkEffect;
+		//Managers.Stat.onTakeDamage(GetComponent<Character>().playerIndex) += SetBlinkEffect;
+	}
+
 	private void Update()
 	{
 		ApplySlowEffect();
 		ApplyFaintEffect();
 		ApplyKnockbackEffect();
+	}
+
+	private void GetRenderers()
+	{
+		_spriteRenderers.AddRange(GetComponentsInChildren<SpriteRenderer>());
+		for (int i = 0; i < _spriteRenderers.Count; i++)
+		{
+			_originalColors.Add(_spriteRenderers[i].color);
+			Debug.Log(_spriteRenderers[i].name);
+		}
 	}
 
 	#region Slow Effect
@@ -159,6 +182,40 @@ public class CharacterStatus : MonoBehaviour
 			_rigidbody2.sharedMaterial.bounciness = 0;
 		}
 	}
+	#endregion
+
+	#region Blink Effect
+
+	public void SetBlinkEffect(int index)
+	{
+		if (index != _character.playerIndex)
+		{
+			return;
+		}
+
+		if(_blinkCR != null) StopCoroutine(_blinkCR);
+		_blinkCR = StartCoroutine(CR_BlinkEffect());
+	}
+
+	private IEnumerator CR_BlinkEffect()
+	{
+		float _blinkTime = 0.15f;
+
+		foreach (var renderer in _spriteRenderers) 
+		{
+			renderer.color = Color.white;
+		}
+		yield return new WaitForSeconds(_blinkTime);
+		for (int i = 0; i < _spriteRenderers.Count; i++)
+		{
+			_spriteRenderers[i].color = _originalColors[i];
+		}
+	}
+
+	#endregion
+
+	#region Freez Effect
+
 	#endregion
 }
 
