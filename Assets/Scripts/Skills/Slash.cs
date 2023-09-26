@@ -36,7 +36,6 @@ public class Slash : SkillBase, IActiveSkill
 	IEnumerator ExecuteCo()
 	{
 		// 선딜
-		Debug.Log($"선딜 시작  {BeforeDelay}");
 		yield return new WaitForSeconds(BeforeDelay);
 
 		GameObject effect = null;
@@ -48,8 +47,6 @@ public class Slash : SkillBase, IActiveSkill
 		}
 
 		// 실제 피해
-		Debug.Log($"실제 피해 ");
-		Debug.Log($"시전 시간  {Duration}");
 
 		float x = Owner.transform.localScale.x < 0 ? -1 : 1;
 		Vector2 centerInWorld = (Vector2)Owner.transform.position + new Vector2(x * _data.HitBoxCenter.x, _data.HitBoxCenter.y);
@@ -62,12 +59,10 @@ public class Slash : SkillBase, IActiveSkill
 			}
 
 			character.TakeDamage(1);
-			Debug.Log(character.name + "에게 피해를 입힘.");
 		}
 
 
 		// 후딜
-		Debug.Log($"후딜 시작  {AfterDelay}");
 		yield return new WaitForSeconds(AfterDelay);
 
 		Managers.Resource.Release(effect);
