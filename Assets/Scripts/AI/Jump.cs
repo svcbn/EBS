@@ -3,14 +3,14 @@ using BehaviorDesigner.Runtime.Tasks;
 public class Jump : Action
 {
 	private CharactorJump _jump;
-	private CharactorMovement _movement;
+	private CharacterMovement _movement;
 
 	public override void OnStart()
 	{
 		base.OnStart();
 
 		_jump = GetComponent<CharactorJump>();
-		_movement = GetComponent<CharactorMovement>();
+		_movement = GetComponent<CharacterMovement>();
 	}
 
 	public override TaskStatus OnUpdate()

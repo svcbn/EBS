@@ -5,7 +5,7 @@ public class CharactorJump : MonoBehaviour
 	public Vector3 velocity;
 	
 	CharacterGround _charaterGround;
-	CharactorMovement _charactorMovement;
+	CharacterMovement _charactorMovement;
 	CharactorMovementData _charactorMovementData;
 	Rigidbody2D _body;
 
@@ -14,7 +14,7 @@ public class CharactorJump : MonoBehaviour
 	private void Awake()
 	{
 		_charaterGround = GetComponent<CharacterGround>();
-		_charactorMovement = GetComponent<CharactorMovement>();
+		_charactorMovement = GetComponent<CharacterMovement>();
 		_charactorMovementData = _charactorMovement.ChractorMovementData;
 		_body = GetComponent<Rigidbody2D>();
 	}

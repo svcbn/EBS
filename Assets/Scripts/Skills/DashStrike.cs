@@ -78,4 +78,9 @@ public class DashStrike : SkillBase, IActiveSkill
 
 		return isEnemyInBox && isEnoughMP;
 	}
+
+	public override IEnumerator ExecuteImplCo()
+	{
+		throw new System.NotImplementedException();
+	}
 }
