@@ -68,11 +68,7 @@ public class Character : MonoBehaviour
 		{
 
 			if( name != "Capsule A") { return; } 
-			// CurrentSkill = _skills.FirstOrDefault();
 
-			//CurrentSkill = new Slash(); // for Test
-			CurrentSkill = new TeleportBack(); // for Test
-			
 			CurrentSkill.Init();
 			CurrentSkill.Owner = this;
 			CurrentSkill.Execute();

@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
+	public static SkillManager Skill => Instance._skill;
 	#endregion
 
 

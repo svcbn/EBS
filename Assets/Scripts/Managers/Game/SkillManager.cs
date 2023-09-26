@@ -61,6 +61,23 @@ public class SkillManager
 		return _skillCache.TryGetValue(id, out type);
 	}
 
+	// Test
+#if UNITY_EDITOR
+	public ISkill GetSkill(uint id, Character owner)
+	{
+		if (!TryFindSkillTypeById(id, out var skillType))
+		{
+			Debug.LogError($"Undefined skill type. ID: {id}");
+			return null;
+		}
+
+		var skill = owner.gameObject.AddComponent(skillType) as ISkill;
+		owner.AddSkill(skill);
+
+		return skill;
+	}
+#endif
+
 	private void GetAllSkills()
 	{
 		var skillTypes = AppDomain.CurrentDomain.GetAssemblies().
@@ -69,7 +86,8 @@ public class SkillManager
 
 		foreach (var type in skillTypes)
 		{
-			
-		}
+			ActiveSkillData data = Managers.Resource.Load<ActiveSkillData>($"data/{type.Name}Data");
+			_skillCache.Add(data.Id, type);
+		} 
 	}
 }
