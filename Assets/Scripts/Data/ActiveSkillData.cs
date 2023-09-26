@@ -6,7 +6,6 @@ public class ActiveSkillData : ScriptableSkillData
 {
 	[SerializeField] private int _priority;
 	[SerializeField] private bool _isRestrictMoving;
-	[SerializeField] private float _cooldown;
 	[SerializeField] private float _beforeDelay;
 	[SerializeField] private float _afterDelay;
 	[SerializeField] private int _requireMP;
@@ -28,7 +27,6 @@ public class ActiveSkillData : ScriptableSkillData
 
 	public int Priority => _priority;
 	public bool IsRestrictMoving => _isRestrictMoving;
-	public float Cooldown => _cooldown;
 	public float BeforeDelay => _beforeDelay;
 	public float AfterDelay => _afterDelay;
 	public int RequireMP => _requireMP;
