@@ -1,7 +1,9 @@
 using Sirenix.OdinInspector;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -56,18 +58,29 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
+	public static SkillManager Skill => Instance._skill;
 	#endregion
 
 
 	#region private Variables
+	private Character _currentPicker;
+	[SerializeField]
+	private List<int> _pickCountList;
+	private int _pickCount;
+	private int _pickCountIndex;
+
+	private SkillManager _skill = new();
+	private int _skillPickCount = 9;
+
 	[SerializeField] private int totalRounds;
-	private GameObject player1;
-	private GameObject player2;
+	private Character player1;
+	private Character player2;
 	[SerializeField] private Transform[] spawnPoints = new Transform[2];
 	private int _player1HP;
 	private int _player2HP;
 	private int[] roundDamage = {0, 0, 4, 8, 12, 20, 30, 30, 30, 30};
 	private bool isPlayer1Defeat = false;
+	private bool _isPlayer1Pick = false;
 
 	private KeyCode[] _registeredKeys =
 	{ KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.Space,
@@ -118,7 +131,9 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this);
         }
-        #endregion
+		#endregion
+
+		_skill.Init();
 
         ChangeState(GameState.Title);
 		
@@ -166,11 +181,11 @@ public class GameManager : MonoBehaviour
 
 	private void PreparePlayer()
 	{
-		player1 = Managers.Resource.Instantiate("Player1");
-		player2 = Managers.Resource.Instantiate("Player2");
+		player1 = Managers.Resource.Instantiate("Character/Player 1").GetOrAddComponent<Character>();
+		player2 = Managers.Resource.Instantiate("Character/Player 1").GetOrAddComponent<Character>();
 
-		Managers.Resource.Release(player1);
-		Managers.Resource.Release(player2);
+		Managers.Resource.Release(player1.gameObject);
+		Managers.Resource.Release(player2.gameObject);
 	}
 
 	private void OnTitle()
@@ -181,13 +196,50 @@ public class GameManager : MonoBehaviour
 
     private void OnPickSkill()
     {
-        // if round1, player1 is first
+		_pickCountIndex = 0;
+		_pickCount = _pickCountList[_pickCountIndex];
+		var skillPool = _skill.GeneratePool(_skillPickCount);
+		SkillSelector selector = new(skillPool);
+		_selectorUI = Managers.UI.ShowPopupUI<UISkillSelector>();
+		selector.SkillSelected += PickSkill;
+		_selectorUI.SetSelector(selector);
+		// if round1, player1 is first
+		Character winner = player1;
+		// else, last round's winner is first
+		_currentPicker = CurrentRound == 1 ? player1 : winner;
+	}
 
-        // else, last round's winner is first
-    }
+	private UISkillSelector _selectorUI;
 
-	
-    private void OnPreRound()
+	private void PickSkill(SkillInfo skillInfo)
+	{
+		if (_skill.TryFindSkillTypeById(skillInfo.Id, out var skillType))
+		{
+			Debug.LogError($"Undefined skill type. ID: {skillInfo.Id}, Name: {skillInfo.Name}");
+			return;
+		}
+		
+		ISkill skill = _currentPicker.gameObject.AddComponent(skillType) as ISkill;
+		_currentPicker.AddSkill(skill);
+		if (--_pickCount <= 0)
+		{
+			_currentPicker = _isPlayer1Pick ? player2 : player1;
+			_isPlayer1Pick = !_isPlayer1Pick;
+			
+			if (_pickCountIndex < _pickCountList.Count - 1)
+			{
+				_pickCount = _pickCountList[++_pickCountIndex];
+			}
+			else
+			{
+				// pick end
+				Managers.UI.ClosePopupUI(_selectorUI);
+				ChangeState(GameState.PreRound);
+			}
+		}
+	}
+
+	private void OnPreRound()
     {
         // reset something
 
@@ -234,9 +286,9 @@ public class GameManager : MonoBehaviour
 
 	private void PrepareBattle()
 	{
-		Managers.Pool.Get("Player1");
+		player1 = Managers.Resource.Instantiate("Character/Player 1").GetOrAddComponent<Character>();
+		player2 = Managers.Resource.Instantiate("Character/Player 1").GetOrAddComponent<Character>();
 		player1.transform.position = spawnPoints[0].position;
-		Managers.Pool.Get("Player2");
 		player2.transform.position = spawnPoints[1].position;
 
 		// maybe ui guide

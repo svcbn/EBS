@@ -33,7 +33,7 @@ public static class GameObjectExtension
 
 		if (recursive)
 		{
-			foreach (T component in gameObject.GetComponentsInChildren<T>())
+			foreach (T component in gameObject.GetComponentsInChildren<T>(true))
 			{
 				if (string.IsNullOrEmpty(name) || component.name == name)
 				{

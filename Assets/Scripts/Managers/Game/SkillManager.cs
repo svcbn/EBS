@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SkillManager
@@ -10,7 +11,7 @@ public class SkillManager
 
 	private Dictionary<Character, List<ISkill>> _skills = new();
 
-	private Dictionary<int, ISkill> _skillCache = new();
+	private Dictionary<uint, Type> _skillCache = new();
 
 	public void Init()
 	{
@@ -55,21 +56,27 @@ public class SkillManager
 		return _skillData.Skills.FirstOrDefault(info => info.Id == skill.Id);
 	}
 
-	public ISkill GetSkillById(int id)
+	public bool TryFindSkillTypeById(uint id, out Type type)
 	{
-		if (!_skillCache.TryGetValue(id, out var skill))
-		{
-			skill = _skills.SelectMany(pool => pool.Value).FirstOrDefault(skill => skill.Id == id);
-			if (skill == null)
-			{
-				// TODO: 스킬을 보유하지 않은 경우 처리
-			}
+		return _skillCache.TryGetValue(id, out type);
+	}
 
-			_skillCache[id] = skill;
+	// Test
+#if UNITY_EDITOR
+	public ISkill GetSkill(uint id, Character owner)
+	{
+		if (!TryFindSkillTypeById(id, out var skillType))
+		{
+			Debug.LogError($"Undefined skill type. ID: {id}");
+			return null;
 		}
+
+		var skill = owner.gameObject.AddComponent(skillType) as ISkill;
+		owner.AddSkill(skill);
 
 		return skill;
 	}
+#endif
 
 	private void GetAllSkills()
 	{
@@ -79,7 +86,8 @@ public class SkillManager
 
 		foreach (var type in skillTypes)
 		{
-			ISkill skill = Activator.CreateInstance(type) as ISkill;
-		}
+			ActiveSkillData data = Managers.Resource.Load<ActiveSkillData>($"data/{type.Name}Data");
+			_skillCache.Add(data.Id, type);
+		} 
 	}
 }
