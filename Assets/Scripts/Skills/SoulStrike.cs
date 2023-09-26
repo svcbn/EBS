@@ -10,7 +10,7 @@ public class SoulStrike : SkillBase, IActiveSkill
 	{
 		base.Init();
 
-		_data = Managers.Resource.Load<SoulStrikeData>("Data/SoulStrike");
+		_data = Managers.Resource.Load<SoulStrikeData>($"Data/{nameof(SoulStrikeData)}");
 		if (_data == null) { Debug.LogWarning($"Fail load Data/SoulStrike"); return; }
 
 		Id = _data.Id;

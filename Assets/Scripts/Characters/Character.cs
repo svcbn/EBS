@@ -8,6 +8,8 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
+	public bool CurrentSkillIsNotNull;
+	
 	public List<IActiveSkill> CanUseSkills = new();
 	public IActiveSkill CurrentSkill;
 	public int playerIndex;
@@ -29,6 +31,8 @@ public class Character : MonoBehaviour
 
 	public IReadOnlyList<ISkill> Skills => _skills;
 
+	public BehaviorTree BehaviorTree => _moveBehavior;
+
 	public event NotifyCollectionChangedEventHandler CollectionChanged
 	{
 		add => _skills.CollectionChanged += value;
@@ -37,11 +41,15 @@ public class Character : MonoBehaviour
 
 	private void Awake()
 	{
-		foreach (var skill in _skills)
-		{
-			skill.Init();
-			skill.Owner = this;
-		}
+		//temp
+		// _skills.Add(gameObject.AddComponent<Slash>());
+		// _skills.Add(gameObject.AddComponent<TripleStrike>());
+		// _skills.Add(gameObject.AddComponent<TeleportBack>());
+		// _skills.Add(gameObject.AddComponent<Block>());
+		// _skills.Add(gameObject.AddComponent<ManaShower>());
+		// _skills.Add(gameObject.AddComponent<HeavyStrike>());
+		// _skills.Add(gameObject.AddComponent<MagicMissile>());
+		
 		
 		_moveBehavior = GetComponent<BehaviorTree>();
 		_rigidbody2 = GetComponent<Rigidbody2D>();
@@ -62,6 +70,7 @@ public class Character : MonoBehaviour
 	private void Update()
 	{
 		SetMoveBTVariables();
+		CurrentSkillIsNotNull = CurrentSkill is not null;
 	}
 
 	//private void OnDrawGizmos()
@@ -83,6 +92,11 @@ public class Character : MonoBehaviour
 		{
 			CanUseSkills.Clear();
 			_hasCooldowmSkill = false;
+			if (CurrentSkill is { IsActing: true })
+			{
+				yield return new WaitForSeconds(0.05f);
+				continue;
+			}
 
 			foreach (var skill in _skills.OfType<IActiveSkill>())
 			{

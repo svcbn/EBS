@@ -92,7 +92,7 @@ public class UISkillList : UIScene
 
 	private UISkillSlot CreateSlot(SkillInfo info)
 	{
-		GameObject go = Managers.Resource.Instantiate("UI/Popup/UISkillSlot");
+		GameObject go = Managers.Resource.Instantiate("UI/Popup/UISkillSlot", usePool: false);
 
 		var slot = go.GetOrAddComponent<UISkillSlot>();
 		slot.SetInfo(info);
