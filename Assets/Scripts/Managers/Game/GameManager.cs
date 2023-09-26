@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -22,15 +24,16 @@ public class GameManager : MonoBehaviour
 	//public Player Player2 { get; private set; }
 	public bool IsPlayer1Win { get; set; } = true;
 
-	public int Player1HP
+	public int Player1Life
 	{
 		get
 		{
-			return _player1HP;
+			return _player1Life;
 		}
 		private set
 		{
-			_player1HP = value;
+			_player1Life = value;
+			player1LifeTxt.text = "LIFE : " + _player1Life;
 			if (value < 0)
 			{
 				_isPlayer1Defeat = true;
@@ -38,16 +41,17 @@ public class GameManager : MonoBehaviour
 			}
 		}
 	}
-	public int Player2HP
+	public int Player2Life
 	{
 		get
 		{
-			return _player2HP;
+			return _player2Life;
 		}
 		private set
 		{
-			_player2HP = value;
-			if(value < 0)
+			_player2Life = value;
+			player2LifeTxt.text = "LIFE : " + _player2Life;
+			if (value < 0)
 			{
 				_isPlayer1Defeat = false;
 				ChangeState(GameState.GameOver);
@@ -83,11 +87,47 @@ public class GameManager : MonoBehaviour
 	private Character player1;
 	private Character player2;
 	[SerializeField] private Transform[] spawnPoints = new Transform[2];
-	private int _player1HP;
-	private int _player2HP;
-	private int[] roundDamage = {0, 0, 4, 8, 12, 20, 30, 30, 30, 30};
+	private int _player1Life;
+	private int _player2Life;
+	//private int[] roundDamage = {0, 0, 4, 8, 12, 20, 30, 30, 30, 30};
 	private bool _isPlayer1Defeat = false;
 	private bool _isPlayer1Pick = false;
+	int _player1RoundHP;
+	int _player2RoundHP;
+
+	int Player1RoundHP
+	{
+		get
+		{
+			return _player1RoundHP;
+		}
+		set
+		{
+
+		}
+	}
+	int Player2RoundHP
+	{
+		get
+		{
+			return _player2RoundHP;
+		}
+		set
+		{
+
+		}
+	}
+
+	GameObject canvas;
+	public Slider player1RoundHPUI;
+	public Slider player2RoundHPUI;
+	TextMeshProUGUI roundText;
+	TextMeshProUGUI timerText;
+	TextMeshProUGUI player1LifeTxt;
+	TextMeshProUGUI player2LifeTxt;
+
+	float timer;
+
 	#endregion
 
 
@@ -143,6 +183,8 @@ public class GameManager : MonoBehaviour
 		_skill.Init();
 
 		PreparePlayer();
+
+		SetBattleUI();
         ChangeState(GameState.Title);
     }
 
@@ -153,13 +195,41 @@ public class GameManager : MonoBehaviour
 			_ui.ShowMenu();
 		}
 		
-		//_ui.UpdateTimer();
+		if(State == GameState.Battle)
+		{
+			timer -= Time.deltaTime;
+			timerText.text = (int)timer + "";
+			if(timer <= 0)
+			{
+				ChangeState(GameState.RoundOver);
+				timer = 0;
+			}
+		}
+
+		
+	}
+
+	void SetBattleUI()
+	{
+		canvas = GameObject.Find("BattleCanvas");
+		player1RoundHPUI = GameObject.Find("Player1RoundHP").GetComponent<Slider>();
+		player2RoundHPUI = GameObject.Find("Player2RoundHP").GetComponent<Slider>();
+		roundText = GameObject.Find("RoundTxt").GetComponent<TextMeshProUGUI>();
+		timerText = GameObject.Find("TimerTxt").GetComponent<TextMeshProUGUI>();
+		player1LifeTxt = GameObject.Find("Player1LifeTxt").GetComponent<TextMeshProUGUI>();
+		player2LifeTxt = GameObject.Find("Player2LifeTxt").GetComponent<TextMeshProUGUI>();
+		Player1Life = 10;
+		Player2Life = 10;
+
+
+		canvas.SetActive(false);
 	}
 
 	public void StartGame()
 	{
 		CurrentRound = 1;
 		_skill.SetCharacters(player1, player2);
+		canvas.SetActive(true);
 		ChangeState(GameState.PickSkill);
 	}
 
@@ -251,11 +321,14 @@ public class GameManager : MonoBehaviour
 
 	private void OnPreRound()
     {
-        // reset something
+		// reset something
+		
 
-        // do something
+		// do something
 
-        // ui refresh??
+		// ui refresh??
+		roundText.text = "Round" + CurrentRound;
+		timerText.text = (int)timer + ""; 
 
         ChangeState(GameState.Battle);
     }
@@ -272,6 +345,10 @@ public class GameManager : MonoBehaviour
 		CalculateRoundDamage();
 
 		// reset something
+
+		player1RoundHPUI.value = 100 + CurrentRound * 20;
+		player2RoundHPUI.value = 100 + CurrentRound * 20;
+		timer = 99f;
 
 		CurrentRound++;
 
@@ -324,12 +401,14 @@ public class GameManager : MonoBehaviour
 	{
 		if (IsPlayer1Win)
 		{
-			Player2HP -= roundDamage[CurrentRound]; // + 남은 체력 비례 데미지;
+			Player2Life -= Mathf.Max(CurrentRound - 1, 1); 
 		}
 		else
 		{
-			Player1HP -= roundDamage[CurrentRound]; // + 남은 체력 비례 데미지;
+			Player1Life -= Mathf.Max(CurrentRound - 1, 1); 
 		}
+
+		
 	}
 
 	private void OnValidate()
