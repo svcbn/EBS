@@ -28,6 +28,11 @@ public class Character : MonoBehaviour
 	{
 		//temp
 		_skills.Add(gameObject.AddComponent<Slash>());
+		foreach (var skill in _skills)
+		{
+			skill.Init();
+			skill.Owner = this;
+		}
 		//_skills.Add(gameObject.AddComponent<TripleStrike>());
 		
 		_moveBehavior = GetComponent<BehaviorTree>();
@@ -47,32 +52,6 @@ public class Character : MonoBehaviour
 	private void Update()
 	{
 		SetMoveBTVariables();
-
-		if (Input.GetKeyDown(KeyCode.Space))
-		{
-			// CurrentSkill = _skills.FirstOrDefault();
-
-			CurrentSkill = new Slash(); // for Test
-			
-			CurrentSkill.Init();
-			CurrentSkill.Owner = this;
-			CurrentSkill.Execute();
-		}
-
-
-	}
-
-	//private void OnDrawGizmos()
-	//{
-	//	foreach (var skill in _skills)
-	//	{
-	//		skill.OnDrawGizmos(transform);
-	//	}
-	//}
-
-	public void UseSkill()
-	{
-		
 	}
 
 	public void TakeDamage(int damage)
@@ -119,7 +98,7 @@ public class Character : MonoBehaviour
 			_moveBehavior.SetVariableValue("IsActing", true);
 
 
-			if (CurrentSkill.IsRestricteMoving == true)
+			if (CurrentSkill.IsRestrictMoving == true)
 				_moveBehavior.SetVariableValue("CanMove", false);
 			else
 				_moveBehavior.SetVariableValue("CanMove", true);

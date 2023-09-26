@@ -15,7 +15,7 @@ public class Slash : SkillBase, IActiveSkill
 		Id                = _data.Id;
 		Type              = _data.Type;
 		Priority          = _data.Priority;
-		IsRestricteMoving = _data.IsRestricteMoving;
+		IsRestrictMoving = _data.IsRestrictMoving;
 
 		Cooldown          = _data.Cooldown;
 		BeforeDelay       = _data.BeforeDelay;
@@ -34,21 +34,24 @@ public class Slash : SkillBase, IActiveSkill
 
 	IEnumerator ExecuteCo()
 	{
-		// 애니메이션 재생
-		if(_data.SpriteEffect != null){
-			_data.SpriteEffect.transform.position = Owner.transform.position;
-			_data.SpriteEffect.Play();
-		}
-
 		// 선딜
 		Debug.Log($"선딜 시작  {BeforeDelay}");
 		yield return new WaitForSeconds(BeforeDelay);
+
+		// 애니메이션 재생
+		if (_data.SpriteEffect != null)
+		{
+			_data.SpriteEffect.transform.position = Owner.transform.position;
+			_data.SpriteEffect.Play();
+		}
 
 		// 실제 피해
 		Debug.Log($"실제 피해 ");
 		Debug.Log($"시전 시간  {Duration}");
 
-		var boxes = Physics2D.OverlapBoxAll((Vector2)Owner.transform.right + _data.HitBoxCenter, _data.HitBoxSize, 0);
+		float x = Owner.transform.localScale.x < 0 ? -1 : 1;
+		Vector2 centerInWorld = (Vector2)Owner.transform.position + new Vector2(x * _data.HitBoxCenter.x, _data.HitBoxCenter.y);
+		var boxes = Physics2D.OverlapBoxAll(centerInWorld, _data.HitBoxSize, 0);
 		foreach (var box in boxes)
 		{
 			if (!box.TryGetComponent<Character>(out var character) || character == Owner)
@@ -67,7 +70,11 @@ public class Slash : SkillBase, IActiveSkill
 
 	}
 
-
+	public override bool CheckCanUse()
+	{
+		bool isEnemyInBox = CheckEnemyInBox(_data.CheckBoxCenter, _data.CheckBoxSize);
+		return isEnemyInBox;
+	}
 
 	public void OnDrawGizmos()
 	{

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public abstract class SkillBase : MonoBehaviour, ISkill
@@ -26,7 +27,7 @@ public abstract class SkillBase : MonoBehaviour, ISkill
 
 	public int Priority { get; protected set; }
 
-	public bool IsRestricteMoving { get; protected set; }
+	public bool IsRestrictMoving { get; protected set; }
 
 	public float Cooldown { get; protected set; }
 
@@ -52,19 +53,22 @@ public abstract class SkillBase : MonoBehaviour, ISkill
 		CalculateCooltime();
 	}
 
-	public virtual bool CheckCanUse()
-	{
-		if (IsCoolReady == true)	
-			return true;
-		else 
-			return false;
-	}
+	public abstract bool CheckCanUse();
 
 	protected virtual void CalculateCooltime()
 	{
 		Owner.StartCoroutine(CoCalculateTime(Cooldown, () => IsCoolReady = true));
 		float delay = BeforeDelay + Duration + AfterDelay;
 		Owner.StartCoroutine(CoCalculateTime(delay, () => IsActing = false));
+	}
+
+	protected virtual bool CheckEnemyInBox(Vector2 center, Vector2 size)
+	{
+		float x = Owner.transform.localScale.x < 0 ? -1 : 1;
+		Vector2 centerInWorld = (Vector2)Owner.transform.position + new Vector2(x * center.x, center.y);
+		var boxes = Physics2D.OverlapBoxAll(centerInWorld, size, 0);
+		bool flag = boxes.Length != 0;
+		return boxes.Any(box => box.TryGetComponent<Character>(out var character) && character != Owner);
 	}
 
 	private static IEnumerator CoCalculateTime(float time, Action onFinish)

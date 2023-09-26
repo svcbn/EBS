@@ -16,7 +16,7 @@ public class TripleStrike : SkillBase, IActiveSkill
 		Id = _data.Id;
 		Type = _data.Type;
 		Priority = _data.Priority;
-		IsRestricteMoving = _data.IsRestricteMoving;
+		IsRestrictMoving = _data.IsRestrictMoving;
 
 		Cooldown = _data.Cooldown;
 		BeforeDelay = _data.BeforeDelay;
@@ -29,9 +29,14 @@ public class TripleStrike : SkillBase, IActiveSkill
 	{
 		if (_data == null) { Debug.LogWarning($"Fail load Data/TripleAttackData"); return; }
 
-
 		base.Execute();
 		Owner.StartCoroutine(ExecuteCo());
+	}
+
+	public override bool CheckCanUse()
+	{
+		bool isEnemyInBox = CheckEnemyInBox(_data.CheckBoxCenter, _data.CheckBoxSize);
+		return isEnemyInBox;
 	}
 
 	IEnumerator ExecuteCo()
@@ -71,8 +76,6 @@ public class TripleStrike : SkillBase, IActiveSkill
 		// 후딜
 		Debug.Log($"후딜 시작  {AfterDelay}");
 		yield return new WaitForSeconds(AfterDelay);
-
-
 	}
 
 	public void OnDrawGizmos()

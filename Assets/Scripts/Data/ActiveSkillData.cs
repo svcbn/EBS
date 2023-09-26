@@ -16,7 +16,7 @@ public class ActiveSkillData : ScriptableObject
 	[SerializeField] private uint _id;
 	[SerializeField] private SkillType _type;
 	[SerializeField] private int _priority;
-	[SerializeField] private bool _isRestricteMoving;
+	[SerializeField] private bool _isRestrictMoving;
 	[SerializeField] private float _cooldown;
 	[SerializeField] private float _beforeDelay;
 	[SerializeField] private float _duration;
@@ -34,7 +34,7 @@ public class ActiveSkillData : ScriptableObject
 	public uint Id => _id;
 	public SkillType Type => _type;
 	public int Priority => _priority;
-	public bool IsRestricteMoving => _isRestricteMoving;
+	public bool IsRestrictMoving => _isRestrictMoving;
 	public float Cooldown => _cooldown;
 	public float BeforeDelay => _beforeDelay;
 	public float Duration => _duration;

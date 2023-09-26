@@ -10,8 +10,6 @@ public class SkillManager
 
 	private Dictionary<Character, List<ISkill>> _skills = new();
 
-	private static Dictionary<Character, List<IActiveSkill>> _dummySkills = new(); // for test
-
 	private Dictionary<int, ISkill> _skillCache = new();
 
 	public void Init()
@@ -83,55 +81,5 @@ public class SkillManager
 		{
 			ISkill skill = Activator.CreateInstance(type) as ISkill;
 		}
-	}
-
-
-	static Character _dummyChar;
-	
-	public static void SetDummySkills() // for test
-	{
-		Debug.Log("SetDummySkills");
-
-
-		_dummyChar = new Character();
-		_dummySkills.Add(_dummyChar, new List<IActiveSkill>()
-		{
-			new DummyFireballSkill(),
-			//new DummyHealSkill(),
-			//new DummyStunSkill(),
-			//new DummyShieldSkill(),
-			//new DummyDashSkill(),
-			//new DummyLightningSkill(),
-			//new DummyIceSkill(),
-			//new DummyStealthSkill(),
-			//new DummyBarrierSkill(),
-			//new DummySpeedBoostSkill()
-		});
-	}
-
-	public static List<IActiveSkill> GetDummySkills()
-	{
-		Debug.Log("GetDummySkills");
-
-		return _dummySkills[_dummyChar];
-	}
-
-
-	public static IActiveSkill GetHighPrioritySkill()
-	{
-		if( _dummySkills == null ) { return null; }
-
-		List<IActiveSkill> skills = _dummySkills[_dummyChar];
-
-		foreach( var skill in skills)
-		{
-			// find high priority skill
-			if (skill.Priority == 1)
-			{
-				return skill;
-			}
-		}
-
-		return null;
 	}
 }

@@ -13,7 +13,7 @@ public interface IActiveSkill : ISkill
 	/// <summary>
 	/// 스킬이 캐릭터의 움직임을 제약하는지 여부
 	/// </summary>
-	bool IsRestricteMoving { get; }
+	bool IsRestrictMoving { get; }
 
 	/// <summary>
 	/// 스킬의 쿨타임이 끝났는지 여부
