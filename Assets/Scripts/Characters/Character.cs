@@ -3,6 +3,7 @@ using BehaviorDesigner.Runtime.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class Character : MonoBehaviour
@@ -18,19 +19,17 @@ public class Character : MonoBehaviour
 
 	private BehaviorTree _moveBehavior;
 
-	private List<ISkill> _skills = new()
-	{
-		//new Slash(),
-		new DummyFireballSkill(),
-		new DummyFireballSkill1(),
-		new DummyFireballSkill2(),
-	};
+	private List<ISkill> _skills = new();
 
 	private bool _hasCooldowmSkill;
 	private bool _canMove;
 
 	private void Awake()
 	{
+		//temp
+		_skills.Add(gameObject.AddComponent<Slash>());
+		//_skills.Add(gameObject.AddComponent<TripleStrike>());
+		
 		_moveBehavior = GetComponent<BehaviorTree>();
 	}
 
@@ -58,8 +57,6 @@ public class Character : MonoBehaviour
 			CurrentSkill.Init();
 			CurrentSkill.Owner = this;
 			CurrentSkill.Execute();
-
-
 		}
 
 
