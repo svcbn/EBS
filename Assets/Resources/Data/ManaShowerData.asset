@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e559455c29065434d87ce9a2bd6b6b42, type: 3}
+  m_Name: ManaShowerData
+  m_EditorClassIdentifier: 
+  _id: 29
+  _type: 0
+  _priority: 3
+  _isRestrictMoving: 1
+  _cooldown: 10
+  _beforeDelay: 1
+  _afterDelay: 0.5
+  _requireMP: 0
+  _effect: {fileID: 7623069860143548831, guid: 67203d99b9c257b45bc9d49d9f706169, type: 3}
+  _amount: 20
