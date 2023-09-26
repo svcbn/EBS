@@ -42,6 +42,7 @@ public class TripleStrike : SkillBase, IActiveSkill
 			effect.transform.position = Owner.transform.position;
 		}
 
+		yield return new WaitForSeconds(0);
 		for (int i = 0; i < 3; i++)
 		{
 			// 실제 피해
@@ -56,7 +57,7 @@ public class TripleStrike : SkillBase, IActiveSkill
 				}
 
 				// Todo : statmanager 쪽에 연산 요청
-
+				Debug.Log("damaged");
 			}
 
 			yield return new WaitForSeconds(_data.DelayBetween);

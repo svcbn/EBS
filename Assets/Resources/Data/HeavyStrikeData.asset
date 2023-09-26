@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _id: 5
   _type: 1
+  _cooldown: 7
   _priority: 1
   _isRestrictMoving: 1
-  _cooldown: 7
   _beforeDelay: 1.5
   _afterDelay: 0.5
   _requireMP: 0
@@ -24,5 +24,5 @@ MonoBehaviour:
   _checkBoxCenter: {x: 0, y: 0}
   _checkBoxSize: {x: 7, y: 7}
   _hitBoxCenter: {x: 0, y: 0}
-  _hitBoxSize: {x: 5, y: 5}
+  _hitBoxSize: {x: 7, y: 7}
   _damage: 20
