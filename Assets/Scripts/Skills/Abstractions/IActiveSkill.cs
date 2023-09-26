@@ -26,11 +26,6 @@ public interface IActiveSkill : ISkill
 	bool IsActing { get; }
 
 	/// <summary>
-	/// 스킬의 쿨타임
-	/// </summary>
-	float Cooldown { get; }
-
-	/// <summary>
 	/// 스킬의 선 딜레이
 	/// </summary>
 	float BeforeDelay { get; }
@@ -48,5 +43,5 @@ public interface IActiveSkill : ISkill
 	/// <summary>
 	/// 스킬 사용에 필요한 mp
 	/// </summary>
-	float RequireMP { get; }
+	int RequireMP { get; }
 }

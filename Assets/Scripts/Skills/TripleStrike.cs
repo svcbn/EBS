@@ -57,7 +57,8 @@ public class TripleStrike : SkillBase, IActiveSkill
 					continue;
 				}
 
-				character.TakeDamage(1);
+				// Todo : statmanager 쪽에 연산 요청
+
 			}
 
 			yield return new WaitForSeconds(_data.DelayBetween);
@@ -74,7 +75,10 @@ public class TripleStrike : SkillBase, IActiveSkill
 	public override bool CheckCanUse()
 	{
 		bool isEnemyInBox = CheckEnemyInBox(_data.CheckBoxCenter, _data.CheckBoxSize);
-		return isEnemyInBox;
+
+		bool isEnoughMP = CheckEnoughMP(RequireMP);
+
+		return isEnemyInBox && isEnoughMP;
 	}
 
 	public void OnDrawGizmos()

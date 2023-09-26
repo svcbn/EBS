@@ -27,7 +27,6 @@ public class Execute : Action
 			_selectedSkill.Execute();
 			_character.CurrentSkill = _selectedSkill;
 			_character.CanUseSkills.Remove(_selectedSkill);
-			_selectedSkill = null;
 
 			return TaskStatus.Success;
 		}

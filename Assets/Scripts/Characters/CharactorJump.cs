@@ -38,14 +38,4 @@ public class CharactorJump : MonoBehaviour
 		Vector2 newGravity = new Vector2(0, (-2 * _charactorMovementData.JumpHeight) / (_charactorMovementData.TimeToJumpApex * _charactorMovementData.TimeToJumpApex));
 		_body.gravityScale = (newGravity.y / Physics2D.gravity.y) * _charactorMovementData.GravMultiplier;
 	}
-
-	void Update()
-	{
-		//test
-		if (Input.GetKeyDown(KeyCode.Space))
-		{
-			OnJump(Vector2.zero);
-		}
-	}
-
 }

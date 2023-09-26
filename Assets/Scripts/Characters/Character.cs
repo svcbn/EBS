@@ -12,12 +12,11 @@ public class Character : MonoBehaviour
 {
 	public List<IActiveSkill> CanUseSkills = new();
 	public IActiveSkill CurrentSkill;
-
-	[SerializeField]
-	private int _hp;
+	public int playerIndex;
 
 	[SerializeField]
 	private GameObject _target;
+	
 
 	private BehaviorTree _moveBehavior;
 	private Rigidbody2D _rigidbody2;
@@ -96,11 +95,6 @@ public class Character : MonoBehaviour
 	public void UseSkill()
 	{
 		
-	}
-
-	public void TakeDamage(int damage)
-	{
-		_hp -= damage;
 	}
 
 	private IEnumerator CheckSkills()
