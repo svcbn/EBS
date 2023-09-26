@@ -15,8 +15,7 @@ public class StatManager
 	private int[] _finalMaxHps = new int[2];
 	private int[] _finalMaxMps = new int[2];
 
-
-	public StatManager() 
+	public void Init()
 	{
 		LoadData();
 	}

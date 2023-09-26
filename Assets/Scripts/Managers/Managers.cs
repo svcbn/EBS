@@ -52,6 +52,7 @@ public class Managers : MonoBehaviour
 			DontDestroyOnLoad(s_Instance);
 
 			s_Instance._input.Init();
+			s_Instance._stat.Init();
 		}
 	}
 }

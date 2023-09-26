@@ -22,7 +22,7 @@ public class ActiveSkillData : ScriptableSkillData
 	[SerializeField] private Vector2 _hitBoxSize;
 
 	
-	[SerializeField] private float _damage;
+	[SerializeField] private int _damage;
 
 
 	public int Priority => _priority;
@@ -40,6 +40,6 @@ public class ActiveSkillData : ScriptableSkillData
 	public Vector2 HitBoxSize => _hitBoxSize;
 
 	
-	public float Damage => _damage;
+	public int Damage => _damage;
 
 }
