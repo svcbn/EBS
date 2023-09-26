@@ -136,9 +136,12 @@ public abstract class SkillBase : MonoBehaviour, ISkill
 
 		Transform parent = Owner.transform;
 		GameObject effect = Managers.Resource.Instantiate("Skills/"+effName, parent ); // paraent를 character.gameObject로
-		if(effect == null){ yield break; }
-
-		effect.transform.localPosition = Vector3.zero;
+		
+		if(effect){
+			effect.transform.localPosition = Vector3.zero;
+		}else{
+			Debug.LogError($"effect is null. effName :{effName}");
+		}
 
 		yield return new WaitForSeconds(duration); // 이펙트 재생 시간
 		Managers.Resource.Release(effect);
