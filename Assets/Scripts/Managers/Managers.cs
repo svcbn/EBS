@@ -14,6 +14,8 @@ public class Managers : MonoBehaviour
 
 	private UIManager _ui = new();
 
+	private StatManager _stat = new();
+
 	public static Managers Instance
 	{
 		get
@@ -33,6 +35,10 @@ public class Managers : MonoBehaviour
 
 	public static UIManager UI => Instance._ui;
 
+	public static StatManager Stat => Instance._stat;
+
+
+
 	private static void Init()
 	{
 		if (s_Instance == null)
@@ -46,6 +52,7 @@ public class Managers : MonoBehaviour
 			DontDestroyOnLoad(s_Instance);
 
 			s_Instance._input.Init();
+			s_Instance._stat.Init();
 		}
 	}
 }

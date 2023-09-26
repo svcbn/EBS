@@ -58,8 +58,8 @@ public class Slash : SkillBase, IActiveSkill
 				continue;
 			}
 
-			// Todo : statmanager 쪽에 데미지 연산 요청
-
+			//StatManager 쪽에 데미지 연산 요청
+			Managers.Stat.GiveDamage(1 - Owner.playerIndex, _data.Damage);
 		}
 
 
