@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DashStrike : SkillBase, IActiveSkill
+public class SoulStrike : SkillBase, IActiveSkill
 {
-	private DashStrikeData _data;
+	private SoulStrikeData _data;
 
 	public override void Init()
 	{
 		base.Init();
 
-		_data = Managers.Resource.Load<DashStrikeData>("Data/DashStrikeData");
-
-		if (_data == null) { Debug.LogWarning($"Fail load Data/DashStrikeData"); return; }
+		_data = Managers.Resource.Load<SoulStrikeData>("Data/SoulStrike");
+		if (_data == null) { Debug.LogWarning($"Fail load Data/SoulStrike"); return; }
 
 		Id = _data.Id;
 		Type = _data.Type;
@@ -23,6 +22,7 @@ public class DashStrike : SkillBase, IActiveSkill
 		BeforeDelay = _data.BeforeDelay;
 		AfterDelay = _data.AfterDelay;
 		RequireMP = _data.RequireMP;
+
 	}
 
 	public override void Execute()
@@ -32,12 +32,10 @@ public class DashStrike : SkillBase, IActiveSkill
 
 	public override IEnumerator ExecuteImplCo()
 	{
-		// 선딜
-		yield return new WaitForSeconds(BeforeDelay);
-
 		float x = Owner.transform.localScale.x < 0 ? -1 : 1;
 
 		GameObject effect = null;
+
 		// 애니메이션 재생
 		if (_data.Effect != null)
 		{
@@ -46,28 +44,26 @@ public class DashStrike : SkillBase, IActiveSkill
 			effect.transform.position = Owner.transform.position;
 		}
 
-		// 이동
-		Vector2 dir = (Owner.Target.transform.position - Owner.transform.position).normalized;
-		transform.position += new Vector3(dir.x, dir.y, 0) * 4f;
-		if(Owner.transform.position.y < 1f)
+		for (int i = 0; i < 3; i++)
 		{
-			Owner.transform.position = new Vector3(Owner.transform.position.x, 1f, Owner.transform.position.z);
-		}
+			// 실제 피해
 
-		// 실제 피해
-
-		Vector2 centerInWorld = (Vector2)Owner.transform.position + new Vector2(x * _data.HitBoxCenter.x, _data.HitBoxCenter.y);
-		var boxes = Physics2D.OverlapBoxAll(centerInWorld, _data.HitBoxSize, 0);
-		foreach (var box in boxes)
-		{
-			if (!box.TryGetComponent<Character>(out var character) || character == Owner)
+			Vector2 centerInWorld = (Vector2)Owner.transform.position + new Vector2(x * _data.HitBoxCenter.x, _data.HitBoxCenter.y);
+			var boxes = Physics2D.OverlapBoxAll(centerInWorld, _data.HitBoxSize, 0);
+			foreach (var box in boxes)
 			{
-				continue;
+				if (!box.TryGetComponent<Character>(out var character) || character == Owner)
+				{
+					continue;
+				}
+
+				// Todo : statmanager 쪽에 연산 요청
+
+				// Todo : playerStatus 쪽에 스턴 요청
+
+				// Todo : statmanager 쪽에 마나 뺏기 요청
 			}
 
-			// Todo : statmanager 쪽에 데미지 연산 요청
-
-			// Todo : charactorstatus 쪽에 스턴 요청
 		}
 
 
@@ -75,6 +71,7 @@ public class DashStrike : SkillBase, IActiveSkill
 		yield return new WaitForSeconds(AfterDelay);
 
 		Managers.Resource.Release(effect);
+
 	}
 
 	public override bool CheckCanUse()
@@ -85,5 +82,4 @@ public class DashStrike : SkillBase, IActiveSkill
 
 		return isEnemyInBox && isEnoughMP;
 	}
-
 }

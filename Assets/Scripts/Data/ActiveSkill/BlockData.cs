@@ -5,5 +5,5 @@ using UnityEngine;
 public class BlockData : ActiveSkillData
 {
 	
-
+    public float Duration = 5f;
 }

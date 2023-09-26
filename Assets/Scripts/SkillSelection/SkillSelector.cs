@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 
 public class SkillSelector
 {
+	private SkillSelectorInput _input;
+	
 	private int _selectedCount = 0;
 	
 	public SkillSelector(IList<SkillInfo> skills)
@@ -13,7 +15,17 @@ public class SkillSelector
 
 	public Action<SkillInfo> SkillSelected;
 
-	public SkillSelectorInput Input { get; set; }
+	public Action<SkillSelectorInput> InputChanged;
+
+	public SkillSelectorInput Input
+	{
+		get => _input;
+		set
+		{
+			_input = value;
+			InputChanged?.Invoke(_input);
+		}
+	}
 
 	public IReadOnlyList<SkillInfo> Skills { get; private set; }
 

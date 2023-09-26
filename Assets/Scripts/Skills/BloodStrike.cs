@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DashStrike : SkillBase, IActiveSkill
+public class BloodStrike : SkillBase, IActiveSkill
 {
-	private DashStrikeData _data;
+	private BloodStrikeData _data;
 
 	public override void Init()
 	{
 		base.Init();
 
-		_data = Managers.Resource.Load<DashStrikeData>("Data/DashStrikeData");
-
-		if (_data == null) { Debug.LogWarning($"Fail load Data/DashStrikeData"); return; }
+		_data = Managers.Resource.Load<BloodStrikeData>("Data/BloodStrikeData");
+		if (_data == null) { Debug.LogWarning($"Fail load Data/BloodStrikeData"); return; }
 
 		Id = _data.Id;
 		Type = _data.Type;
@@ -32,26 +31,16 @@ public class DashStrike : SkillBase, IActiveSkill
 
 	public override IEnumerator ExecuteImplCo()
 	{
-		// 선딜
-		yield return new WaitForSeconds(BeforeDelay);
-
 		float x = Owner.transform.localScale.x < 0 ? -1 : 1;
 
 		GameObject effect = null;
 		// 애니메이션 재생
 		if (_data.Effect != null)
 		{
+			// todo 상대위치에다가
 			effect = Managers.Resource.Instantiate("Skills/" + _data.Effect.name);
 			effect.transform.localScale = new Vector3(x, Owner.transform.localScale.y, Owner.transform.localScale.z);
-			effect.transform.position = Owner.transform.position;
-		}
-
-		// 이동
-		Vector2 dir = (Owner.Target.transform.position - Owner.transform.position).normalized;
-		transform.position += new Vector3(dir.x, dir.y, 0) * 4f;
-		if(Owner.transform.position.y < 1f)
-		{
-			Owner.transform.position = new Vector3(Owner.transform.position.x, 1f, Owner.transform.position.z);
+			effect.transform.position = Owner.Target.transform.position;
 		}
 
 		// 실제 피해
@@ -65,9 +54,10 @@ public class DashStrike : SkillBase, IActiveSkill
 				continue;
 			}
 
-			// Todo : statmanager 쪽에 데미지 연산 요청
+			//StatManager 쪽에 데미지 연산 요청
+			Managers.Stat.GiveDamage(1 - Owner.playerIndex, _data.Damage);
 
-			// Todo : charactorstatus 쪽에 스턴 요청
+			// todo : 흡혈 요청
 		}
 
 
@@ -85,5 +75,4 @@ public class DashStrike : SkillBase, IActiveSkill
 
 		return isEnemyInBox && isEnoughMP;
 	}
-
 }

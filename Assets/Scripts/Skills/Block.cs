@@ -17,6 +17,8 @@ public class Block : SkillBase, IActiveSkill
 		Priority          = _data.Priority;
 		IsRestrictMoving  = _data.IsRestrictMoving;
 
+		Duration		  = _data.Duration;
+
 		Cooldown          = _data.Cooldown;
 		BeforeDelay       = _data.BeforeDelay;
 		AfterDelay        = _data.AfterDelay;
@@ -33,7 +35,7 @@ public class Block : SkillBase, IActiveSkill
 		StartCoroutine(PlayEffect(Owner.transform));
 
 
-		// TODO: n 초간 무적,CC면역, 
+		// TODO: _data.Duration 초간 무적,CC면역, 
 		// DamageManager에서 함수 제공 예정
 
 
@@ -51,7 +53,7 @@ public class Block : SkillBase, IActiveSkill
 			effect.transform.position = Owner.transform.position;
 		}
 
-		yield return new WaitForSeconds(0.5f); // 이펙트 재생 시간
+		yield return new WaitForSeconds(_data.Duration); // 이펙트 재생 시간
 
 		Managers.Resource.Release(effect);
 	}
@@ -59,18 +61,14 @@ public class Block : SkillBase, IActiveSkill
 
 	public override bool CheckCanUse() //CheckCanUse
 	{
-		return true;
+		Character enemy = Owner.GetTarget().GetComponent<Character>();
 
-		// bool isEnemyInBox = CheckEnemyInBox(_data.CheckBoxCenter, _data.CheckBoxSize);
+		if(enemy              == null){ return false; }
+		if(enemy.CurrentSkill == null){ return false; }
 
-		// Character enemy = Owner.GetTarget().GetComponent<Character>();
+		bool isEnemyInBeforeDelay = ((SkillBase)enemy.CurrentSkill).IsBeforeDelay; 
 
-		// if(enemy              == null){ return false; }
-		// if(enemy.CurrentSkill == null){ return false; }
-
-		// bool isEnemyInBeforeDelay = enemy.CurrentSkill.IsBeforeDelay; 
-
-		// return isEnemyInBox && isEnemyInBeforeDelay;
+		return isEnemyInBeforeDelay;
 	}
 }
 

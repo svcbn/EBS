@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 789582f81dc76cd4f9b00617d2cec08e, type: 3}
+  m_Name: BloodStrikeData
+  m_EditorClassIdentifier: 
+  _id: 12
+  _type: 1
+  _cooldown: 17
+  _priority: 1
+  _isRestrictMoving: 1
+  _beforeDelay: 0.5
+  _afterDelay: 0.5
+  _requireMP: 15
+  _effect: {fileID: 0}
+  _checkBoxCenter: {x: 0, y: 0}
+  _checkBoxSize: {x: 20, y: 20}
+  _hitBoxCenter: {x: 0, y: 0}
+  _hitBoxSize: {x: 20, y: 20}
+  _damage: 10
+  _amount: 8

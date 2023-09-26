@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class UISkillSelector : UIPopup
@@ -9,13 +10,24 @@ public class UISkillSelector : UIPopup
 		Items,
 	}
 
+	private enum Texts
+	{
+		PickerText
+	}
+	
+	private static readonly Color[] s_Colors = new[] { Color.red, Color.blue };
+	
+	private int _playerIndex = 0;
+	
+	private readonly List<UISkillSlot> _slots = new();
+
 	private SkillSelectorInput _input;
 
 	private SkillSelector _selector;
 
 	private UISkillDescriptor _descriptor;
 
-	private List<UISkillSlot> _slots = new();
+	private TextMeshProUGUI _pickerText;
 
 	private int _currentIndex = -1;
 
@@ -23,12 +35,14 @@ public class UISkillSelector : UIPopup
 
 	private void Update()
 	{
-		_input =_selector.Input;
-		if (_input != null)
+		if (_selector.Input == null)
 		{
-			HandleDirectionInput();
-			HandleSelect();
+			return;
 		}
+		
+		_pickerText.text = _input.Owner;
+		HandleDirectionInput();
+		HandleSelect();
 	}
 
 	private void OnDisable()
@@ -49,6 +63,7 @@ public class UISkillSelector : UIPopup
 			if (slot.IsEnabled)
 			{
 				_selector.SelectSkill(_currentIndex);
+				slot.SetBorderColor(s_Colors[_playerIndex]);
 				slot.ShowChoiceEffect();
 				slot.Disable();
 			}
@@ -87,6 +102,9 @@ public class UISkillSelector : UIPopup
 		base.Init();
 
 		Bind<GameObject, Elements>();
+		Bind<TextMeshProUGUI, Texts>();
+
+		_pickerText = Get<TextMeshProUGUI>((int)Texts.PickerText);
 		
 		InitializeSlots();
 	}
@@ -94,6 +112,18 @@ public class UISkillSelector : UIPopup
 	public void SetSelector(SkillSelector selector)
 	{
 		_selector = selector;
+		_selector.InputChanged += input =>
+		{
+			if (_input != _selector.Input)
+			{
+				_playerIndex++;
+				_playerIndex %= s_Colors.Length;
+				_input = _selector.Input;
+			}
+			
+			_slots[_currentIndex].SetBorderColor(s_Colors[_playerIndex]);
+		};
+		_input = selector.Input;
 		InitializeSlots();
 	}
 
@@ -191,6 +221,7 @@ public class UISkillSelector : UIPopup
 		}
 
 		_currentIndex = newIndex;
+		_slots[_currentIndex].SetBorderColor(s_Colors[_playerIndex]);
 		_slots[_currentIndex].Select();
 
 		ShowDescriptionUI();
