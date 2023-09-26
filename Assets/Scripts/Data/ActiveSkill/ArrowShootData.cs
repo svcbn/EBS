@@ -5,7 +5,7 @@ using UnityEngine;
 public class ArrowShootData : ActiveSkillData
 {
 	public GuidedBulletMover missilePrefab;
-    public LayerMask damageLayer;
+    public LayerMask targetLayer;
     public float duration;
     public int missileCount;
     
