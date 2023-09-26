@@ -8,6 +8,6 @@ partial class UISkillSlot
 	private void CheckCooldown()
 	{
 		var image = Get<Image>((int)Elements.CooldownIndicator);
-		image.fillAmount = _skill.CurrentCooldown / _skill.Cooldown;
+		image.fillAmount = 1-  _skill.CurrentCooldown / _skill.Cooldown;
 	}
 }

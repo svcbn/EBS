@@ -36,14 +36,13 @@ public class UISkillList : UIScene
 		if (_left != null)
 		{
 			_left.CollectionChanged -= OnCollectionChanged;
+			_left.CollectionChanged += OnCollectionChanged;
 		}
 		if (_right != null)
 		{
 			_right.CollectionChanged -= OnCollectionChanged;
+			_right.CollectionChanged += OnCollectionChanged;
 		}
-
-		_left.CollectionChanged += OnCollectionChanged;
-		_right.CollectionChanged += OnCollectionChanged;
 	}
 
 	private void OnCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)

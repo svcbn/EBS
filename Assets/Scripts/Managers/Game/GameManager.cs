@@ -145,8 +145,11 @@ public class GameManager : MonoBehaviour
 
 	private void PreparePlayer()
 	{
-		player1 = Managers.Resource.Instantiate("Character/Player 1").GetOrAddComponent<Character>();
-		player2 = Managers.Resource.Instantiate("Character/Player 2").GetOrAddComponent<Character>();
+		player1 = GameObject.Find("Player 1").GetOrAddComponent<Character>();
+		player2 = GameObject.Find("Player 2").GetOrAddComponent<Character>();
+
+		//player1 = Managers.Resource.Instantiate("Character/Player 1").GetOrAddComponent<Character>();
+		//player2 = Managers.Resource.Instantiate("Character/Player 2").GetOrAddComponent<Character>();
 
 		_ui.ShowSkillList(player1, player2);
 

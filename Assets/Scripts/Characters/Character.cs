@@ -32,14 +32,7 @@ public class Character : MonoBehaviour
 	}
 
 	private void Awake()
-	{
-		//temp
-		foreach (var skill in _skills)
-		{
-			skill.Init();
-			skill.Owner = this;
-		}
-		
+	{		
 		_moveBehavior = GetComponent<BehaviorTree>();
 		_rigidbody2 = GetComponent<Rigidbody2D>();
 	}
@@ -57,6 +50,7 @@ public class Character : MonoBehaviour
 
 	public void AddSkill(ISkill skill)
 	{
+		skill.Owner = this;
 		_skills.Add(skill);
 	}
 
