@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CharactorMovementData
   m_EditorClassIdentifier: 
   _maxSpeed: 16.9
-  _maxAcceleration: 79.7
+  _maxAcceleration: 100
   _jumpHeight: 10
   _jumpPower: 23.7
   _timeToJumpApex: 0.2

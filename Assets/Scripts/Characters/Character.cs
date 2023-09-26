@@ -33,7 +33,7 @@ public class Character : MonoBehaviour
 		//temp
 		_skills.Add(gameObject.AddComponent<Slash>());
 		_skills.Add(gameObject.AddComponent<TripleStrike>());
-		//_skills.Add(gameObject.AddComponent<TeleportBack>());
+		_skills.Add(gameObject.AddComponent<TeleportBack>());
 		foreach (var skill in _skills)
 		{
 			skill.Init();
@@ -112,7 +112,7 @@ public class Character : MonoBehaviour
 				if (skill.IsCoolReady)
 					_hasCooldowmSkill = true;
 
-				if (skill.CheckCanUse() && CanUseSkills.Contains(skill) == false)
+				if (skill.CheckCanUse() && CanUseSkills.Contains(skill) == false && skill.IsCoolReady)
 					CanUseSkills.Add(skill);
 
 				if (CurrentSkill != null && CurrentSkill.IsActing == false)
