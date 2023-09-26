@@ -18,7 +18,7 @@ MonoBehaviour:
   _priority: 1
   _type: 1
   _isRestrictMoving: 1
-  _beforeDelay: 0
+  _beforeDelay: 0.3
   _afterDelay: 0.5
   _requireMP: 5
   _checkBoxCenter: {x: 4, y: 0}

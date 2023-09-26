@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DashStrikeData
   m_EditorClassIdentifier: 
   _id: 8
-  _cooldown: 6
+  _cooldown: 15
   _effect: {fileID: 4152039297200343374, guid: 9409f0784f6c8e64686008edcd08e208, type: 3}
   _priority: 1
   _type: 1
