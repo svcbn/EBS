@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00cc6a1a06c762f4396f6405a207d9cb, type: 3}
   m_Name: SlashData
   m_EditorClassIdentifier: Assembly-CSharp::SlashData
-  _checkBoxCenter: {x: 0, y: 0}
-  _checkBoxSize: {x: 0, y: 0}
-  _hitBoxCenter: {x: 0, y: 0}
-  _hitBoxSize: {x: 0, y: 0}
-  _id: 0
+  _checkBoxCenter: {x: 3, y: 3}
+  _checkBoxSize: {x: 3, y: 3}
+  _hitBoxCenter: {x: 2, y: 2}
+  _hitBoxSize: {x: 2, y: 2}
+  _id: 1
   _type: 1
   _priority: 1
   _isRestricteMoving: 1

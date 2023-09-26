@@ -127,42 +127,42 @@ public class GameManager : MonoBehaviour
 
 	private void Update()
 	{
-		InputCheck();
+		//InputCheck();
 	}
 
-	private void InputCheck()
-	{
-		var keys = _registeredKeys.Where(key => Input.GetKeyDown(key));
-		keys.ToList().ForEach(HandleInput);
-	}
+	//private void InputCheck()
+	//{
+	//	var keys = _registeredKeys.Where(key => Input.GetKeyDown(key));
+	//	keys.ToList().ForEach(HandleInput);
+	//}
 
-	private void HandleInput(KeyCode key)
-	{
-		switch (key)
-		{
-			case KeyCode.W:
-				break;
-			case KeyCode.A:
-				break;
-			case KeyCode.S:
-				break;
-			case KeyCode.D:
-				break;
-			case KeyCode.Space:
-				break;
+	//private void HandleInput(KeyCode key)
+	//{
+	//	switch (key)
+	//	{
+	//		case KeyCode.W:
+	//			break;
+	//		case KeyCode.A:
+	//			break;
+	//		case KeyCode.S:
+	//			break;
+	//		case KeyCode.D:
+	//			break;
+	//		case KeyCode.Space:
+	//			break;
 
-			case KeyCode.UpArrow:
-				break;
-			case KeyCode.LeftArrow:
-				break;
-			case KeyCode.DownArrow:
-				break;
-			case KeyCode.RightArrow:
-				break;
-			case KeyCode.Return:
-				break;
-		}
-	}
+	//		case KeyCode.UpArrow:
+	//			break;
+	//		case KeyCode.LeftArrow:
+	//			break;
+	//		case KeyCode.DownArrow:
+	//			break;
+	//		case KeyCode.RightArrow:
+	//			break;
+	//		case KeyCode.Return:
+	//			break;
+	//	}
+	//}
 
 	private void PreparePlayer()
 	{
