@@ -22,7 +22,7 @@ MonoBehaviour:
   _afterDelay: 0.5
   _requireMP: 0
   _checkBoxCenter: {x: 0, y: 0}
-  _checkBoxSize: {x: 3, y: 3}
+  _checkBoxSize: {x: 10, y: 10}
   _hitBoxCenter: {x: 0, y: 0}
   _hitBoxSize: {x: 0, y: 0}
   _damage: 20
