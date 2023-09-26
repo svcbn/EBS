@@ -11,6 +11,7 @@ public class ManaShower : SkillBase, IActiveSkill
 		base.Init();
 
 		_data = Managers.Resource.Load<ManaShowerData>("Data/ManaShowerData");
+		if (_data == null) { Debug.LogWarning($"Fail load Data/ManaShowerData"); return; }
 
 		Id = _data.Id;
 		Type = _data.Type;
@@ -25,13 +26,10 @@ public class ManaShower : SkillBase, IActiveSkill
 
 	public override void Execute()
 	{
-		if (_data == null) { Debug.LogWarning($"Fail load Data/ManaShowerData"); return; }
-
 		base.Execute();
-		Owner.StartCoroutine(ExecuteCo());
 	}
 
-	IEnumerator ExecuteCo()
+	public override IEnumerator ExecuteImplCo()
 	{
 		// 선딜
 		yield return new WaitForSeconds(BeforeDelay);
