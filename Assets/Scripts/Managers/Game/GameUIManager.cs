@@ -6,15 +6,15 @@ public class GameUIManager
 {
 	private UISkillSelector _skillSelector;
 
-	public void ShowSkillSelector(List<SkillInfo> skills)
+	public void ShowSkillSelector(SkillSelector selector)
 	{
 		if (_skillSelector != null)
 		{
 			Managers.Resource.Release(_skillSelector.gameObject);
 		}
 
-		_skillSelector = Managers.UI.ShowSceneUI<UISkillSelector>();
-		_skillSelector.SetItems(skills);
+		_skillSelector = Managers.UI.ShowPopupUI<UISkillSelector>();
+		_skillSelector.SetSelector(selector);
 	}
 
 	public void HideSkillSelector()

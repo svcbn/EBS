@@ -13,8 +13,7 @@ public class UIManager
 	{
 		get
 		{
-			GameObject root = GameObject.Find("@UI_Root");
-			if (root == null)
+			if (GameObject.Find("@UI_Root") is not GameObject root)
 			{
 				root = new() { name = "@UI_Root" };
 			}
@@ -49,7 +48,7 @@ public class UIManager
 		return sceneUI;
 	}
 
-	public T ShowPopupUI<T>(string name = null)
+	public T ShowPopupUI<T>(string name = null, bool usePool = false)
 		where T : UIPopup
 	{
 		if (string.IsNullOrEmpty(name))
@@ -57,7 +56,7 @@ public class UIManager
 			name = typeof(T).Name;
 		}
 
-		GameObject gameObject = Managers.Resource.Instantiate($"UI/Popup/{name}");
+		GameObject gameObject = Managers.Resource.Instantiate($"UI/Popup/{name}", usePool: usePool);
 		T popup = gameObject.GetOrAddComponent<T>();
 		_popupStack.Push(popup);
 
@@ -73,28 +72,26 @@ public class UIManager
 			return;
 		}
 
-		if (_popupStack.Peek() != popup)
+		while (_popupStack.TryPeek(out var last) && last != popup)
 		{
-			Debug.Log($"Can't close popup: {popup.name}");
+			last = _popupStack.Pop();
+			Managers.Resource.Release(last.gameObject);
 		}
 
-		popup = _popupStack.Pop();
-		Managers.Resource.Release(popup.gameObject);
-
+		if (_popupStack.TryPop(out popup))
+		{
+			//popup = _popupStack.Pop();
+			Managers.Resource.Release(popup.gameObject);
+		}
 		_order--;
 	}
 
 	public void ClosePopupUI()
 	{
-		if (_popupStack.Count == 0)
+		if (_popupStack.TryPeek(out var popup))
 		{
-			return;
+			ClosePopupUI(popup);
 		}
-
-		UIPopup popup = _popupStack.Pop();
-		Managers.Resource.Release(popup.gameObject);
-
-		_order--;
 	}
 
 	public void ClearAllPopup()

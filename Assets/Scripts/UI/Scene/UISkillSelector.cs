@@ -5,22 +5,39 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UISkillSelector : UIScene
+public class UISkillSelector : UIPopup
 {
 	private enum Elements
 	{
 		Items,
 	}
 
-	private List<UISkillSlot> _slots = new();
+	private SkillSelector _selector;
 
-	private List<SkillInfo> _skillInfoList;
+	private UISkillDescriptor _descriptor;
+
+	private List<UISkillSlot> _slots = new();
 
 	private int _currentIndex = -1;
 
 	private int _columnCount = 3;
 
 	private void Update()
+	{
+		HandleArrowInput();
+	}
+
+	private void OnDisable()
+	{
+		ClearSlots();
+		if (_descriptor != null)
+		{
+			Managers.UI.ClosePopupUI(_descriptor);
+			_descriptor = null;
+		}
+	}
+
+	private void HandleArrowInput()
 	{
 		Direction direction;
 		if (Input.GetKeyDown(KeyCode.W))
@@ -52,31 +69,26 @@ public class UISkillSelector : UIScene
 		base.Init();
 
 		Bind<GameObject, Elements>();
-		GameObject items = Get<GameObject>((int)Elements.Items);
-		foreach (Transform child in items.transform)
-		{
-			Managers.Resource.Release(child.gameObject);
-		}
-
+		
 		InitializeSlots();
 	}
 
-	public void SetItems(List<SkillInfo> skills)
+	public void SetSelector(SkillSelector selector)
 	{
-		_skillInfoList = skills;
+		_selector = selector;
 		InitializeSlots();
 	}
 
 	private void InitializeSlots()
 	{
 		_currentIndex = -1;
-		_slots?.Clear();
+		ClearSlots();
 
-		if (_skillInfoList != null)
+		if (_selector?.Skills?.Any() is true)
 		{
 			GameObject items = Get<GameObject>((int)Elements.Items);
 
-			foreach (var info in _skillInfoList)
+			foreach (var info in _selector.Skills)
 			{
 				var slot = CreateSlot(info);
 				slot.transform.SetParent(items.transform);
@@ -84,14 +96,23 @@ public class UISkillSelector : UIScene
 				_slots.Add(slot);
 			}
 
-			_currentIndex = 0;
-			_slots.First().Select();
+			SelectItem(0);
 		}
+	}
+
+	private void ClearSlots()
+	{
+		GameObject items = Get<GameObject>((int)Elements.Items);
+		foreach (Transform child in items.transform)
+		{
+			Managers.Resource.Release(child.gameObject);
+		}
+		_slots?.Clear();
 	}
 
 	private UISkillSlot CreateSlot(SkillInfo info)
 	{
-		GameObject go = Managers.Resource.Instantiate("UI/Scene/UISkillSlot");
+		GameObject go = Managers.Resource.Instantiate("UI/Popup/UISkillSlot");
 		
 		var slot = go.GetOrAddComponent<UISkillSlot>();
 		slot.SetSkill(info);
@@ -140,9 +161,46 @@ public class UISkillSelector : UIScene
 			return;
 		}
 
-		_slots[_currentIndex].Unselect();
+		int newIndex = row * _columnCount + column;
+		SelectItem(newIndex);
+	}
 
-		_currentIndex = row * _columnCount + column;
+	private void SelectItem(int newIndex)
+	{
+		if (_currentIndex != -1)
+		{
+			_slots[_currentIndex].Unselect();
+		}
+
+		_currentIndex = newIndex;
 		_slots[_currentIndex].Select();
+
+		ShowDescriptionUI();
+	}
+
+	private void ShowDescriptionUI()
+	{
+		if (_descriptor != null)
+		{
+			Managers.UI.ClosePopupUI(_descriptor);
+		}
+
+		var items = Get<GameObject>((int)Elements.Items);
+		if (!items.TryGetComponent<RectTransform>(out var parent))
+		{
+			return;
+		}
+
+		_descriptor = Managers.UI.ShowPopupUI<UISkillDescriptor>();
+		var card = _descriptor.gameObject.FindChild("Card");
+		if (!card.TryGetComponent<RectTransform>(out var child))
+		{
+			return;
+		}
+
+		float width = (parent.rect.width / 2f) + (child.rect.width / 2f);
+		float space = 10f;
+		child.transform.localPosition = new(parent.localPosition.x + width + space, 0, 0);
+		_descriptor.SetSkillInfo(_slots[_currentIndex].SkillInfo);
 	}
 }
