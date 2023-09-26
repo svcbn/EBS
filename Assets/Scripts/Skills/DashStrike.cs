@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HeavyStrike : SkillBase, IActiveSkill
+public class DashStrike : SkillBase, IActiveSkill
 {
-	private HeavyStrikeData _data;
+	private DashStrikeData _data;
 
 	public override void Init()
 	{
 		base.Init();
 
-		_data = Managers.Resource.Load<HeavyStrikeData>("Data/HeavyStrikeData");
+		_data = Managers.Resource.Load<DashStrikeData>("Data/DashStrikeData");
 
 		Id = _data.Id;
 		Type = _data.Type;
@@ -25,7 +25,7 @@ public class HeavyStrike : SkillBase, IActiveSkill
 
 	public override void Execute()
 	{
-		if (_data == null) { Debug.LogWarning($"Fail load Data/HeavyStrikeData"); return; }
+		if (_data == null) { Debug.LogWarning($"Fail load Data/DashStrikeData"); return; }
 
 		base.Execute();
 		Owner.StartCoroutine(ExecuteCo());
@@ -60,9 +60,9 @@ public class HeavyStrike : SkillBase, IActiveSkill
 
 			// Todo : statmanager 쪽에 데미지 연산 요청
 
-			// Todo : Charactorstatus 쪽에 스턴 요청
-
+			// Todo : charactorstatus 쪽에 스턴 요청
 		}
+
 
 		// 후딜
 		yield return new WaitForSeconds(AfterDelay);
