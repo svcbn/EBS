@@ -43,6 +43,8 @@ public abstract class SkillBase : MonoBehaviour, ISkill
 
 	public bool IsActing { get; protected set; }
 
+	public bool IsBeforeDelay { get; protected set; }
+
 	protected virtual void Awake()
 	{
 		IsCoolReady = true;
@@ -53,14 +55,27 @@ public abstract class SkillBase : MonoBehaviour, ISkill
 	}
 
 	public virtual void Execute()
-	{
+	{	
 		Debug.Log(GetType().Name);
 
 		IsCoolReady = false;
 		IsActing = true;
 
 		CalculateCooltime();
+
+		IsBeforeDelay = true;
+
+		Invoke("ExecuteImpl", BeforeDelay);
+	}	
+
+	void ExecuteImpl()
+	{
+		IsBeforeDelay = false;
+		Owner.StartCoroutine(ExecuteImplCo());
 	}
+	
+	public abstract IEnumerator ExecuteImplCo();
+
 
 	public abstract bool CheckCanUse();
 
@@ -100,4 +115,7 @@ public abstract class SkillBase : MonoBehaviour, ISkill
 
 		onFinish?.Invoke();
 	}
+
+
+
 }

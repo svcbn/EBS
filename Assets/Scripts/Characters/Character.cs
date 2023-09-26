@@ -33,6 +33,9 @@ public class Character : MonoBehaviour
 		_skills.Add(gameObject.AddComponent<Slash>());
 		_skills.Add(gameObject.AddComponent<TripleStrike>());
 		_skills.Add(gameObject.AddComponent<TeleportBack>());
+		_skills.Add(gameObject.AddComponent<Block>());
+
+
 		foreach (var skill in _skills)
 		{
 			skill.Init();
