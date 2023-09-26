@@ -43,6 +43,8 @@ public abstract class SkillBase : MonoBehaviour, ISkill
 
 	public bool IsActing { get; protected set; }
 
+	public bool IsBeforeDelay { get; protected set; }
+
 	protected virtual void Awake()
 	{
 		IsCoolReady = true;

@@ -11,6 +11,7 @@ public class TeleportBack : SkillBase, IActiveSkill
 		base.Init();
 
 		_data = Managers.Resource.Load<TeleportBackData>("Data/TeleportBackData");
+		if (_data == null){ Debug.LogWarning($"Fail load Data/TeleportBackData"); return; }
 
 		Id                = _data.Id;
 		Type              = _data.Type;
@@ -24,44 +25,26 @@ public class TeleportBack : SkillBase, IActiveSkill
 	}
 
 	public override void Execute()
-	{
-		if (_data == null){ Debug.LogWarning($"Fail load Data/TeleportBackData"); return;  }
-		
+	{		
 		base.Execute();
 
-		Owner.StartCoroutine(ExecuteCo());
+		IsBeforeDelay = true;
+		Invoke("ExecuteImpl", BeforeDelay);
+
+		StartCoroutine(PlayTelepotEffect(Owner.transform)); // TBD: 이펙트 재생 위치 및 시간 고려필요
 	}
 
-	public override bool CheckCanUse()
+	void ExecuteImpl()
 	{
-
-		Vector3 center = (Vector2)Owner.transform.position + _data.CheckBoxCenter;
-		Vector3 size =  _data.CheckBoxSize;
-
-		var boxes = Physics2D.OverlapBoxAll( center, size , 0);
-		foreach (var box in boxes)
-		{
-			if (!box.TryGetComponent<Character>(out var character) || character == Owner)
-			{
-				continue;
-			}
-
-			if( character == Owner.GetTarget().GetComponent<Character>() ){
-				return true;
-			}
-		}
-		return false;
+		IsBeforeDelay = false;
+		Owner.StartCoroutine(ExecuteImplCo());
 	}
 
-
-	IEnumerator ExecuteCo()
+	IEnumerator ExecuteImplCo()
 	{
-		PlayTelepotEffect(Owner.transform);
-		yield return new WaitForSeconds(BeforeDelay);
-
 		Owner.transform.position = CalcTeleportPos();
 
-		PlayPostEffect(Owner.transform);
+		StartCoroutine(PlayPostEffect(Owner.transform));
 		yield return new WaitForSeconds(AfterDelay);
 	}
 
@@ -91,33 +74,63 @@ public class TeleportBack : SkillBase, IActiveSkill
 		return destV;
 	}
 
-	void PlayTelepotEffect(Transform pos )
+	IEnumerator PlayTelepotEffect(Transform pos)
 	{
-		if(_data.teleportEffect != null){
-			_data.teleportEffect.transform.position = pos.position;
-			_data.teleportEffect.Play();
-		}else{
-			Debug.Log("teleportEffect is null");
+		GameObject effect = null;
+		if (_data.teleportEffect != null)
+		{
+			string effName = "Teleport_Before";
+			effect = Managers.Resource.Instantiate("Skills/"+effName);
+			effect.transform.position = Owner.transform.position;
 		}
+
+		yield return new WaitForSeconds(0.5f); // 이펙트 재생 시간
+
+		Managers.Resource.Release(effect);
 	}
-	void PlayPostEffect(Transform pos)
+
+	IEnumerator PlayPostEffect(Transform pos)
 	{
-		if(_data.postEffect != null){
-			_data.postEffect.transform.position = pos.position;
-			_data.postEffect.Play();
-		}else{
-			Debug.Log("teleportPostEffect is null");
+		GameObject effect = null;
+		if (_data.postEffect != null)
+		{
+			string effName = "Teleport_After";
+			effect = Managers.Resource.Instantiate("Skills/"+effName);
+			effect.transform.position = Owner.transform.position;
 		}
+
+		yield return new WaitForSeconds(0.5f); // 이펙트 재생 시간
+
+		Managers.Resource.Release(effect);
 	}
     
 	
 	void OnDrawGizmos() 
 	{
-
-		Gizmos.color = Color.red;
-		Vector3 checkboxPos = Owner.transform.position;
-		Gizmos.DrawWireCube(checkboxPos + (Vector3)_data.CheckBoxCenter, (Vector3)_data.CheckBoxSize);
+		// Gizmos.color = Color.red;
+		// Vector3 checkboxPos = Owner.transform.position;
+		// Gizmos.DrawWireCube(checkboxPos + (Vector3)_data.CheckBoxCenter, (Vector3)_data.CheckBoxSize);
     }
+
+	public override bool CheckCanUse()
+	{
+		Vector3 center = (Vector2)Owner.transform.position + _data.CheckBoxCenter;
+		Vector3 size =  _data.CheckBoxSize;
+
+		var boxes = Physics2D.OverlapBoxAll( center, size , 0);
+		foreach (var box in boxes)
+		{
+			if (!box.TryGetComponent<Character>(out var character) || character == Owner)
+			{
+				continue;
+			}
+
+			if ( character == Owner.GetTarget().GetComponent<Character>() ){
+				return true;
+			}
+		}
+		return false;
+	}
 
 }
 
