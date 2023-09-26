@@ -18,7 +18,7 @@ public class StatManager
 	private float[] _invincibleTimers = new float[2];
 	private Coroutine _invincibleCR;
 
-	private Character[] characters = new Character[2];
+	private Character[] _characters = new Character[2];
 
 	public delegate void OnCharacterEvent(int actorIndex);
 	public event OnCharacterEvent onBlockDamage;
@@ -37,6 +37,9 @@ public class StatManager
 
 		if (_invincibleCR != null) Managers.Instance.StopCoroutine(_invincibleCR);
 		_invincibleCR = Managers.Instance.StartCoroutine(CR_TickInvincibleTimers());
+
+		_characters[0] = GameObject.Find("Player 1").GetComponent<Character>();
+		_characters[1] = GameObject.Find("Player 2").GetComponent<Character>();
 	}
 
 	public void SoftResetStats()
@@ -93,7 +96,7 @@ public class StatManager
 			//죽음 체크
 			if (_currentHps[playerIndex] <= 0)
 			{
-				GameManager.Instance.SetRoundWinner(characters[(playerIndex + 1) % 2]);
+				GameManager.Instance.SetRoundWinner(_characters[(playerIndex + 1) % 2]);
 				GameManager.Instance.ChangeState(GameManager.GameState.RoundOver);
 				Debug.Log($"Player {playerIndex} died.");
 			}

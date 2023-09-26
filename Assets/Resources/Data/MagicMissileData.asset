@@ -13,26 +13,25 @@ MonoBehaviour:
   m_Name: MagicMissileData
   m_EditorClassIdentifier: 
   _id: 6
-  _cooldown: 3
+  _cooldown: 10
   _effect: {fileID: 0}
   _priority: 1
   _type: 1
-  _isRestrictMoving: 0
-  _beforeDelay: 0.1
-  _afterDelay: 0.1
+  _isRestrictMoving: 1
+  _beforeDelay: 0.7
+  _afterDelay: 0.7
   _requireMP: 1
   _checkBoxCenter: {x: 0, y: 0}
   _checkBoxSize: {x: 30, y: 30}
   _hitBoxCenter: {x: 0, y: 0}
   _hitBoxSize: {x: 1, y: 1}
-  _damage: 1
+  _damage: 2
   missilePrefab: {fileID: 1941211119430951607, guid: 79bd5dbc4da377c4d9e1de615713fa4b, type: 3}
   targetLayer:
     serializedVersion: 2
     m_Bits: 256
   duration: 1
   missileCount: 5
-  fireBallDelay: 1
   range: 20
   bezierDelta: 10
   bezierDelta2: 10

@@ -56,6 +56,7 @@ public class Slash : SkillBase, IActiveSkill
 
 			//StatManager 쪽에 데미지 연산 요청
 			Managers.Stat.GiveDamage(1 - Owner.playerIndex, _data.Damage);
+			character.Status.SetKnockbackEffect(.2f, 3f, transform.position);
 		}
 
 

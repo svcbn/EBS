@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TeleportEvacuateData
   m_EditorClassIdentifier: 
   _id: 3
-  _cooldown: 3
+  _cooldown: 7
   _effect: {fileID: 0}
   _priority: 1
   _type: 0

@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: TripleStrikeData
   m_EditorClassIdentifier: 
   _id: 2
-  _cooldown: 3
+  _cooldown: 6
   _effect: {fileID: 5856407191537457485, guid: 2d8be82c267721f40b6d9d8a1685ecf8, type: 3}
   _priority: 1
   _type: 1
-  _isRestrictMoving: 1
+  _isRestrictMoving: 0
   _beforeDelay: 0.5
   _afterDelay: 0.5
   _requireMP: 0
@@ -25,5 +25,5 @@ MonoBehaviour:
   _checkBoxSize: {x: 7, y: 3}
   _hitBoxCenter: {x: 0, y: 0}
   _hitBoxSize: {x: 7, y: 2}
-  _damage: 5
+  _damage: 4
   _delayBetween: 0.1

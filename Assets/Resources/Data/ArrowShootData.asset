@@ -19,19 +19,19 @@ MonoBehaviour:
   _type: 1
   _isRestrictMoving: 0
   _beforeDelay: 0.1
-  _afterDelay: 0.3
+  _afterDelay: 0.5
   _requireMP: 1
   _checkBoxCenter: {x: 0, y: 0}
   _checkBoxSize: {x: 20, y: 20}
   _hitBoxCenter: {x: 0, y: 0}
   _hitBoxSize: {x: 1, y: 1}
-  _damage: 1
+  _damage: 2
   missilePrefab: {fileID: 1941211119430951607, guid: 96898d6cec7f3dd45b40548a32379d22, type: 3}
   targetLayer:
     serializedVersion: 2
     m_Bits: 256
-  duration: 1
+  duration: 0.7
   missileCount: 1
   range: 20
-  bezierDelta: 10
-  bezierDelta2: 10
+  bezierDelta: 1
+  bezierDelta2: 1

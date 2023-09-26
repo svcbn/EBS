@@ -86,7 +86,10 @@ public class UIManager
 		if (_popupStack.TryPop(out popup))
 		{
 			//popup = _popupStack.Pop();
-			Managers.Resource.Release(popup.gameObject);
+			if (popup != null && popup.gameObject != null)
+			{
+				Managers.Resource.Release(popup.gameObject);
+			}
 		}
 		_order--;
 	}

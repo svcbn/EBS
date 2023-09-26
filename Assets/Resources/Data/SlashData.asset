@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SlashData
   m_EditorClassIdentifier: Assembly-CSharp::SlashData
   _id: 1
-  _cooldown: 5
+  _cooldown: 10
   _effect: {fileID: 8370813354424140250, guid: 6f94f4460f3f91b45bcbb6d760e7c6f3, type: 3}
   _priority: 1
   _type: 1
