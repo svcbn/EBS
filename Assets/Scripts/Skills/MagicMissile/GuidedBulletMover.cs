@@ -68,14 +68,11 @@ public class GuidedBulletMover : Mover
             //if (col.gameObject != owner.gameObject) // Owner is the self gameObject
             if (col.GetComponent<Character>() != owner)
             {
-                //Debug.Log($"MagicMissile: {col.gameObject.name}");
+                
                 validTargets.Add(col);
-
-                // 진입이 안됨
             }
         }
 
-        Debug.Log( "   validTargets.Count :  " + validTargets.Count );
         if (validTargets.Count > 0)
         {
             Collider2D c = validTargets[Random.Range(0, validTargets.Count)];

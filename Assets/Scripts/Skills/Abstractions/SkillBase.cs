@@ -93,7 +93,9 @@ public abstract class SkillBase : MonoBehaviour, ISkill
 	protected virtual bool CheckEnemyInBox(Vector2 center, Vector2 size)
 	{
 		float x = Owner.transform.localScale.x < 0 ? -1 : 1;
+		
 		Vector2 centerInWorld = (Vector2)Owner.transform.position + new Vector2(x * center.x, center.y);
+
 		var boxes = Physics2D.OverlapBoxAll(centerInWorld, size, 0);
 		bool flag = boxes.Length != 0;
 		return boxes.Any(box => box.TryGetComponent<Character>(out var character) && character != Owner);
@@ -136,11 +138,24 @@ public abstract class SkillBase : MonoBehaviour, ISkill
 
 		Transform parent = Owner.transform;
 		GameObject effect = Managers.Resource.Instantiate("Skills/"+effName, parent ); // paraent를 character.gameObject로
-		effect.transform.localPosition = Vector3.zero;
+		
+		if(effect){
+			effect.transform.localPosition = Vector3.zero;
+		}else{
+			Debug.LogError($"effect is null. effName :{effName}");
+		}
 
 		yield return new WaitForSeconds(duration); // 이펙트 재생 시간
 		Managers.Resource.Release(effect);
 		
 	}
+
+    protected void DebugRay(Vector2 from, Vector2 dir)
+    {
+        Debug.DrawLine(from + new Vector2(dir.x, dir.y) / 2, from + new Vector2(-dir.x, dir.y) / 2, Color.red, 1f);
+        Debug.DrawLine(from + new Vector2(-dir.x, -dir.y) / 2, from + new Vector2(dir.x, -dir.y) / 2, Color.red, 1f);
+        Debug.DrawLine(from + new Vector2(-dir.x, dir.y) / 2, from + new Vector2(-dir.x, -dir.y) / 2, Color.red, 1f);
+        Debug.DrawLine(from + new Vector2(dir.x, dir.y) / 2, from + new Vector2(dir.x, -dir.y) / 2, Color.red, 1f);
+    }
 
 }

@@ -32,33 +32,15 @@ public class Block : SkillBase, IActiveSkill
 
 	public override IEnumerator ExecuteImplCo()
 	{
-		StartCoroutine(PlayEffect(Owner.transform));
+		if (_data.Effect != null){ PlayEffect("Block_Green", Duration); }
 
-
-		// TODO: _data.Duration 초간 무적,CC면역, 
-		// DamageManager에서 함수 제공 예정
-
+		Managers.Stat.BeInvincible(Owner.playerIndex ,Duration);
 
 		// 후딜
 		yield return new WaitForSeconds(AfterDelay);
 	}
 
 	
-	IEnumerator PlayEffect(Transform pos)
-	{
-		GameObject effect = null;
-		if (_data.Effect != null)
-		{
-			effect = Managers.Resource.Instantiate("Skills/"+_data.Effect.name);
-			effect.transform.position = Owner.transform.position;
-		}
-
-		yield return new WaitForSeconds(_data.Duration); // 이펙트 재생 시간
-
-		Managers.Resource.Release(effect);
-	}
-
-
 	public override bool CheckCanUse() //CheckCanUse
 	{
 		Character enemy = Owner.GetTarget().GetComponent<Character>();

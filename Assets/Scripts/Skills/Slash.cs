@@ -45,6 +45,8 @@ public class Slash : SkillBase, IActiveSkill
 		// 실제 피해
 		Vector2 centerInWorld = (Vector2)Owner.transform.position + new Vector2(x * _data.HitBoxCenter.x, _data.HitBoxCenter.y);
 		var boxes = Physics2D.OverlapBoxAll(centerInWorld, _data.HitBoxSize, 0);
+		DebugRay(centerInWorld, _data.HitBoxSize);
+
 		foreach (var box in boxes)
 		{
 			if (!box.TryGetComponent<Character>(out var character) || character == Owner)
@@ -70,19 +72,6 @@ public class Slash : SkillBase, IActiveSkill
 		bool isEnoughMP = CheckEnoughMP(RequireMP);
 
 		return isEnemyInBox && isEnoughMP;
-	}
-
-	public void OnDrawGizmos()
-	{
-		Gizmos.color = Color.red;
-		Vector3 hitboxPos = Owner.transform.position;
-		// if ( gameObject != null){
-		// 	hitboxPos = transform.position;
-		// }
-
-		//Debug.Log( $"OnDrawGizmos() | hitboxPos {hitboxPos}  hitBoxCenter {_data.HitBoxCenter}  hitBoxSize {_data.HitBoxSize} " );
-
-		//Gizmos.DrawCube(hitboxPos + (Vector3)_data.HitBoxCenter, (Vector3)_data.HitBoxSize);
 	}
 }
 
