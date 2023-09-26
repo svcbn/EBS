@@ -36,7 +36,10 @@ public class TripleStrike : SkillBase, IActiveSkill
 	IEnumerator ExecuteCo()
 	{
 		// 애니메이션 재생
-		_data.SpriteEffect.Play();
+		if (_data.SpriteEffect != null)
+		{
+			_data.SpriteEffect.Play();
+		}
 
 		// 선딜
 		Debug.Log($"선딜 시작  {BeforeDelay}");

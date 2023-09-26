@@ -20,6 +20,7 @@ public class CharacterGround : MonoBehaviour
 		onGround = Physics2D.Raycast(transform.position + colliderOffset, Vector2.down, groundLength, groundLayer) || Physics2D.Raycast(transform.position - colliderOffset, Vector2.down, groundLength, groundLayer);
 	}
 
+
 	private void OnDrawGizmos()
 	{
 		//Draw the ground colliders on screen for debug purposes
