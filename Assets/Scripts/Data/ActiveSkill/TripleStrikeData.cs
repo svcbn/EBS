@@ -8,4 +8,5 @@ public class TripleStrikeData : ActiveSkillData
 	[SerializeField] private float _delayBetween;
 
 	public float DelayBetween => _delayBetween;
+
 }

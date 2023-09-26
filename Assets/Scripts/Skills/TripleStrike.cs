@@ -37,21 +37,20 @@ public class TripleStrike : SkillBase, IActiveSkill
 	IEnumerator ExecuteCo()
 	{
 		// 선딜
-		Debug.Log($"선딜 시작  {BeforeDelay}");
 		yield return new WaitForSeconds(BeforeDelay);
+
+		GameObject effect = null;
 
 		// 애니메이션 재생
 		if (_data.Effect != null)
 		{
-			_data.Effect.transform.position = Owner.transform.position;
-			_data.Effect.SetActive(true);
+			effect = Managers.Resource.Instantiate("Skills/" + _data.Effect.name);
+			effect.transform.position = Owner.transform.position;
 		}
 
 		for (int i = 0; i < 3; i++)
 		{
 			// 실제 피해
-			Debug.Log($"실제 피해 ");
-			Debug.Log($"시전 시간  {Duration}");
 
 			float x = Owner.transform.localScale.x < 0 ? -1 : 1;
 			Vector2 centerInWorld = (Vector2)Owner.transform.position + new Vector2(x * _data.HitBoxCenter.x, _data.HitBoxCenter.y);
@@ -64,16 +63,17 @@ public class TripleStrike : SkillBase, IActiveSkill
 				}
 
 				character.TakeDamage(1);
-				Debug.Log(character.name + "에게 피해를 입힘.");
 			}
+
+			yield return new WaitForSeconds(_data.DelayBetween);
 		}
 
 
 		// 후딜
-		Debug.Log($"후딜 시작  {AfterDelay}");
 		yield return new WaitForSeconds(AfterDelay);
 
-		_data.Effect.SetActive(false);
+		Managers.Resource.Release(effect);
+
 	}
 
 	public override bool CheckCanUse()

@@ -25,5 +25,6 @@ MonoBehaviour:
   _duration: 0
   _afterDelay: 0
   _requireMP: 0
+  _damage: 5
   _effect: {fileID: 5856407191537457485, guid: 2d8be82c267721f40b6d9d8a1685ecf8, type: 3}
-  _delayBetween: 0
+  _delayBetween: 0.1

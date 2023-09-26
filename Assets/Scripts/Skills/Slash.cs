@@ -58,7 +58,6 @@ public class Slash : SkillBase, IActiveSkill
 			}
 
 			character.TakeDamage(1);
-			Debug.Log(character.name + "에게 피해를 입힘.");
 		}
 
 

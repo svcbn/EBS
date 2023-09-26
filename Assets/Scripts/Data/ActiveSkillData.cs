@@ -22,6 +22,7 @@ public class ActiveSkillData : ScriptableObject
 	[SerializeField] private float _duration;
 	[SerializeField] private float _afterDelay;
 	[SerializeField] private float _requireMP;
+	[SerializeField] private float _damage;
 
 	[SerializeField] private GameObject _effect;
 
@@ -40,6 +41,7 @@ public class ActiveSkillData : ScriptableObject
 	public float Duration => _duration;
 	public float AfterDelay => _afterDelay;
 	public float RequireMP => _requireMP;
+	public float Damage => _damage;
 
 	public GameObject Effect => _effect;
 }
