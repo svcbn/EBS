@@ -20,11 +20,12 @@ public class Character : MonoBehaviour
 	private GameObject _target;
 
 	private BehaviorTree _moveBehavior;
+	private Rigidbody2D _rigidbody2;
 
 	private List<ISkill> _skills = new();
 	
 	private bool _hasCooldowmSkill;
-	private bool _canMove;
+
 
 
 	private void Awake()
@@ -32,6 +33,7 @@ public class Character : MonoBehaviour
 		//temp
 		_skills.Add(gameObject.AddComponent<Slash>());
 		_skills.Add(gameObject.AddComponent<TripleStrike>());
+		//_skills.Add(gameObject.AddComponent<TeleportBack>());
 		foreach (var skill in _skills)
 		{
 			skill.Init();
@@ -39,6 +41,7 @@ public class Character : MonoBehaviour
 		}
 		
 		_moveBehavior = GetComponent<BehaviorTree>();
+		_rigidbody2 = GetComponent<Rigidbody2D>();
 	}
 
 	private void Start()

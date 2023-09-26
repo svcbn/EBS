@@ -16,7 +16,7 @@ MonoBehaviour:
   _checkBoxSize: {x: 20, y: 20}
   _hitBoxCenter: {x: 0, y: 0}
   _hitBoxSize: {x: 4, y: 4}
-  _id: 1
+  _id: 3
   _type: 0
   _priority: 1
   _isRestrictMoving: 1

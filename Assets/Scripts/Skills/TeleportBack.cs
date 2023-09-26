@@ -15,9 +15,9 @@ public class TeleportBack : SkillBase, IActiveSkill
 		Id                = _data.Id;
 		Type              = _data.Type;
 		Priority          = _data.Priority;
-		//IsRestricteMoving = _data.IsRestricteMoving;
+		IsRestrictMoving = _data.IsRestrictMoving;
 
-		Cooldown          = _data.Cooldown;
+		Cooldown		  = _data.Cooldown;
 		BeforeDelay       = _data.BeforeDelay;
 		Duration          = _data.Duration;
 		AfterDelay        = _data.AfterDelay;
@@ -119,10 +119,7 @@ public class TeleportBack : SkillBase, IActiveSkill
 
 		Gizmos.color = Color.red;
 		Vector3 checkboxPos = Owner.transform.position;
-
-		Debug.Log( $"OnDrawGizmos() | checkboxPos {checkboxPos}  checkBoxCenter {_data.CheckBoxCenter}  checkBoxSize {_data.CheckBoxSize} " );
-
-		Gizmos.DrawCube(checkboxPos + (Vector3)_data.CheckBoxCenter, (Vector3)_data.CheckBoxSize);
+		Gizmos.DrawWireCube(checkboxPos + (Vector3)_data.CheckBoxCenter, (Vector3)_data.CheckBoxSize);
     }
 
 }
