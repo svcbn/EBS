@@ -39,7 +39,7 @@ public class PoolManager
 
 	public void Release(Poolable poolable)
 	{
-		poolable.transform.parent = Root;
+		poolable.transform.SetParent(Root);
 		poolable.Pool.Release(poolable);
 	}
 

@@ -22,12 +22,21 @@ public class UISkillSlot : UIBase
 
 	private Coroutine _scaleHandler;
 
+	public SkillInfo SkillInfo => _info;
+
 	protected override void Awake()
 	{
 		base.Awake();
 
 		_border = GetComponent<Image>();
-		_border.color = s_UnselectedColor;
+	}
+
+	private void OnEnable()
+	{
+		if (_border != null)
+		{
+			_border.color = s_UnselectedColor;
+		}
 	}
 
 	public override void Init()
@@ -43,6 +52,7 @@ public class UISkillSlot : UIBase
 	public void SetSkill(SkillInfo info)
 	{
 		_info = info;
+		SetSkillInfo();
 	}
 
 	public void Select()
@@ -68,7 +78,10 @@ public class UISkillSlot : UIBase
 			_scaleHandler = null;
 		}
 
-		_border.color = s_UnselectedColor;
+		if (_border != null)
+		{
+			_border.color = s_UnselectedColor;
+		}
 		transform.localScale = Vector3.one;
 	}
 

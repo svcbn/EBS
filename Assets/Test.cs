@@ -4,15 +4,30 @@ using UnityEngine;
 
 public class Test : MonoBehaviour
 {
+	private UISkillSelector _selector;
+
 	private void Awake()
 	{
-		var skillManager = new SkillManager();
-		skillManager.Init();
-		var selector = Managers.UI.ShowSceneUI<UISkillSelector>();
-		selector.SetItems(skillManager.GeneratePool(9));
+		
 	}
 
 	private void Update()
 	{
+		if (Input.GetKeyDown(KeyCode.Space))
+		{
+			if (_selector == null)
+			{
+				var skillManager = new SkillManager();
+				skillManager.Init();
+				var selector = new SkillSelector(skillManager.GeneratePool(9));
+				_selector = Managers.UI.ShowPopupUI<UISkillSelector>();
+				_selector.SetSelector(selector);
+			}
+			else
+			{
+				Managers.UI.ClosePopupUI(_selector);
+				_selector = null;
+			}
+		}
 	}
 }
