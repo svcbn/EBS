@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
 			_player1HP = value;
 			if (value < 0)
 			{
-				isPlayer1Defeat = true;
+				_isPlayer1Defeat = true;
 				ChangeState(GameState.GameOver);
 			}
 		}
@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
 			_player2HP = value;
 			if(value < 0)
 			{
-				isPlayer1Defeat = false;
+				_isPlayer1Defeat = false;
 				ChangeState(GameState.GameOver);
 			}
 		}
@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
 	private int _player1HP;
 	private int _player2HP;
 	private int[] roundDamage = {0, 0, 4, 8, 12, 20, 30, 30, 30, 30};
-	private bool isPlayer1Defeat = false;
+	private bool _isPlayer1Defeat = false;
 	private bool _isPlayer1Pick = false;
 	#endregion
 
@@ -170,13 +170,11 @@ public class GameManager : MonoBehaviour
 
     private void OnPickSkill()
     {
-		Time.timeScale = 0f;
-
+		Character winner = _isPlayer1Defeat ? player2 : player1;
 		// if round1, player1 is first
-		Character winner = GetWinner();
 		// else, last round's winner is first
 		_currentPicker = CurrentRound == 1 ? player1 : winner;
-		_isPlayer1Pick = _currentPicker == player1;
+		_isPlayer1Pick = winner == player1;
 
 		_pickCountIndex = 0;
 		_pickCount = _pickCountList[_pickCountIndex];
@@ -203,9 +201,8 @@ public class GameManager : MonoBehaviour
 			Debug.LogError($"Undefined skill type. ID: {skillInfo.Id}, Name: {skillInfo.Name}");
 			return;
 		}
-		
-		ISkill skill = _currentPicker.gameObject.AddComponent(skillType) as ISkill;
-		if (skill == null)
+
+		if (_currentPicker.gameObject.AddComponent(skillType) is not ISkill skill)
 		{
 			Debug.LogError($"Can't add skill to {_currentPicker}. Id: {skillInfo.Id}, Name: {skillInfo.Name}");
 			return;
@@ -252,7 +249,6 @@ public class GameManager : MonoBehaviour
 		// change something
 
 		PrepareBattle();
-		Time.timeScale = 1f;
     }
 
     private void OnPostRound()
@@ -269,7 +265,7 @@ public class GameManager : MonoBehaviour
     private void OnGameOver()
     {
         // winner ui??
-		if (isPlayer1Defeat)
+		if (_isPlayer1Defeat)
 		{
 			// player2 win
 		}

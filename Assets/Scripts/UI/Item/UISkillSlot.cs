@@ -22,6 +22,8 @@ public partial class UISkillSlot : UIBase
 
 	private Image _border;
 
+	private Color _selectedColor = s_SelectedColor;
+
 	public SkillInfo SkillInfo => _info;
 
 	protected override void Awake()
@@ -68,6 +70,15 @@ public partial class UISkillSlot : UIBase
 	{
 		_info = info;
 		SetSkillInfo();
+	}
+	
+	public void SetBorderColor(Color color, bool overrideAlpha = false)
+	{
+		if (_border != null)
+		{
+			_selectedColor = overrideAlpha ? color : new Color(color.r, color.g, color.b, s_SelectedColor.a);
+			_border.color = _selectedColor;
+		}
 	}
 
 	private void SetSkillInfo()
