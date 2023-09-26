@@ -10,7 +10,7 @@ public class SkillManager
 
 	private Dictionary<Character, List<ISkill>> _skills = new();
 
-	private Dictionary<int, ISkill> _skillCache = new();
+	private Dictionary<uint, ISkill> _skillCache = new();
 
 	public void Init()
 	{
@@ -55,7 +55,7 @@ public class SkillManager
 		return _skillData.Skills.FirstOrDefault(info => info.Id == skill.Id);
 	}
 
-	public ISkill GetSkillById(int id)
+	public ISkill GetSkillById(uint id)
 	{
 		if (!_skillCache.TryGetValue(id, out var skill))
 		{

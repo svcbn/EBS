@@ -55,6 +55,11 @@ public class Character : MonoBehaviour
 		}
 	}
 
+	public void AddSkill(ISkill skill)
+	{
+		_skills.Add(skill);
+	}
+
 	private void Update()
 	{
 		SetMoveBTVariables();

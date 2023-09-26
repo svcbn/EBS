@@ -24,6 +24,16 @@ public class UISkillSelector : UIPopup
 
 	private void Update()
 	{
+		if (_currentIndex != -1 && Input.GetKeyDown(KeyCode.Return))
+		{
+			var slot = _slots[_currentIndex];
+			if (slot.enabled)
+			{
+				_selector.SelectSkill(_currentIndex);
+				slot.enabled = false;
+			}
+		}
+
 		HandleArrowInput();
 	}
 

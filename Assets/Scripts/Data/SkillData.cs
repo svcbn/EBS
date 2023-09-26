@@ -16,11 +16,17 @@ public class SkillInfo : ISerializationCallbackReceiver
 
 	public string Name;
 
+	public string SkillType;
+
+	public float CoolDown;
+
 	public string Description;
 
 	public string SpriteName;
 
 	public Sprite Sprite;
+
+	public ActiveSkillData Data;
 
 	public void OnBeforeSerialize()
 	{
@@ -29,5 +35,15 @@ public class SkillInfo : ISerializationCallbackReceiver
 	public void OnAfterDeserialize()
 	{
 		Sprite = Managers.Resource.Load<Sprite>($"Sprites/{SpriteName}");
+		Data = Managers.Resource.Load<ActiveSkillData>($"Data/{Name}Data");
+		if (Data != null)
+		{
+			SkillType = "Active";
+			CoolDown = Data.Cooldown;
+		}
+		else
+		{
+			SkillType = "Passive";
+		}
 	}
 }
