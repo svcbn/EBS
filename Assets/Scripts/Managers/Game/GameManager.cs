@@ -1,4 +1,6 @@
+using BehaviorDesigner.Runtime;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -284,7 +286,17 @@ public class GameManager : MonoBehaviour
 
 		if (State != GameState.GameOver)
 		{
-			ChangeState(GameState.PickSkill);
+			var popup = Managers.UI.ShowPopupUI<UIRoundWinner>();
+			popup.SetWinner(_roundWinner);
+			IEnumerator ShowRoundWinner()
+			{
+				yield return new WaitForSeconds(3f);
+				Managers.UI.ClosePopupUI(popup);
+				ChangeState(GameState.PickSkill);
+			}
+
+			StartCoroutine(ShowRoundWinner());
+			
 		}
     }
     
@@ -310,9 +322,11 @@ public class GameManager : MonoBehaviour
 	{
 		player1.gameObject.SetActive(true);
 		player2.gameObject.SetActive(true);
-		
-		player1.BehaviorTree.enabled = false;
-		player2.BehaviorTree.enabled = false;
+
+		player1.GetComponent<BehaviorTree>().enabled = false;
+		player2.GetComponent<BehaviorTree>().enabled = false;
+		// player1.BehaviorTree.enabled = false;
+		// player2.BehaviorTree.enabled = false;
 
 		player1.GetComponent<CharacterMovement>().PlayerInput = Vector2.zero;
 		player2.GetComponent<CharacterMovement>().PlayerInput = Vector2.zero;

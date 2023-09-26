@@ -110,13 +110,11 @@ public abstract class SkillBase : MonoBehaviour, ISkill
 
 	private static IEnumerator CoCalculateTime(float time, Action<float> onUpdate, Action onFinish)
 	{
-		const float waitTime = 0.02f;
-
 		float timer = 0;
 		while (timer < time)
 		{
-			yield return new WaitForSeconds(waitTime);
-			timer += waitTime;
+			yield return null;
+			timer += Time.deltaTime;
 			onUpdate?.Invoke(timer);
 		}
 
