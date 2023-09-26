@@ -80,6 +80,14 @@ public class StatManager
 			//대미지 적용
 			_currentHps[playerIndex] -= finalDamage;
 			_currentHps[playerIndex] = Mathf.Clamp(_currentHps[playerIndex], 0, _finalMaxHps[playerIndex]);
+			if(playerIndex == 0)
+			{
+				GameManager.Instance.player1RoundHPUI.value = _currentHps[playerIndex];
+			}
+			else
+			{
+				GameManager.Instance.player2RoundHPUI.value = _currentHps[playerIndex];
+			}
 			Debug.Log($"Player {playerIndex} took total {finalDamage} damage.");
 			onTakeDamage?.Invoke(playerIndex);
 			//죽음 체크
@@ -141,7 +149,5 @@ public class StatManager
 			_finalMaxHps[i] = _baseMaxHps[i] + totalLowModifier;
 		}
 	}
-
-
 
 }
