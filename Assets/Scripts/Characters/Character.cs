@@ -148,7 +148,8 @@ public class Character : MonoBehaviour
 
 		// CanUseSkill Control
 		if (CanUseSkills != null && CanUseSkills.Count > 0
-			&& _status.CurrentStatus[StatusType.Faint] == false)
+			&& _status.CurrentStatus[StatusType.Faint] == false
+			&& _status.CurrentStatus[StatusType.Knockback] == false)
 		{ 
 			_moveBehavior.SetVariableValue("CanUseSkill", true);
 		}
@@ -161,7 +162,9 @@ public class Character : MonoBehaviour
 			_moveBehavior.SetVariableValue("IsActing", true);
 
 
-			if (CurrentSkill.IsRestrictMoving == true || _status.CurrentStatus[StatusType.Faint] == true)
+			if (CurrentSkill.IsRestrictMoving == true 
+				|| _status.CurrentStatus[StatusType.Faint] == true
+				|| _status.CurrentStatus[StatusType.Knockback] == true)
 				_moveBehavior.SetVariableValue("CanMove", false);
 			else
 				_moveBehavior.SetVariableValue("CanMove", true);
@@ -171,7 +174,8 @@ public class Character : MonoBehaviour
 			_moveBehavior.SetVariableValue("IsActing", false);
 
 
-			if (_status.CurrentStatus[StatusType.Faint] == true)
+			if (_status.CurrentStatus[StatusType.Faint] == true
+				|| _status.CurrentStatus[StatusType.Knockback] == true)
 				_moveBehavior.SetVariableValue("CanMove", false);
 			else
 				_moveBehavior.SetVariableValue("CanMove", true);

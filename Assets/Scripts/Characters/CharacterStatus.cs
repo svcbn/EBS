@@ -15,13 +15,19 @@ public class CharacterStatus : MonoBehaviour
 {
 	public Dictionary<StatusType, bool> CurrentStatus = new();
 
+	[SerializeField, Range(0f, 1f)]
+	private float _stopBounceTimeRatio = 0.9f;
+	
+	[SerializeField, Range(0f, 1f)]
+	private float _bouncinesss = 0.8f;
+
 	private List<SlowEffect> _currentSlowEffects = new();
-
 	private FaintEffect _currentFaintEffect;
-
-	private CharacterMovement _movement;
+	private KnockbackEffect _currentKnockbackEffect;
 
 	private Character _character;
+	private CharacterMovement _movement;
+	private Rigidbody2D _rigidbody2;
 
 	private float _originSpeed;
 
@@ -29,6 +35,7 @@ public class CharacterStatus : MonoBehaviour
 	{
 		_movement = GetComponent<CharacterMovement>();
 		_character = GetComponent<Character>();
+		_rigidbody2 = GetComponent<Rigidbody2D>();
 	}
 
 	private void Start()
@@ -43,6 +50,7 @@ public class CharacterStatus : MonoBehaviour
 	{
 		ApplySlowEffect();
 		ApplyFaintEffect();
+		ApplyKnockbackEffect();
 	}
 
 	#region Slow Effect
@@ -84,13 +92,9 @@ public class CharacterStatus : MonoBehaviour
 	public void SetFaintEffect(float duration)
 	{
 		if (_currentFaintEffect == null)
-		{
 			_currentFaintEffect = new FaintEffect(duration);
-		}
 		else
-		{
 			_currentFaintEffect = (duration > _currentFaintEffect.Duration) ? new FaintEffect(duration) : _currentFaintEffect;
-		}
 	}
 
 	private void ApplyFaintEffect()
@@ -98,6 +102,7 @@ public class CharacterStatus : MonoBehaviour
 		if (_currentFaintEffect == null || _currentFaintEffect.IsEffectActive() == false)
 		{
 			CurrentStatus[StatusType.Faint] = false;
+			_currentFaintEffect = null;
 			return;
 		}
 
@@ -111,6 +116,47 @@ public class CharacterStatus : MonoBehaviour
 			{
 				currentSkill.CancelInvoke();
 			}
+		}
+	}
+	#endregion
+
+	#region Knockback Effect
+	public void SetKnockbackEffect(float duration, float knockbackPower, Vector2 enemyPos)
+	{
+		if (_currentKnockbackEffect == null)
+			_currentKnockbackEffect = new KnockbackEffect(duration, knockbackPower, _rigidbody2, transform.position, enemyPos);
+		else
+		{
+			var longerDuration = (duration > _currentKnockbackEffect.LeftDuration) ? duration : _currentKnockbackEffect.LeftDuration;
+			_currentKnockbackEffect = new KnockbackEffect(longerDuration, knockbackPower, _rigidbody2, transform.position, enemyPos);
+		}
+	}
+
+	private void ApplyKnockbackEffect()
+	{
+		if (_currentKnockbackEffect == null || _currentKnockbackEffect.GetRemainingRatio() <= 0)
+		{
+			CurrentStatus[StatusType.Knockback] = false;
+			_currentKnockbackEffect = null;
+			return;
+		}
+
+		// 선딜 취소
+		CurrentStatus[StatusType.Knockback] = true;
+		var currentSkill = (SkillBase)_character.CurrentSkill;
+		if (currentSkill != null && currentSkill.IsBeforeDelay == true)
+		{
+			currentSkill.CancelInvoke();
+		}
+
+		// 탄성 조절
+		if (_currentKnockbackEffect.GetRemainingRatio() > 1 - _stopBounceTimeRatio)
+		{
+			_rigidbody2.sharedMaterial.bounciness = _bouncinesss;
+		}
+		else 
+		{
+			_rigidbody2.sharedMaterial.bounciness = 0;
 		}
 	}
 	#endregion
@@ -159,6 +205,42 @@ public class FaintEffect
 			Duration -= Time.deltaTime;
 			return true;
 		}
+	}
+}
+
+public class KnockbackEffect
+{
+	public float LeftDuration;
+
+	private float _originDuration;
+
+	private const float Angle = 5f;
+
+
+	public KnockbackEffect(float duration, float knockbackPower, Rigidbody2D rigidbody2D, Vector2 myPos, Vector2 enemyPos)
+	{
+		_originDuration = duration;
+		LeftDuration = _originDuration;
+
+		Knockback(knockbackPower, rigidbody2D, myPos, enemyPos);
+	}
+
+	private void Knockback(float knockbackPower, Rigidbody2D rigidbody2D, Vector2 myPos, Vector2 enemyPos)
+	{
+		float knockbackAngle = (enemyPos.x - myPos.x > 0) ? 180 - Angle : Angle;
+		float angleInRadians = knockbackAngle * Mathf.Deg2Rad;
+		Vector3 forceDirection = new Vector3(Mathf.Cos(angleInRadians), Mathf.Sin(angleInRadians), 0);
+		Vector3 force = forceDirection * knockbackPower;
+
+		// 밀려나는 기능
+		rigidbody2D.velocity = Vector2.zero;
+		rigidbody2D.AddForce(force, ForceMode2D.Impulse);
+	}
+
+	public float GetRemainingRatio()
+	{
+		LeftDuration -= Time.deltaTime;
+		return LeftDuration / _originDuration;
 	}
 }
 
