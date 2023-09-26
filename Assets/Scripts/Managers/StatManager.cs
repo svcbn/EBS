@@ -55,7 +55,12 @@ public class StatManager
 		//대미지 적용
 		_currentHps[playerIndex] -= finalDamage;
 		_currentHps[playerIndex] = Mathf.Clamp(_currentHps[playerIndex], 0, _finalMaxHps[playerIndex]);
+		Debug.Log($"Player {playerIndex} took total {finalDamage} damage.");
 		//죽음 체크
+		if (_currentHps[playerIndex] <= 0)
+		{
+			Debug.Log($"Player {playerIndex} died.");
+		}
 	}
 
 	public void GiveHeal(int playerIndex, int baseAmount)
