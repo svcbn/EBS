@@ -20,7 +20,6 @@ public class TripleStrike : SkillBase, IActiveSkill
 
 		Cooldown = _data.Cooldown;
 		BeforeDelay = _data.BeforeDelay;
-		Duration = _data.Duration;
 		AfterDelay = _data.AfterDelay;
 		RequireMP = _data.RequireMP;
 	}

@@ -15,11 +15,10 @@ public class TeleportBack : SkillBase, IActiveSkill
 		Id                = _data.Id;
 		Type              = _data.Type;
 		Priority          = _data.Priority;
-		//IsRestricteMoving = _data.IsRestricteMoving;
+		IsRestrictMoving = _data.IsRestrictMoving;
 
 		Cooldown          = _data.Cooldown;
 		BeforeDelay       = _data.BeforeDelay;
-		Duration          = _data.Duration;
 		AfterDelay        = _data.AfterDelay;
 
 	}
