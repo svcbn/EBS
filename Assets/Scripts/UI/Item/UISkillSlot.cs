@@ -67,8 +67,9 @@ public class UISkillSlot : UIBase
 	{
 		Vector3 scale = transform.localScale;
 		Vector3 targetScale = Vector3.one * 0.95f;
-		System.Action callback = () => _scaleHandler = Utility.Lerp(targetScale, scale, 0.1f, vector2 => transform.localScale = vector2);
-		_scaleHandler = Utility.Lerp(scale, targetScale, 0.1f, vector => transform.localScale = vector, callback);
+		float duration = 0.07f;
+		System.Action callback = () => _scaleHandler = Utility.Lerp(targetScale, scale, duration, vector2 => transform.localScale = vector2);
+		_scaleHandler = Utility.Lerp(scale, targetScale, duration, vector => transform.localScale = vector, callback);
 	}
 
 	public void Select()
