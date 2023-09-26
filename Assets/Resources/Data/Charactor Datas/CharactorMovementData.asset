@@ -12,5 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7da3b84f48f7a4240a07bf1e93bc7c09, type: 3}
   m_Name: CharactorMovementData
   m_EditorClassIdentifier: 
-  _maxSpeed: 21.2
-  _maxAcceleration: 30.9
+  _maxSpeed: 13.1
+  _maxAcceleration: 10.5
+  _jumpHeight: 10
+  _jumpSpeed: 10
+  _timeToJumpApex: 0
+  _gravMultiplier: 0

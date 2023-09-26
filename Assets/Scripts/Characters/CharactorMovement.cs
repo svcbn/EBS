@@ -8,6 +8,8 @@ public class CharactorMovement : MonoBehaviour
 	[SerializeField]
 	public CharactorMovementData ChractorMovementData;
 
+	public Vector2 LookDirction;
+
 	public Vector2 PlayerInput { 
 		get { return _playerInput; }
 		set
@@ -35,7 +37,7 @@ public class CharactorMovement : MonoBehaviour
 
 	private void LookMoveDirction(Vector3 moveDirction)
 	{
-		var lookDirctionX = Mathf.Abs(transform.localScale.x) * (moveDirction.x > 0 ? 1 : -1); 
-		transform.localScale = new Vector3(lookDirctionX, transform.localScale.y, transform.localScale.z);
+		LookDirction = new Vector2(Mathf.Abs(transform.localScale.x) * (moveDirction.x > 0 ? 1 : -1), 0) ; 
+		transform.localScale = new Vector3(LookDirction.x, transform.localScale.y, transform.localScale.z);
 	}
 }
