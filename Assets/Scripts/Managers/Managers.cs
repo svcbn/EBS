@@ -43,7 +43,7 @@ public class Managers : MonoBehaviour
 	{
 		if (s_Instance == null)
 		{
-			if (GameObject.Find("@Managers") is not GameObject managersRoot)
+			if (GameObject.Find("@Managers") is not { } managersRoot)
 			{
 				managersRoot = new() { name = "@Managers" };
 			}
