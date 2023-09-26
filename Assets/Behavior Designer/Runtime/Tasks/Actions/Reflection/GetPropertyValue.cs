@@ -1,10 +1,8 @@
 using UnityEngine;
-using System;
-using System.Reflection;
 
 namespace BehaviorDesigner.Runtime.Tasks
 {
-    [TaskDescription("Gets the value from the property specified. Returns success if the property was retrieved.")]
+	[TaskDescription("Gets the value from the property specified. Returns success if the property was retrieved.")]
     [TaskCategory("Reflection")]
     [TaskIcon("{SkinColor}ReflectionIcon.png")]
     public class GetPropertyValue : Action

@@ -1,8 +1,6 @@
-using UnityEngine;
-
 namespace BehaviorDesigner.Runtime.Tasks
 {
-    [TaskDescription("Restarts a behavior tree, returns success after it has been restarted.")]
+	[TaskDescription("Restarts a behavior tree, returns success after it has been restarted.")]
     [TaskIcon("{SkinColor}RestartBehaviorTreeIcon.png")]
     public class RestartBehaviorTree : Action
     {

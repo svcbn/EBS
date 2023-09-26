@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -47,7 +45,7 @@ public class UIMenu : UIPopup
 #if UNITY_EDITOR
 			1 => data => UnityEditor.EditorApplication.isPlaying = false,
 #else
-			1 => Application.Quit(),
+			1 => data => Application.Quit(),
 #endif
 			_ => null
 		};

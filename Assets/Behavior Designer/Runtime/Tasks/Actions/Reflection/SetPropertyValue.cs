@@ -1,10 +1,8 @@
 using UnityEngine;
-using System;
-using System.Reflection;
 
 namespace BehaviorDesigner.Runtime.Tasks
 {
-    [TaskDescription("Sets the property to the value specified. Returns success if the property was set.")]
+	[TaskDescription("Sets the property to the value specified. Returns success if the property was set.")]
     [TaskCategory("Reflection")]
     [TaskIcon("{SkinColor}ReflectionIcon.png")]
     public class SetPropertyValue : Action

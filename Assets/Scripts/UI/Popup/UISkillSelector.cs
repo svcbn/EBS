@@ -1,9 +1,6 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UISkillSelector : UIPopup
 {
@@ -11,6 +8,8 @@ public class UISkillSelector : UIPopup
 	{
 		Items,
 	}
+
+	private SkillSelectorInput _input;
 
 	private SkillSelector _selector;
 
@@ -24,18 +23,12 @@ public class UISkillSelector : UIPopup
 
 	private void Update()
 	{
-		if (_currentIndex != -1 && Input.GetKeyDown(KeyCode.Return))
+		_input =_selector.Input;
+		if (_input != null)
 		{
-			var slot = _slots[_currentIndex];
-			if (slot.enabled)
-			{
-				_selector.SelectSkill(_currentIndex);
-				slot.ShowChoiceEffect();
-				slot.Disable();
-			}
+			HandleDirectionInput();
+			HandleSelect();
 		}
-
-		HandleArrowInput();
 	}
 
 	private void OnDisable()
@@ -48,22 +41,36 @@ public class UISkillSelector : UIPopup
 		}
 	}
 
-	private void HandleArrowInput()
+	private void HandleSelect()
+	{
+		if (_currentIndex != -1 && Input.GetKeyDown(_input.Select))
+		{
+			var slot = _slots[_currentIndex];
+			if (slot.IsEnabled)
+			{
+				_selector.SelectSkill(_currentIndex);
+				slot.ShowChoiceEffect();
+				slot.Disable();
+			}
+		}
+	}
+
+	private void HandleDirectionInput()
 	{
 		Direction direction;
-		if (Input.GetKeyDown(KeyCode.W))
+		if (Input.GetKeyDown(_input.Up))
 		{
 			direction = Direction.Up;
 		}
-		else if (Input.GetKeyDown(KeyCode.A))
+		else if (Input.GetKeyDown(_input.Left))
 		{
 			direction = Direction.Left;
 		}
-		else if (Input.GetKeyDown(KeyCode.S))
+		else if (Input.GetKeyDown(_input.Down))
 		{
 			direction = Direction.Down;
 		}
-		else if (Input.GetKeyDown(KeyCode.D))
+		else if (Input.GetKeyDown(_input.Right))
 		{
 			direction = Direction.Right;
 		}
@@ -126,7 +133,7 @@ public class UISkillSelector : UIPopup
 		GameObject go = Managers.Resource.Instantiate("UI/Popup/UISkillSlot");
 		
 		var slot = go.GetOrAddComponent<UISkillSlot>();
-		slot.SetSkill(info);
+		slot.SetInfo(info);
 		
 		return slot;
 	}
