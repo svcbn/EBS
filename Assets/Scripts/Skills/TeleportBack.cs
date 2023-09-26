@@ -15,46 +15,56 @@ public class TeleportBack : SkillBase, IActiveSkill
 		Id                = _data.Id;
 		Type              = _data.Type;
 		Priority          = _data.Priority;
-		IsRestricteMoving = _data.IsRestricteMoving;
+		//IsRestricteMoving = _data.IsRestricteMoving;
 
 		Cooldown          = _data.Cooldown;
 		BeforeDelay       = _data.BeforeDelay;
 		Duration          = _data.Duration;
 		AfterDelay        = _data.AfterDelay;
+
 	}
 
 	public override void Execute()
 	{
 		if (_data == null){ Debug.LogWarning($"Fail load Data/TeleportBackData"); return;  }
 		
+		if( !CheckCanUse() ){ return; }
 		
 		base.Execute();
+
 		Owner.StartCoroutine(ExecuteCo());
 	}
 
+	public override bool CheckCanUse()
+	{
+
+		Vector3 center = (Vector2)Owner.transform.position + _data.CheckBoxCenter;
+		Vector3 size =  _data.CheckBoxSize;
+
+		var boxes = Physics2D.OverlapBoxAll( center, size , 0);
+		foreach (var box in boxes)
+		{
+			if (!box.TryGetComponent<Character>(out var character) || character == Owner)
+			{
+				continue;
+			}
+
+			if( character == Owner.GetTarget().GetComponent<Character>() ){
+				return true;
+			}
+		}
+		return false;
+	}
+
+
 	IEnumerator ExecuteCo()
 	{
-		// 애니메이션 재생
-		if(_data.SpriteEffect != null){
-			_data.SpriteEffect.transform.position = Owner.transform.position;
-			_data.SpriteEffect.Play();
-		}
-
-
-		// 선딜
-		Debug.Log($"텔포 선딜 시작  {BeforeDelay}");
-		//yield return new WaitForSeconds(BeforeDelay); // tmp 삭제 for test
-
-		// 캐릭터 이동, 1)일단 한 방향 2)두 방향
-		Debug.Log($"텔포 시전 시간  {Duration}");
-
-
+		PlayTelepotEffect(Owner.transform);
+		yield return new WaitForSeconds(BeforeDelay);
 
 		Owner.transform.position = CalcTeleportPos();
 
-
-		// 후딜
-		Debug.Log($"텔포 후딜 시작  {AfterDelay}");
+		PlayPostEffect(Owner.transform);
 		yield return new WaitForSeconds(AfterDelay);
 	}
 
@@ -62,49 +72,58 @@ public class TeleportBack : SkillBase, IActiveSkill
 	{
 		Vector3 destV;
 
+		Camera mainCamera = Camera.main;
+		Vector3 centerV = mainCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, mainCamera.nearClipPlane));
 
 		Transform ownerTrans = Owner.transform;
 		Transform enemyTrans = Owner.GetTarget().transform;
 
-		// 적 기준, 좌 우 선택
-		Vector3 enemyLeft  = enemyTrans.position + enemyTrans.right * -5;
-		Vector3 enemyRight = enemyTrans.position + enemyTrans.right *  5;  // 거리 5칸
-
-		// 막히는 거리까지 판단
-		// Vector3 maxLeft  = ;
-		// Vector3 maxRight = ;
+		// 적 기준, 좌 우 텔포위치
+		Vector3 enemyLeft  = enemyTrans.position + enemyTrans.right * -_data.telpoDistance;
+		Vector3 enemyRight = enemyTrans.position + enemyTrans.right *  _data.telpoDistance;
 
 
-		// 거리 계산 : 둘 중 나에게서 가장 먼 곳
-		float left  = Vector3.Distance( ownerTrans.position, enemyLeft  );
-		float right = Vector3.Distance( ownerTrans.position, enemyRight );
-		
-		if  ( left > right ){ destV = enemyLeft;  }
-		else                { destV = enemyRight; }
-		
+		if( enemyTrans.position.x - centerV.x > 0){ // 중앙 오른쪽에 있으면
+			destV = enemyLeft; // 텔포 위치는 적의 왼쪽
+		}else{
+			destV = enemyRight;
+		}
+
 		// 현재 높이 유지
 		destV = new Vector3(destV.x, ownerTrans.position.y , destV.z );
-
-
-		Debug.Log( $"destV : {destV}");
-
 		return destV;
 	}
 
-
-
-
-	public void OnDrawGizmos()
+	void PlayTelepotEffect(Transform pos )
 	{
-		Gizmos.color = Color.red;
-		Vector3 hitboxPos = Owner.transform.position;
-		// if ( gameObject != null){
-		// 	hitboxPos = transform.position;
-		// }
-
-		Debug.Log( $"OnDrawGizmos() | hitboxPos {hitboxPos}  hitBoxCenter {_data.HitBoxCenter}  hitBoxSize {_data.HitBoxSize} " );
-
-		Gizmos.DrawCube(hitboxPos + (Vector3)_data.HitBoxCenter, (Vector3)_data.HitBoxSize);
+		if(_data.teleportEffect != null){
+			_data.teleportEffect.transform.position = pos.position;
+			_data.teleportEffect.Play();
+		}else{
+			Debug.Log("teleportEffect is null");
+		}
 	}
+	void PlayPostEffect(Transform pos)
+	{
+		if(_data.postEffect != null){
+			_data.postEffect.transform.position = pos.position;
+			_data.postEffect.Play();
+		}else{
+			Debug.Log("teleportPostEffect is null");
+		}
+	}
+    
+	
+	void OnDrawGizmos() 
+	{
+
+		Gizmos.color = Color.red;
+		Vector3 checkboxPos = Owner.transform.position;
+
+		Debug.Log( $"OnDrawGizmos() | checkboxPos {checkboxPos}  checkBoxCenter {_data.CheckBoxCenter}  checkBoxSize {_data.CheckBoxSize} " );
+
+		Gizmos.DrawCube(checkboxPos + (Vector3)_data.CheckBoxCenter, (Vector3)_data.CheckBoxSize);
+    }
+
 }
 
