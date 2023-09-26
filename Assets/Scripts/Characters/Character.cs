@@ -11,6 +11,7 @@ public class Character : MonoBehaviour
 	public List<IActiveSkill> CanUseSkills = new();
 	public IActiveSkill CurrentSkill;
 	public int playerIndex;
+	public bool CanMove { get; private set; } = true;
 
 	[SerializeField]
 	private GameObject _target;
@@ -113,36 +114,55 @@ public class Character : MonoBehaviour
 		if (CanUseSkills != null && CanUseSkills.Count > 0
 			&& _status.CurrentStatus[StatusType.Faint] == false
 			&& _status.CurrentStatus[StatusType.Knockback] == false)
-		{ 
+		{
 			_moveBehavior.SetVariableValue("CanUseSkill", true);
 		}
 		else
+		{
 			_moveBehavior.SetVariableValue("CanUseSkill", false);
+		}
 
-		// IsAction and CanMove Control
+		// IsAction Control 
 		if (CurrentSkill != null)
 		{
 			_moveBehavior.SetVariableValue("IsActing", true);
-
-
-			if (CurrentSkill.IsRestrictMoving == true 
-				|| _status.CurrentStatus[StatusType.Faint] == true
-				|| _status.CurrentStatus[StatusType.Knockback] == true)
-				_moveBehavior.SetVariableValue("CanMove", false);
-			else
-				_moveBehavior.SetVariableValue("CanMove", true);
 		}
 		else
 		{ 
 			_moveBehavior.SetVariableValue("IsActing", false);
+		}
 
-
+		// CanMove Control
+		if (CurrentSkill != null)
+		{
+			if (CurrentSkill.IsRestrictMoving == true
+				|| _status.CurrentStatus[StatusType.Faint] == true
+				|| _status.CurrentStatus[StatusType.Knockback] == true)
+			{
+				CanMove = false;
+				_moveBehavior.SetVariableValue("CanMove", false);
+			}
+			else
+			{
+				CanMove = true;
+				_moveBehavior.SetVariableValue("CanMove", true);
+			}
+		}
+		else
+		{
 			if (_status.CurrentStatus[StatusType.Faint] == true
 				|| _status.CurrentStatus[StatusType.Knockback] == true)
+			{
+				CanMove = false;
 				_moveBehavior.SetVariableValue("CanMove", false);
+			}
 			else
+			{ 
+				CanMove = true;
 				_moveBehavior.SetVariableValue("CanMove", true);
+			}
 		}
+
 	}
 
 	public List<IActiveSkill> GetHighPrioritySkill()
