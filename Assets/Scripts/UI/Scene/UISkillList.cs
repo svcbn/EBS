@@ -1,5 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class UISkillList : UIScene
@@ -48,7 +48,8 @@ public class UISkillList : UIScene
 
 	private void OnCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
 	{
-		
+		AddSlotToPanel(_left, true);
+		AddSlotToPanel(_right, false);
 	}
 
 	private void AddSlotToPanel(Character character, bool isLeft)
@@ -65,19 +66,30 @@ public class UISkillList : UIScene
 			passive = Get<GameObject>((int)Elements.RightPassive);
 		}
 
-		foreach (Transform child in active.transform)
+		var activeSkills = character.Skills.OfType<IActiveSkill>();
+		var passiveSkills = character.Skills.OfType<IPassiveSkill>();
+
+		AddSlotToPanel(active, activeSkills);
+		AddSlotToPanel(passive, passiveSkills);
+	}
+
+	private void AddSlotToPanel(GameObject panel, IEnumerable<ISkill> skills)
+	{
+		foreach (Transform child in panel.transform)
 		{
 			Managers.Resource.Release(child.gameObject);
 		}
 
-		//foreach (var skill in character.Skills)
-		//{
-		//	var info = GameManager.Skill.GetInfo(skill.Id);
-		//	var slot = CreateSlot(info);
-		//	slot.transform.SetParent(items.transform);
-		//	slot.transform.localScale = Vector3.one;
-		//}
-	}
+		foreach (var skill in skills)
+		{
+			var info = GameManager.Skill.GetInfo(skill.Id);
+			var slot = CreateSlot(info);
+			slot.SetSkill(skill);
+			slot.SetInfo(info);
+			slot.transform.SetParent(panel.transform);
+			slot.transform.localScale = Vector3.one;
+		}
+	}	
 
 	private UISkillSlot CreateSlot(SkillInfo info)
 	{

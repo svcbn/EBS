@@ -34,9 +34,6 @@ public class Character : MonoBehaviour
 	private void Awake()
 	{
 		//temp
-		_skills.Add(gameObject.AddComponent<Slash>());
-		_skills.Add(gameObject.AddComponent<TripleStrike>());
-		_skills.Add(gameObject.AddComponent<TeleportBack>());
 		foreach (var skill in _skills)
 		{
 			skill.Init();

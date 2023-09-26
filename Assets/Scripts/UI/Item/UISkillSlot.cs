@@ -33,9 +33,9 @@ public partial class UISkillSlot : UIBase
 
 	private void Update()
 	{
-		if (_skill == null)
+		if (_skill != null)
 		{
-			return;
+			CheckCooldown();
 		}
 	}
 

@@ -31,6 +31,8 @@ public abstract class SkillBase : MonoBehaviour, ISkill
 
 	public float Cooldown { get; protected set; }
 
+	public float CurrentCooldown { get; protected set; }
+
 	public float BeforeDelay { get; protected set; }
 
 	public float Duration { get; protected set; }
@@ -66,9 +68,9 @@ public abstract class SkillBase : MonoBehaviour, ISkill
 
 	protected virtual void CalculateCooltime()
 	{
-		Owner.StartCoroutine(CoCalculateTime(Cooldown, () => IsCoolReady = true));
+		Owner.StartCoroutine(CoCalculateTime(Cooldown, time => CurrentCooldown = time, () => IsCoolReady = true));
 		float delay = BeforeDelay + Duration + AfterDelay;
-		Owner.StartCoroutine(CoCalculateTime(delay, () => IsActing = false));
+		Owner.StartCoroutine(CoCalculateTime(delay, null, () => IsActing = false));
 	}
 
 	protected virtual bool CheckEnemyInBox(Vector2 center, Vector2 size)
@@ -87,7 +89,7 @@ public abstract class SkillBase : MonoBehaviour, ISkill
 		return true;
 	}
 
-	private static IEnumerator CoCalculateTime(float time, Action onFinish)
+	private static IEnumerator CoCalculateTime(float time, Action<float> onUpdate, Action onFinish)
 	{
 		const float waitTime = 0.1f;
 
@@ -96,6 +98,7 @@ public abstract class SkillBase : MonoBehaviour, ISkill
 		{
 			yield return new WaitForSeconds(waitTime);
 			timer += waitTime;
+			onUpdate?.Invoke(timer);
 		}
 
 		onFinish?.Invoke();

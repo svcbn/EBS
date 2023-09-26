@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public partial class UISkillSlot
 {
@@ -20,7 +21,7 @@ public partial class UISkillSlot
 	public void Disable()
 	{
 		IsEnabled = false;
-		Get<GameObject>((int)Elements.Dim).SetActive(true);
+		Get<Image>((int)Elements.Dim).gameObject.SetActive(true);
 	}
 
 	public void Select()
