@@ -47,6 +47,8 @@ public class HeavyStrike : SkillBase, IActiveSkill
 		yield return new WaitForSeconds(0);
 		Vector2 centerInWorld = (Vector2)Owner.transform.position + new Vector2(x * _data.HitBoxCenter.x, _data.HitBoxCenter.y);
 		var boxes = Physics2D.OverlapBoxAll(centerInWorld, _data.HitBoxSize, 0);
+		DebugRay(centerInWorld, _data.HitBoxSize);
+
 		foreach (var box in boxes)
 		{
 			if (!box.TryGetComponent<Character>(out var character) || character == Owner)
