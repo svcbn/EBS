@@ -1,5 +1,6 @@
 using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
+using BehaviorDesigner.Runtime.Tasks.Unity.UnityRigidbody;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,6 +54,38 @@ public class Character : MonoBehaviour
 	private void Update()
 	{
 		SetMoveBTVariables();
+
+		if (Input.GetKeyDown(KeyCode.Space))
+		{
+			// CurrentSkill = _skills.FirstOrDefault();
+
+			//CurrentSkill = new Slash(); // for Test
+			CurrentSkill = new TeleportBack(); // for Test
+			
+			CurrentSkill.Init();
+			CurrentSkill.Owner = this;
+			CurrentSkill.Execute();
+		}
+
+		if (Input.GetKeyDown(KeyCode.UpArrow))
+		{
+			//AddForce
+		}
+
+
+	}
+
+	//private void OnDrawGizmos()
+	//{
+	//	foreach (var skill in _skills)
+	//	{
+	//		skill.OnDrawGizmos(transform);
+	//	}
+	//}
+
+	public void UseSkill()
+	{
+		
 	}
 
 	public void TakeDamage(int damage)
@@ -137,5 +170,15 @@ public class Character : MonoBehaviour
 			}
 		}
 		return _tmpSkills;
+	}
+
+	public GameObject GetTarget()
+	{
+		if(_target == null){
+			Debug.LogWarning("Target is null");
+			return null;
+		}
+
+		return _target;
 	}
 }
