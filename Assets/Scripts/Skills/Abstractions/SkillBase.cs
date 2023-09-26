@@ -47,6 +47,8 @@ public abstract class SkillBase : MonoBehaviour, ISkill
 
 	public bool IsBeforeDelay { get; protected set; }
 
+	public Coroutine UsingSkillCo { get; protected set; }
+
 	protected virtual void Awake()
 	{
 		IsCoolReady = true;
@@ -73,7 +75,7 @@ public abstract class SkillBase : MonoBehaviour, ISkill
 	void ExecuteImpl()
 	{
 		IsBeforeDelay = false;
-		Owner.StartCoroutine(ExecuteImplCo());
+		UsingSkillCo = Owner.StartCoroutine(ExecuteImplCo());
 	}
 	
 	public abstract IEnumerator ExecuteImplCo();

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CharactorMovement : MonoBehaviour
+public class CharacterMovement : MonoBehaviour
 {
 	[SerializeField]
 	public CharactorMovementData ChractorMovementData;
