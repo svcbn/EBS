@@ -19,6 +19,9 @@ public class CharactorMovementData : ScriptableObject
 	[SerializeField, Range(0f, 100f)]
 	float _jumpHeight = 10f;
 
+	[SerializeField, Range(0f, 100f)]
+	float _jumpSpeed = 10f;
+
 	[SerializeField, Range(0.2f, 1.25f)]
 	float _timeToJumpApex;
 
@@ -29,6 +32,7 @@ public class CharactorMovementData : ScriptableObject
 	public float MaxSpeed => _maxSpeed;
 	public float MaxAcceleration => _maxAcceleration;
 	public float JumpHeight => _jumpHeight;
+	public float JumpSpeed => _jumpSpeed;
 	public float TimeToJumpApex => _timeToJumpApex;
 	public float GravMultiplier => _gravMultiplier;
 }
