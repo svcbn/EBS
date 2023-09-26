@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PassiveSkillData : ScriptableSkillData
 {
-	[SerializeField] private int _amount;
+	[SerializeField] private float _amount;
 
-	public int Amount => _amount;
+	public float Amount => _amount;
 }
