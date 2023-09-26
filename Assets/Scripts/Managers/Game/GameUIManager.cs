@@ -1,6 +1,10 @@
+using System;
+
 public class GameUIManager
 {
 	private UISkillSelector _skillSelector;
+
+	private UIMenu _menu;
 
 	public void ShowSkillSelector(SkillSelector selector)
 	{
@@ -23,5 +27,25 @@ public class GameUIManager
 	{
 		var list = Managers.UI.ShowSceneUI<UISkillList>();
 		list.RegisterCharacter(left, right);
+	}
+
+	public void ShowTitle(Action onStart)
+	{
+		Managers.UI.ClearAllPopup();
+
+		var title = Managers.UI.ShowPopupUI<UITitle>();
+		title.StartButtonClicked += () => Managers.UI.ClosePopupUI(title);
+		title.StartButtonClicked += onStart;
+	}
+
+	public void ShowMenu()
+	{
+		if (_menu != null)
+		{
+			Managers.UI.ClosePopupUI(_menu);
+			_menu = null;
+		}
+
+		_menu = Managers.UI.ShowPopupUI<UIMenu>();
 	}
 }
