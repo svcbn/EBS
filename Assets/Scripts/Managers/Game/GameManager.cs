@@ -158,6 +158,9 @@ public class GameManager : MonoBehaviour
 	{
 		player1 = GameObject.Find("Player 1").GetOrAddComponent<Character>();
 		player2 = GameObject.Find("Player 2").GetOrAddComponent<Character>();
+		
+		_ui.SetSkillPresenter(player1);
+		_ui.SetSkillPresenter(player2);
 
 		_ui.ShowSkillList(player1, player2);
 	}

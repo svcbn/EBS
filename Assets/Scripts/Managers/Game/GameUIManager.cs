@@ -48,4 +48,10 @@ public class GameUIManager
 
 		_menu = Managers.UI.ShowPopupUI<UIMenu>();
 	}
+	
+	public void SetSkillPresenter(Character character)
+	{
+		var presenter = Managers.UI.ShowSceneUI<UISkillPresenter>();
+		presenter.SetSkill(character);
+	}
 }
