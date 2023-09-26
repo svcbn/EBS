@@ -16,6 +16,8 @@ public class Execute : Action
 	public override void OnStart()
 	{
 		_selectedSkill = SelectRandomSkill(_character.GetHighPrioritySkill());
+		
+		_selectedSkill.Init();
 	}
 
 	public override TaskStatus OnUpdate()
