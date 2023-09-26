@@ -1,8 +1,6 @@
-using UnityEngine;
-
 namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject
 {
-    [TaskCategory("Unity/GameObject")]
+	[TaskCategory("Unity/GameObject")]
     [TaskDescription("Returns Success if tags match, otherwise Failure.")]
     public class CompareTag : Conditional
     {

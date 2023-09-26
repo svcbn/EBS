@@ -1,8 +1,6 @@
-using UnityEngine;
-
 namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject
 {
-    [TaskCategory("Unity/GameObject")]
+	[TaskCategory("Unity/GameObject")]
     [TaskDescription("Stores the GameObject tag. Returns Success.")]
     public class GetTag : Action
     {

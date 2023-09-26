@@ -11,6 +11,7 @@ public class HeavyStrike : SkillBase, IActiveSkill
 		base.Init();
 
 		_data = Managers.Resource.Load<HeavyStrikeData>("Data/HeavyStrikeData");
+		if (_data == null) { Debug.LogWarning($"Fail load Data/HeavyStrikeData"); return; }
 
 		Id = _data.Id;
 		Type = _data.Type;
@@ -25,17 +26,11 @@ public class HeavyStrike : SkillBase, IActiveSkill
 
 	public override void Execute()
 	{
-		if (_data == null) { Debug.LogWarning($"Fail load Data/HeavyStrikeData"); return; }
-
 		base.Execute();
-		Owner.StartCoroutine(ExecuteCo());
 	}
 
-	IEnumerator ExecuteCo()
+	public override IEnumerator ExecuteImplCo()
 	{
-		// 선딜
-		yield return new WaitForSeconds(BeforeDelay);
-
 		float x = Owner.transform.localScale.x < 0 ? -1 : 1;
 
 		GameObject effect = null;
@@ -60,7 +55,7 @@ public class HeavyStrike : SkillBase, IActiveSkill
 
 			// Todo : statmanager 쪽에 데미지 연산 요청
 
-			// Todo : Charactorstatus 쪽에 cc 요청
+			// Todo : Charactorstatus 쪽에 스턴 요청
 
 		}
 

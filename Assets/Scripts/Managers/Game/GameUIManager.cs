@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class GameUIManager
 {
 	private UISkillSelector _skillSelector;
@@ -21,5 +17,11 @@ public class GameUIManager
 	{
 		Managers.Resource.Release(_skillSelector.gameObject);
 		_skillSelector = null;
+	}
+
+	public void ShowSkillList(Character left, Character right)
+	{
+		var list = Managers.UI.ShowSceneUI<UISkillList>();
+		list.RegisterCharacter(left, right);
 	}
 }

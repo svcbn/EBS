@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Data.Common;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = nameof(TeleportBackData), menuName = "ScriptableObjects/Skills/" + nameof(TeleportBackData))]
+[CreateAssetMenu(fileName = nameof(TeleportBackData), menuName = "ScriptableObjects/ActiveSkills/" + nameof(TeleportBackData))]
 public class TeleportBackData : ActiveSkillData
 {
 

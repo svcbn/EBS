@@ -1,10 +1,8 @@
 using UnityEngine;
-using System;
-using System.Reflection;
 
 namespace BehaviorDesigner.Runtime.Tasks
 {
-    [TaskDescription("Gets the value from the field specified. Returns success if the field was retrieved.")]
+	[TaskDescription("Gets the value from the field specified. Returns success if the field was retrieved.")]
     [TaskCategory("Reflection")]
     [TaskIcon("{SkinColor}ReflectionIcon.png")]
     public class GetFieldValue : Action

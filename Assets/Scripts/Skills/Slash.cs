@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Slash : SkillBase, IActiveSkill
@@ -11,6 +10,7 @@ public class Slash : SkillBase, IActiveSkill
 		base.Init();
 
 		_data = Managers.Resource.Load<SlashData>("Data/SlashData");
+		if (_data == null){ Debug.LogWarning($"Fail load Data/SlashData"); return;  }
 
 		Id                = _data.Id;
 		Type              = _data.Type;
@@ -25,17 +25,11 @@ public class Slash : SkillBase, IActiveSkill
 
 	public override void Execute()
 	{
-		if (_data == null){ Debug.LogWarning($"Fail load Data/SlashData"); return;  }
-		
 		base.Execute();
-		Owner.StartCoroutine(ExecuteCo());
 	}
 
-	IEnumerator ExecuteCo()
+	public override IEnumerator ExecuteImplCo()
 	{
-		// 선딜
-		yield return new WaitForSeconds(BeforeDelay);
-
 		float x = Owner.transform.localScale.x < 0 ? -1 : 1;
 
 		GameObject effect = null;

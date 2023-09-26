@@ -1,8 +1,4 @@
-using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
-using UnityEditor;
-using UnityEditor.Tilemaps;
-using UnityEngine;
 
 public class SetMoveBTVariables : Action
 {

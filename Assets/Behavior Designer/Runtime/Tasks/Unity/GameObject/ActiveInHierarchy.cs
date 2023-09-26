@@ -1,8 +1,6 @@
-using UnityEngine;
-
 namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject
 {
-    [TaskCategory("Unity/GameObject")]
+	[TaskCategory("Unity/GameObject")]
     [TaskDescription("Returns Success if the GameObject is active in the hierarchy, otherwise Failure.")]
     public class ActiveInHierarchy : Conditional
     {

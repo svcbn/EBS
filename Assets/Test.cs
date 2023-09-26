@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Test : MonoBehaviour
@@ -13,7 +11,7 @@ public class Test : MonoBehaviour
 
 	private void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Space))
+		if (Input.GetKeyDown(KeyCode.Alpha1))
 		{
 			GameManager.Instance.ChangeState(GameManager.GameState.PickSkill);
 		}

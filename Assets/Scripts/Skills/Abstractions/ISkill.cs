@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public interface ISkill
 {
 	/// <summary>
@@ -18,6 +14,11 @@ public interface ISkill
 	/// 스킬의 쿨타임
 	/// </summary>
 	float Cooldown { get; }
+
+	/// <summary>
+	/// 스킬의 현재 쿨타임
+	/// </summary>
+	float CurrentCooldown { get; }
 
 	/// <summary>
 	/// 스킬 초기화 시 호출
