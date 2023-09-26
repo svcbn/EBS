@@ -12,7 +12,7 @@ public class SkillData
 [Serializable]
 public class SkillInfo : ISerializationCallbackReceiver
 {
-	public int Id;
+	public uint Id;
 
 	public string Name;
 

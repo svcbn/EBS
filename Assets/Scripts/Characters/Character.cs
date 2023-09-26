@@ -7,8 +7,8 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-	public List<ISkill> CanUseSkills = new List<ISkill>();
-	public ISkill CurrentSkill;
+	public List<IActiveSkill> CanUseSkills = new();
+	public IActiveSkill CurrentSkill;
 
 	[SerializeField]
 	private int _hp;
@@ -51,11 +51,18 @@ public class Character : MonoBehaviour
 
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
-			CurrentSkill = _skills.FirstOrDefault();
+			// CurrentSkill = _skills.FirstOrDefault();
+
+			CurrentSkill = new Slash(); // for Test
+			
 			CurrentSkill.Init();
 			CurrentSkill.Owner = this;
 			CurrentSkill.Execute();
+
+
 		}
+
+
 	}
 
 	//private void OnDrawGizmos()
@@ -83,7 +90,7 @@ public class Character : MonoBehaviour
 			CanUseSkills.Clear();
 			_hasCooldowmSkill = false;
 
-			foreach (var skill in _skills)
+			foreach (var skill in _skills.OfType<IActiveSkill>())
 			{
 				// TODO : 쿨다운 체크
 				if (skill.IsCoolReady)
@@ -131,13 +138,13 @@ public class Character : MonoBehaviour
 		_moveBehavior.SetVariableValue("HasCooldownSkill", _hasCooldowmSkill);
 	}
 
-	public List<ISkill> GetHighPrioritySkill()
+	public List<IActiveSkill> GetHighPrioritySkill()
 	{
 
 		int highPriority = int.MaxValue;
-		List<ISkill> _tmpSkills = new List<ISkill>();
+		List<IActiveSkill> _tmpSkills = new();
 		
-		foreach( ISkill skill in CanUseSkills)
+		foreach( var skill in CanUseSkills)
 		{
 			if (skill.Priority < highPriority)
 			{
@@ -145,7 +152,7 @@ public class Character : MonoBehaviour
 			}
 		}
 
-		foreach( ISkill skill in CanUseSkills)
+		foreach( var skill in CanUseSkills)
 		{
 			if (skill.Priority == highPriority)
 			{

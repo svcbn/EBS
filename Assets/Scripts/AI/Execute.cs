@@ -6,7 +6,7 @@ public class Execute : Action
 {
 	private Character _character;
 
-	private ISkill _selectedSkill;
+	private IActiveSkill _selectedSkill;
 
 	public override void OnAwake()
 	{
@@ -32,7 +32,7 @@ public class Execute : Action
 		return TaskStatus.Failure;
 	}
 
-	ISkill SelectRandomSkill(List<ISkill> skills)
+	IActiveSkill SelectRandomSkill(List<IActiveSkill> skills)
 	{
 		float totalCoolTime = 0;
 		foreach (var canUseSkill in skills)

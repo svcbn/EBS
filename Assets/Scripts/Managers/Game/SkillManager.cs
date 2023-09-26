@@ -6,13 +6,11 @@ using UnityEngine;
 
 public class SkillManager
 {
-	private readonly Dictionary<uint, ISkill> _allSkills = new();
-
 	private SkillData _skillData;
 
 	private Dictionary<Character, List<ISkill>> _skills = new();
 
-	private static Dictionary<Character, List<ISkill>> _dummySkills = new(); // for test
+	private static Dictionary<Character, List<IActiveSkill>> _dummySkills = new(); // for test
 
 	private Dictionary<int, ISkill> _skillCache = new();
 
@@ -22,19 +20,29 @@ public class SkillManager
 		_skillData = Managers.Data.Load<SkillData>();
 	}
 
-	public List<ISkill> GetSkills() => _allSkills.Values.ToList();
-
-	public List<ISkill> GeneratePool(int count)
+	public List<SkillInfo> GeneratePool(int count)
 	{
-		List<ISkill> newSkillPool = new();
+		List<SkillInfo> newSkillPool = new();
 
+		int totalCount = _skills.SelectMany(pool => pool.Value).Count();
 		while (newSkillPool.Count < count)
 		{
-			ISkill newSkill = new Slash();
+			if (newSkillPool.Count >= _skillData.Skills.Count - totalCount)
+			{
+				break;
+			}
 
-			if (_skills.Any(pool => pool.Value.Contains(newSkill)))
+			int random = UnityEngine.Random.Range(0, _skillData.Skills.Count);
+			SkillInfo newSkill = _skillData.Skills[random];
+			if (_skills.Any(pool => pool.Value.Any(skill => skill.Id == newSkill.Id)))
 			{
 				// 이미 새 스킬을 누가 가지고 있음
+				continue;
+			}
+
+			if (newSkillPool.Contains(newSkill))
+			{
+				// 이미 리스트에 넣은 스킬임
 				continue;
 			}
 
@@ -42,6 +50,11 @@ public class SkillManager
 		}
 
 		return newSkillPool;
+	}
+
+	public SkillInfo GetInfo(ISkill skill)
+	{
+		return _skillData.Skills.FirstOrDefault(info => info.Id == skill.Id);
 	}
 
 	public ISkill GetSkillById(int id)
@@ -69,10 +82,8 @@ public class SkillManager
 		foreach (var type in skillTypes)
 		{
 			ISkill skill = Activator.CreateInstance(type) as ISkill;
-			_allSkills.Add(skill.Id, skill);
 		}
 	}
-
 
 
 	static Character _dummyChar;
@@ -83,7 +94,7 @@ public class SkillManager
 
 
 		_dummyChar = new Character();
-		_dummySkills.Add(_dummyChar, new List<ISkill>()
+		_dummySkills.Add(_dummyChar, new List<IActiveSkill>()
 		{
 			new DummyFireballSkill(),
 			//new DummyHealSkill(),
@@ -98,7 +109,7 @@ public class SkillManager
 		});
 	}
 
-	public static List<ISkill> GetDummySkills()
+	public static List<IActiveSkill> GetDummySkills()
 	{
 		Debug.Log("GetDummySkills");
 
@@ -106,13 +117,13 @@ public class SkillManager
 	}
 
 
-	public static ISkill GetHighPrioritySkill()
+	public static IActiveSkill GetHighPrioritySkill()
 	{
 		if( _dummySkills == null ) { return null; }
 
-		List<ISkill> skills = _dummySkills[_dummyChar];
+		List<IActiveSkill> skills = _dummySkills[_dummyChar];
 
-		foreach( ISkill skill in skills)
+		foreach( var skill in skills)
 		{
 			// find high priority skill
 			if (skill.Priority == 1)
