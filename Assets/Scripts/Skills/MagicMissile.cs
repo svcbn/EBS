@@ -33,7 +33,7 @@ public class MagicMissile : SkillBase, IActiveSkill
 	public override IEnumerator ExecuteImplCo()
 	{
         int colCount = 0;
-        Collider2D[] cols = Physics2D.OverlapCircleAll(Owner.transform.position, _data.range, _data.damageLayer);
+        Collider2D[] cols = Physics2D.OverlapCircleAll(Owner.transform.position, _data.range, _data.targetLayer);
         if (cols.Length == 0) // 타겟이 없을때 
         {
             for (int i = 0; i < _data.missileCount; i++)
@@ -54,16 +54,11 @@ public class MagicMissile : SkillBase, IActiveSkill
 		List<Collider2D> validTargets = new List<Collider2D>();
 		foreach (var col in cols)
 		{
-
-			//if (col.gameObject != Owner.gameObject) // Owner is the self gameObject
 			if (col.GetComponent<Character>() != Owner)
 			{
-				Debug.Log($"MagicMissile: {col.gameObject.name}");
 				validTargets.Add(col);
 			}
 		}
-
-        Debug.Log( " MagicMissle.cs:  validTargets.Count: "+validTargets.Count );
 
 		if( validTargets.Count > 0)
 		{
@@ -89,25 +84,9 @@ public class MagicMissile : SkillBase, IActiveSkill
 	}
 
 	
-	IEnumerator PlayEffect(Transform pos)
-	{
-		GameObject effect = null;
-		if (_data.Effect != null)
-		{
-			effect = Managers.Resource.Instantiate("Skills/"+_data.Effect.name);
-			effect.transform.position = Owner.transform.position;
-		}
-
-		yield return null; //new WaitForSeconds(0.5f); // 이펙트 재생 시간
-
-		Managers.Resource.Release(effect);
-	}
-
-
 	public override bool CheckCanUse()
 	{
 		bool isEnemyInBox = CheckEnemyInBox(_data.CheckBoxCenter, _data.CheckBoxSize);
-
 
 		return isEnemyInBox;
 	}

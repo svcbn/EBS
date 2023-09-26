@@ -5,10 +5,9 @@ using UnityEngine;
 public class MagicMissileData : ActiveSkillData
 {
 	public GuidedBulletMover missilePrefab;
-    public LayerMask damageLayer;
+    public LayerMask targetLayer; // Player Layer
     public float duration;
     public int missileCount;
-    public float fireBallDelay;
     
     
     public float range;
