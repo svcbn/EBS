@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1241902018169741388}
   - component: {fileID: 1241902018169741387}
   m_Layer: 0
-  m_Name: Slash_Angled_04_Normal
+  m_Name: Slash_Angled_04_Normal Copied
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,9 +48,9 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 0
-  looping: 1
+  looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
