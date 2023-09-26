@@ -23,9 +23,7 @@ public class ActiveSkillData : ScriptableObject
 	[SerializeField] private float _afterDelay;
 	[SerializeField] private float _requireMP;
 
-	[SerializeField] private ParticleSystem _spriteEffect;
-	//[SerializeField] private GameObject 
-
+	[SerializeField] private GameObject _effect;
 
 	public Vector2 CheckBoxCenter => _checkBoxCenter;
 	public Vector2 CheckBoxSize => _checkBoxSize;
@@ -43,5 +41,5 @@ public class ActiveSkillData : ScriptableObject
 	public float AfterDelay => _afterDelay;
 	public float RequireMP => _requireMP;
 
-	public ParticleSystem SpriteEffect => _spriteEffect;
+	public GameObject Effect => _effect;
 }

@@ -21,7 +21,7 @@ public class Slash : SkillBase, IActiveSkill
 		BeforeDelay       = _data.BeforeDelay;
 		Duration          = _data.Duration;
 		AfterDelay        = _data.AfterDelay;
-		
+		RequireMP		  = _data.RequireMP;
 	}
 
 	public override void Execute()
@@ -39,11 +39,12 @@ public class Slash : SkillBase, IActiveSkill
 		Debug.Log($"선딜 시작  {BeforeDelay}");
 		yield return new WaitForSeconds(BeforeDelay);
 
+		GameObject effect = null;
 		// 애니메이션 재생
-		if (_data.SpriteEffect != null)
+		if (_data.Effect != null)
 		{
-			_data.SpriteEffect.transform.position = Owner.transform.position;
-			_data.SpriteEffect.Play();
+			effect = Managers.Resource.Instantiate("Skills/"+_data.Effect.name);
+			effect.transform.position = Owner.transform.position;
 		}
 
 		// 실제 피해
@@ -64,11 +65,12 @@ public class Slash : SkillBase, IActiveSkill
 			Debug.Log(character.name + "에게 피해를 입힘.");
 		}
 
+
 		// 후딜
 		Debug.Log($"후딜 시작  {AfterDelay}");
 		yield return new WaitForSeconds(AfterDelay);
 
-
+		Managers.Resource.Release(effect);
 	}
 
 	public override bool CheckCanUse()

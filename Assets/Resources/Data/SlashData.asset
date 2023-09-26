@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00cc6a1a06c762f4396f6405a207d9cb, type: 3}
   m_Name: SlashData
   m_EditorClassIdentifier: Assembly-CSharp::SlashData
-  _checkBoxCenter: {x: 0, y: 0}
+  _checkBoxCenter: {x: 3, y: 3}
   _checkBoxSize: {x: 3, y: 3}
   _hitBoxCenter: {x: 2, y: 2}
   _hitBoxSize: {x: 2, y: 2}
@@ -25,4 +25,4 @@ MonoBehaviour:
   _duration: 1
   _afterDelay: 0.5
   _requireMP: 0
-  _spriteEffect: {fileID: 0}
+  _effect: {fileID: 8370813354424140250, guid: 6f94f4460f3f91b45bcbb6d760e7c6f3, type: 3}
