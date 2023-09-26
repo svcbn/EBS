@@ -52,6 +52,7 @@ public class Block : SkillBase, IActiveSkill
 			effect = Managers.Resource.Instantiate("Skills/"+_data.Effect.name);
 			effect.transform.position = Owner.transform.position;
 		}
+		DebugRay(Owner.transform.position, _data.HitBoxSize);
 
 		yield return new WaitForSeconds(_data.Duration); // 이펙트 재생 시간
 
