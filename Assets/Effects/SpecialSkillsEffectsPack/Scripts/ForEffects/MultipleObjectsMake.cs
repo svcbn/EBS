@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,8 +19,10 @@ public class MultipleObjectsMake : _ObjectsMakeBase
     float m_scalefactor;
 
 
-    void Start()
+    void OnEnable()
     {
+		m_Time = 0;
+		m_Time2 = 0;
         m_Time = m_Time2 = Time.time;
         m_scalefactor = VariousEffectsScene.m_gaph_scenesizefactor; //transform.parent.localScale.x; 
     }
@@ -50,4 +52,6 @@ public class MultipleObjectsMake : _ObjectsMakeBase
             }
         }
     }
+
+
 }
