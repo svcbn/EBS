@@ -1,8 +1,6 @@
-using UnityEngine;
-
 namespace BehaviorDesigner.Runtime.Tasks
 {
-    [TaskDescription("Sends an event to the behavior tree, returns success after sending the event.")]
+	[TaskDescription("Sends an event to the behavior tree, returns success after sending the event.")]
     [HelpURL("https://www.opsive.com/support/documentation/behavior-designer/events/")]
     [TaskIcon("{SkinColor}SendEventIcon.png")]
     public class SendEvent : Action

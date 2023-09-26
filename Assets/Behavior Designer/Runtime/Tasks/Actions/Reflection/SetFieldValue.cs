@@ -1,10 +1,8 @@
 using UnityEngine;
-using System;
-using System.Reflection;
 
 namespace BehaviorDesigner.Runtime.Tasks
 {
-    [TaskDescription("Sets the field to the value specified. Returns success if the field was set.")]
+	[TaskDescription("Sets the field to the value specified. Returns success if the field was set.")]
     [TaskCategory("Reflection")]
     [TaskIcon("{SkinColor}ReflectionIcon.png")]
     public class SetFieldValue : Action
