@@ -17,6 +17,7 @@ public class Character : MonoBehaviour
 	[SerializeField]
 	private GameObject _target;
 	
+	public GameObject Target => _target;
 
 	private BehaviorTree _moveBehavior;
 	private Rigidbody2D _rigidbody2;

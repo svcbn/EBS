@@ -56,7 +56,7 @@ public class ManaShower : SkillBase, IActiveSkill
 
 	public override bool CheckCanUse()
 	{
-		bool isEnemyInBox = CheckEnemyInBox(_data.CheckBoxCenter, _data.CheckBoxSize);
+		bool isEnemyInBox = !CheckEnemyInBox(_data.CheckBoxCenter, _data.CheckBoxSize);
 
 		bool isEnoughMP = CheckEnoughMP(RequireMP);
 
