@@ -49,6 +49,8 @@ public abstract class SkillBase : MonoBehaviour, ISkill
 
 	public virtual void Execute()
 	{
+		Debug.Log(GetType().Name);
+
 		IsCoolReady = false;
 		IsActing = true;
 

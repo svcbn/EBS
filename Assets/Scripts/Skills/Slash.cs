@@ -28,7 +28,6 @@ public class Slash : SkillBase, IActiveSkill
 	{
 		if (_data == null){ Debug.LogWarning($"Fail load Data/SlashData"); return;  }
 		
-		
 		base.Execute();
 		Owner.StartCoroutine(ExecuteCo());
 	}
@@ -36,7 +35,6 @@ public class Slash : SkillBase, IActiveSkill
 	IEnumerator ExecuteCo()
 	{
 		// 선딜
-		Debug.Log($"선딜 시작  {BeforeDelay}");
 		yield return new WaitForSeconds(BeforeDelay);
 
 		GameObject effect = null;
@@ -48,8 +46,6 @@ public class Slash : SkillBase, IActiveSkill
 		}
 
 		// 실제 피해
-		Debug.Log($"실제 피해 ");
-		Debug.Log($"시전 시간  {Duration}");
 
 		float x = Owner.transform.localScale.x < 0 ? -1 : 1;
 		Vector2 centerInWorld = (Vector2)Owner.transform.position + new Vector2(x * _data.HitBoxCenter.x, _data.HitBoxCenter.y);
@@ -67,7 +63,6 @@ public class Slash : SkillBase, IActiveSkill
 
 
 		// 후딜
-		Debug.Log($"후딜 시작  {AfterDelay}");
 		yield return new WaitForSeconds(AfterDelay);
 
 		Managers.Resource.Release(effect);

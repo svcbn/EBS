@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class CharactorJump : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class CharactorJump : MonoBehaviour
 	{
 		if (_charaterGround.GetOnGround())
 		{
+			_body.velocity = new Vector2(_body.velocity.x, 0);
 			_body.AddForce(Vector2.up * _charactorMovementData.JumpPower, ForceMode2D.Impulse);
 		}
 	}

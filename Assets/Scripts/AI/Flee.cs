@@ -78,9 +78,6 @@ public class CustomFlee : Action
 				selectedTarget = directionToRightTarget;
 		}
 
-		//debug
-		Debug.Log(selectedTarget.Value);
-
 		return selectedTarget;
 	}
 }
