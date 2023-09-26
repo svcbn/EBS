@@ -21,25 +21,36 @@ public class SkillManager
 	{
 		List<SkillInfo> newSkillPool = new();
 
+		int numOfAssignedSkill = Mathf.Min(_skillCache.Count, _skillData.Skills.Count);
 		int totalCount = _skills.SelectMany(pool => pool.Value).Count();
 		while (newSkillPool.Count < count)
 		{
-			if (newSkillPool.Count >= _skillData.Skills.Count - totalCount)
+			if (newSkillPool.Count >= numOfAssignedSkill - totalCount)
 			{
 				break;
 			}
 
 			int random = UnityEngine.Random.Range(0, _skillData.Skills.Count);
 			SkillInfo newSkill = _skillData.Skills[random];
-			if (_skills.Any(pool => pool.Value.Any(skill => skill.Id == newSkill.Id)))
+
+			// 만약 어셈블리 내에 없는 스킬이면
+			if (!_skillCache.TryGetValue(newSkill.Id, out _))
 			{
-				// 이미 새 스킬을 누가 가지고 있음
+				// 패스
 				continue;
 			}
 
+			// 이미 누가 가지고 있는 스킬이면
+			if (_skills.Any(pool => pool.Value.Any(skill => skill.Id == newSkill.Id)))
+			{
+				// 패스
+				continue;
+			}
+
+			// 이미 리스트에 넣은 스킬이면
 			if (newSkillPool.Contains(newSkill))
 			{
-				// 이미 리스트에 넣은 스킬임
+				// 패스
 				continue;
 			}
 

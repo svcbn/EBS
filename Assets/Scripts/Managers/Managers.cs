@@ -53,6 +53,7 @@ public class Managers : MonoBehaviour
 
 			s_Instance._input.Init();
 			s_Instance._stat.Init();
+			s_Instance._ui.Init();
 		}
 	}
 }

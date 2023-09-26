@@ -84,11 +84,6 @@ public class GameManager : MonoBehaviour
 	private int[] roundDamage = {0, 0, 4, 8, 12, 20, 30, 30, 30, 30};
 	private bool isPlayer1Defeat = false;
 	private bool _isPlayer1Pick = false;
-
-	private KeyCode[] _registeredKeys =
-	{ KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.Space,
-		KeyCode.UpArrow, KeyCode.LeftArrow, KeyCode.DownArrow, KeyCode.RightArrow, KeyCode.Return };
-
 	#endregion
 
 
@@ -143,28 +138,37 @@ public class GameManager : MonoBehaviour
 		PreparePlayer();
     }
 
+	private void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Escape))
+		{
+			_ui.ShowMenu();
+		}
+	}
+
+	public void StartGame()
+	{
+		ChangeState(GameState.PickSkill);
+	}
+
 	private void PreparePlayer()
 	{
 		player1 = GameObject.Find("Player 1").GetOrAddComponent<Character>();
 		player2 = GameObject.Find("Player 2").GetOrAddComponent<Character>();
 
-		//player1 = Managers.Resource.Instantiate("Character/Player 1").GetOrAddComponent<Character>();
-		//player2 = Managers.Resource.Instantiate("Character/Player 2").GetOrAddComponent<Character>();
-
 		_ui.ShowSkillList(player1, player2);
-
-		//Managers.Resource.Release(player1.gameObject);
-		//Managers.Resource.Release(player2.gameObject);
 	}
 
 	private void OnTitle()
     {
         // something must do at title
-		
+		_ui.ShowTitle(StartGame);
     }
 
     private void OnPickSkill()
     {
+		Time.timeScale = 0f;
+
 		// if round1, player1 is first
 		Character winner = GetWinner();
 		// else, last round's winner is first
@@ -185,6 +189,7 @@ public class GameManager : MonoBehaviour
 
 	private Character GetWinner()
 	{
+		// TODO: 승자 처리
 		return player1;
 	}
 
@@ -222,6 +227,7 @@ public class GameManager : MonoBehaviour
 
 	private void OnPreRound()
     {
+		Time.timeScale = 1f;
         // reset something
 
         // do something
