@@ -9,6 +9,7 @@ public class TriggerAttacker : MonoBehaviour
     public bool useKnockback = false;
 
     public Character owner;
+    public int damage;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {       
@@ -18,16 +19,17 @@ public class TriggerAttacker : MonoBehaviour
         }
 
         //설정한 damageLayer와 충돌체의 레이어가 같으면 피해를 줍니다.
-        if( collision.gameObject.layer == LayerMask.NameToLayer("EnemyMJ"))
+        if(collision.GetComponent<Character>() != null && collision.GetComponent<Character>().playerIndex != owner.playerIndex)
         {
             //DamageToTarget(collision.gameObject);
             if (isDestroyedOnCollision)
             {
-                // 피격 판정.
+				// 피격 판정.
 
-                // TODO: 데미지 추가
+				// TODO: 데미지 추가
+				Managers.Stat.GiveDamage(1 - owner.playerIndex, damage);
 
-                Destroy(this.gameObject);
+				Destroy(this.gameObject);
             }
         }
     }

@@ -66,8 +66,10 @@ public class DashStrike : SkillBase, IActiveSkill
 			}
 
 			// Todo : statmanager 쪽에 데미지 연산 요청
+			Managers.Stat.GiveDamage(1 - Owner.playerIndex, _data.Damage);
 
 			// Todo : charactorstatus 쪽에 스턴 요청
+			Owner.Target.GetComponent<CharacterStatus>().SetFaintEffect(3);
 		}
 
 

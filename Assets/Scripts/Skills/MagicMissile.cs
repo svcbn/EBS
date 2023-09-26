@@ -22,6 +22,7 @@ public class MagicMissile : SkillBase, IActiveSkill
 		BeforeDelay       = _data.BeforeDelay;
 		AfterDelay        = _data.AfterDelay;
 		RequireMP		  = _data.RequireMP;
+		
 	}
 
 	public override void Execute()
@@ -71,7 +72,7 @@ public class MagicMissile : SkillBase, IActiveSkill
 				if (i%validTargets.Count==0) { colCount = 0; }
 				GuidedBulletMover g = Instantiate(_data.missilePrefab, Owner.transform.position, Quaternion.identity);
 				g.GetComponent<TriggerAttacker>().owner = Owner;
-
+				g.GetComponent<TriggerAttacker>().damage = _data.Damage;
 
 				g.target = validTargets[colCount].transform;
 				g.bezierDelta  = _data.bezierDelta;  // 상대 원
