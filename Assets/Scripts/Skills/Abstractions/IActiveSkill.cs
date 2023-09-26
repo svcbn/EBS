@@ -26,11 +26,6 @@ public interface IActiveSkill : ISkill
 	bool IsActing { get; }
 
 	/// <summary>
-	/// 스킬이 선 딜레이 중인지 여부
-	/// </summary>
-	bool IsBeforeDelay { get; }
-
-	/// <summary>
 	/// 스킬의 쿨타임
 	/// </summary>
 	float Cooldown { get; }

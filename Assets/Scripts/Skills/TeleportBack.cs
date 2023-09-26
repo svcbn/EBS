@@ -27,20 +27,10 @@ public class TeleportBack : SkillBase, IActiveSkill
 	public override void Execute()
 	{		
 		base.Execute();
-
-		IsBeforeDelay = true;
-		Invoke("ExecuteImpl", BeforeDelay);
-
 		StartCoroutine(PlayTelepotEffect(Owner.transform)); // TBD: 이펙트 재생 위치 및 시간 고려필요
 	}
 
-	void ExecuteImpl()
-	{
-		IsBeforeDelay = false;
-		Owner.StartCoroutine(ExecuteImplCo());
-	}
-
-	IEnumerator ExecuteImplCo()
+	public override IEnumerator ExecuteImplCo()
 	{
 		Owner.transform.position = CalcTeleportPos();
 
