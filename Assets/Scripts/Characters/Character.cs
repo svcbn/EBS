@@ -113,6 +113,7 @@ public class Character : MonoBehaviour
 		_moveBehavior.SetVariableValue("Direction", direction);
 		_moveBehavior.SetVariableValue("Distance", distance);
 		_moveBehavior.SetVariableValue("HasCooldownSkill", _hasCooldowmSkill);
+		_moveBehavior.SetVariableValue("Target", _target);
 	}
 
 	public List<IActiveSkill> GetHighPrioritySkill()
