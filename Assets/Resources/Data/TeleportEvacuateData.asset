@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 99c56d7a491c1c24791216a499b42dfe, type: 3}
-  m_Name: TeleportBackData
+  m_Name: TeleportEvacuateData
   m_EditorClassIdentifier: 
   _id: 3
-  _type: 0
-  _priority: 1
-  _isRestrictMoving: 1
   _cooldown: 3
+  _effect: {fileID: 0}
+  _priority: 1
+  _type: 0
+  _isRestrictMoving: 1
   _beforeDelay: 0.5
   _afterDelay: 0.1
   _requireMP: 0
-  _effect: {fileID: 0}
   _checkBoxCenter: {x: 0, y: 0}
   _checkBoxSize: {x: 20, y: 20}
   _hitBoxCenter: {x: 0, y: 0}
   _hitBoxSize: {x: 4, y: 4}
   _damage: 0
-  teleportEffect: {fileID: 81308183512584115, guid: bd67c6c4e41cbb246be5a248ac4486c7, type: 3}
-  postEffect: {fileID: 8733514384126542105, guid: 4ca2213c03f44ca439c6b93726461349, type: 3}
+  beforeEffect: {fileID: 81308183512584115, guid: bd67c6c4e41cbb246be5a248ac4486c7, type: 3}
+  afterEffect: {fileID: 8733514384126542105, guid: 4ca2213c03f44ca439c6b93726461349, type: 3}
   telpoDistance: 20

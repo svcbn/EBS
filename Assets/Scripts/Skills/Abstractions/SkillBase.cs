@@ -126,4 +126,21 @@ public abstract class SkillBase : MonoBehaviour, ISkill
 		CancelInvoke("ExecuteImpl");
 	}
 
+	protected void PlayEffect(string effName, float duration)
+	{
+		StartCoroutine(PlayEffectCo(effName, duration ));
+	}
+
+	IEnumerator PlayEffectCo(string effName, float duration)
+	{
+
+		Transform parent = Owner.transform;
+		GameObject effect = Managers.Resource.Instantiate("Skills/"+effName, parent ); // paraent를 character.gameObject로
+		effect.transform.localPosition = Vector3.zero;
+
+		yield return new WaitForSeconds(duration); // 이펙트 재생 시간
+		Managers.Resource.Release(effect);
+		
+	}
+
 }

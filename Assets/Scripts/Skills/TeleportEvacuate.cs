@@ -1,16 +1,17 @@
+using BehaviorDesigner.Runtime.Tasks.Unity.UnityQuaternion;
 using System.Collections;
 using UnityEngine;
 
-public class TeleportBack : SkillBase, IActiveSkill
+public class TeleportEvacuate : SkillBase, IActiveSkill
 {
-	private TeleportBackData _data;
+	private TeleportEvacuateData _data;
 
 	public override void Init()
 	{
 		base.Init();
 
-		_data = Managers.Resource.Load<TeleportBackData>("Data/TeleportBackData");
-		if (_data == null){ Debug.LogWarning($"Fail load Data/TeleportBackData"); return; }
+		_data = Managers.Resource.Load<TeleportEvacuateData>("Data/TeleportEvacuateData");
+		if (_data == null){ Debug.LogWarning($"Fail load Data/TeleportEvacuateData"); return; }
 
 		Id                = _data.Id;
 		Type              = _data.Type;
@@ -26,14 +27,16 @@ public class TeleportBack : SkillBase, IActiveSkill
 	public override void Execute()
 	{		
 		base.Execute();
-		StartCoroutine(PlayTelepotEffect(Owner.transform)); // TBD: 이펙트 재생 위치 및 시간 고려필요
+
+		if (_data.beforeEffect != null) { PlayEffect("Teleport_Before", 1f ); }
 	}
 
 	public override IEnumerator ExecuteImplCo()
 	{
 		Owner.transform.position = CalcTeleportPos();
 
-		StartCoroutine(PlayPostEffect(Owner.transform));
+		if (_data.afterEffect != null) { PlayEffect("Teleport_After", 1f); }
+
 		yield return new WaitForSeconds(AfterDelay);
 	}
 
@@ -63,36 +66,7 @@ public class TeleportBack : SkillBase, IActiveSkill
 		return destV;
 	}
 
-	IEnumerator PlayTelepotEffect(Transform pos)
-	{
-		GameObject effect = null;
-		if (_data.teleportEffect != null)
-		{
-			string effName = "Teleport_Before";
-			effect = Managers.Resource.Instantiate("Skills/"+effName);
-			effect.transform.position = Owner.transform.position;
-		}
 
-		yield return new WaitForSeconds(0.5f); // 이펙트 재생 시간
-
-		Managers.Resource.Release(effect);
-	}
-
-	IEnumerator PlayPostEffect(Transform pos)
-	{
-		GameObject effect = null;
-		if (_data.postEffect != null)
-		{
-			string effName = "Teleport_After";
-			effect = Managers.Resource.Instantiate("Skills/"+effName);
-			effect.transform.position = Owner.transform.position;
-		}
-
-		yield return new WaitForSeconds(0.5f); // 이펙트 재생 시간
-
-		Managers.Resource.Release(effect);
-	}
-    
 	
 	void OnDrawGizmos() 
 	{

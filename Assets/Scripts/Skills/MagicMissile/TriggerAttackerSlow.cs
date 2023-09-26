@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TriggerAttacker : MonoBehaviour
+public class TriggerAttackerSlow : MonoBehaviour
 {
     [Header("충돌 시 데미지를 주는 Attacker")]
     public bool isDestroyedOnCollision = false;
@@ -26,6 +26,9 @@ public class TriggerAttacker : MonoBehaviour
                 // 피격 판정.
 
                 // TODO: 데미지 추가
+
+                // 슬로우 효과
+                collision.gameObject.GetComponent<CharacterStatus>().SetSlowEffect(5f, 0.5f);
 
                 Destroy(this.gameObject);
             }

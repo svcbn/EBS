@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 999fab61c96651242be20a3acebef12f, type: 3}
   m_Name: DashStrikeData
   m_EditorClassIdentifier: 
-  _id: 7
-  _type: 1
+  _id: 8
   _cooldown: 6
+  _effect: {fileID: 4152039297200343374, guid: 9409f0784f6c8e64686008edcd08e208, type: 3}
   _priority: 1
+  _type: 1
   _isRestrictMoving: 1
   _beforeDelay: 0.5
   _afterDelay: 1
   _requireMP: 0
-  _effect: {fileID: 4152039297200343374, guid: 9409f0784f6c8e64686008edcd08e208, type: 3}
   _checkBoxCenter: {x: 0, y: 0}
   _checkBoxSize: {x: 2, y: 2}
   _hitBoxCenter: {x: 0, y: 0}
