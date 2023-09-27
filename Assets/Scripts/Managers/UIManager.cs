@@ -24,6 +24,7 @@ public class UIManager
 
 	public void Init()
 	{
+		ClearAllPopup();
 		_popupStack.Clear();
 	}
 

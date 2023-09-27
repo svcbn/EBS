@@ -1,8 +1,11 @@
+using BehaviorDesigner.Runtime;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -76,7 +79,9 @@ public class GameManager : MonoBehaviour
 	private GameUIManager _ui = new();
 	private Character _currentPicker;
 	[SerializeField]
-	private List<int> _pickCountList;
+	private List<int> _firstPickCountList;
+	[SerializeField]
+	private List<int> _otherPickCountList;
 	private int _pickCount;
 	private int _pickCountIndex;
 
@@ -253,6 +258,7 @@ public class GameManager : MonoBehaviour
 
     private void OnPickSkill()
     {
+	    canvas.SetActive(false);
 	    InitPlayerStartingPoint();
 	    
 	    // TODO: 라운드별 승자 처리
@@ -262,8 +268,9 @@ public class GameManager : MonoBehaviour
 		_currentPicker = CurrentRound == 1 ? player1 : winner;
 		_isPlayer1Pick = CurrentRound == 1 || winner == player1;
 
+		var list = CurrentRound == 1 ? _firstPickCountList : _otherPickCountList;
 		_pickCountIndex = 0;
-		_pickCount = _pickCountList[_pickCountIndex];
+		_pickCount = list[_pickCountIndex];
 
 		var skillPool = _skill.GeneratePool(_skillPickCount);
 		_selector = new(skillPool)
@@ -304,10 +311,11 @@ public class GameManager : MonoBehaviour
 		_currentPicker = _isPlayer1Pick ? player2 : player1;
 		_selector.Input = _isPlayer1Pick ? _player2Input : _player1Input;
 		_isPlayer1Pick = !_isPlayer1Pick;
-			
-		if (_pickCountIndex < _pickCountList.Count - 1 && _selector.CanSelect)
+
+		var list = CurrentRound == 1 ? _firstPickCountList : _otherPickCountList;
+		if (_pickCountIndex < list.Count - 1 && _selector.CanSelect)
 		{
-			_pickCount = _pickCountList[++_pickCountIndex];
+			_pickCount = list[++_pickCountIndex];
 		}
 		else
 		{
@@ -322,7 +330,7 @@ public class GameManager : MonoBehaviour
 	private void OnPreRound()
     {
 		// reset something
-		
+		canvas.SetActive(true);
 
 		// do something
 
@@ -336,6 +344,7 @@ public class GameManager : MonoBehaviour
     private void OnBattle()
     {
 		// change something
+		timer = 99f;
 		StartBattle();
     }
 
@@ -348,21 +357,36 @@ public class GameManager : MonoBehaviour
 
 		player1RoundHPUI.value = 100 + CurrentRound * 20;
 		player2RoundHPUI.value = 100 + CurrentRound * 20;
-		timer = 99f;
 
 		CurrentRound++;
 
-		ChangeState(GameState.PickSkill);
+		if (State != GameState.GameOver)
+		{
+			var winnerUI = Managers.UI.ShowPopupUI<UIRoundWinner>();
+			winnerUI.SetWinner(_roundWinner);
+
+			IEnumerator WaitUIClose()
+			{
+				yield return new WaitForSeconds(3);
+				Managers.UI.ClosePopupUI(winnerUI);
+				ChangeState(GameState.PickSkill);
+			}
+
+			StartCoroutine(WaitUIClose());
+		}
     }
     
     private void OnGameOver()
     {
+	    var winner = _isPlayer1Defeat ? player2 : player1;
+	    var gameEndUI = Managers.UI.ShowPopupUI<UIGameEnd>();
+	    gameEndUI.SetWinner(winner);
         // winner ui??
-		if (_isPlayer1Defeat)
+		//if (_isPlayer1Defeat)
 		{
 			// player2 win
 		}
-		else
+		//else
 		{
 			// player1 win
 		}
@@ -375,9 +399,9 @@ public class GameManager : MonoBehaviour
 	{
 		player1.gameObject.SetActive(true);
 		player2.gameObject.SetActive(true);
-		
-		player1.BehaviorTree.enabled = false;
-		player2.BehaviorTree.enabled = false;
+
+		player1.GetComponent<BehaviorTree>().enabled = false;
+		player2.GetComponent<BehaviorTree>().enabled = false;
 
 		player1.GetComponent<CharacterMovement>().PlayerInput = Vector2.zero;
 		player2.GetComponent<CharacterMovement>().PlayerInput = Vector2.zero;
