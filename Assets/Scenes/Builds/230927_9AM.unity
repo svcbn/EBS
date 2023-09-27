@@ -569,8 +569,8 @@ MonoBehaviour:
     _right: 275
     _select: 13
     _owner: Player 2
-  _firstPickCountList: 
-  _otherPickCountList: 
+  _firstPickCountList: 010000000200000001000000
+  _otherPickCountList: 0100000001000000
   totalRounds: 0
   spawnPoints:
   - {fileID: 7971570889885747924}
@@ -970,18 +970,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1868505982574859490, guid: 26db5d2878de77f47b2f5d4e464f7fae, type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1868505982574859490, guid: 26db5d2878de77f47b2f5d4e464f7fae, type: 3}
-      propertyPath: m_Color.g
-      value: 0.2544126
-      objectReference: {fileID: 0}
-    - target: {fileID: 1868505982574859490, guid: 26db5d2878de77f47b2f5d4e464f7fae, type: 3}
-      propertyPath: m_Color.r
-      value: 0.1745283
-      objectReference: {fileID: 0}
     - target: {fileID: 1868505982574859491, guid: 26db5d2878de77f47b2f5d4e464f7fae, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -989,18 +977,6 @@ PrefabInstance:
     - target: {fileID: 1868505982574859491, guid: 26db5d2878de77f47b2f5d4e464f7fae, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1868505984177606785, guid: 26db5d2878de77f47b2f5d4e464f7fae, type: 3}
-      propertyPath: m_Color.b
-      value: 0.18396229
-      objectReference: {fileID: 0}
-    - target: {fileID: 1868505984177606785, guid: 26db5d2878de77f47b2f5d4e464f7fae, type: 3}
-      propertyPath: m_Color.g
-      value: 0.53132975
-      objectReference: {fileID: 0}
-    - target: {fileID: 1868505984177606785, guid: 26db5d2878de77f47b2f5d4e464f7fae, type: 3}
-      propertyPath: m_Color.r
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1868505984177606790, guid: 26db5d2878de77f47b2f5d4e464f7fae, type: 3}
       propertyPath: m_AnchorMax.x

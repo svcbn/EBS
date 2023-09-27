@@ -1,5 +1,5 @@
-using System;
 using UnityEngine.UI;
+using UnityEngine;
 
 public class UITitle : UIPopup
 {
@@ -9,9 +9,9 @@ public class UITitle : UIPopup
 		ExitButton
 	}
 
-	public Action StartButtonClicked;
+	public System.Action StartButtonClicked;
 
-	public Action ExitButtonClicked;
+	public System.Action ExitButtonClicked;
 
 	public override void Init()
 	{

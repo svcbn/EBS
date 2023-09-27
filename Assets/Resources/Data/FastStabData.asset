@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: FastStabData
   m_EditorClassIdentifier: 
   _id: 14
-  _cooldown: 8
+  _cooldown: 3
   _effect: {fileID: 5364570079357445507, guid: 2eb0a2b64ca03f849800352bde66defa, type: 3}
   _priority: 1
   _type: 1
   _isRestrictMoving: 0
   _beforeDelay: 0.1
-  _afterDelay: 0.1
+  _afterDelay: 0.5
   _requireMP: 10
   _checkBoxCenter: {x: 0, y: 0}
   _checkBoxSize: {x: 8, y: 3}

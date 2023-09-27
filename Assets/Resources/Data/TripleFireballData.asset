@@ -9,29 +9,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5479e27a40e38a343bd503abd973fce9, type: 3}
-  m_Name: MagicMissileData
+  m_Script: {fileID: 11500000, guid: be7934bcd8fd0804f9ba2b42ccd19bc2, type: 3}
+  m_Name: TripleFireballData
   m_EditorClassIdentifier: 
-  _id: 6
-  _cooldown: 10
+  _id: 20
+  _cooldown: 17
   _effect: {fileID: 0}
   _priority: 1
   _type: 1
   _isRestrictMoving: 1
-  _beforeDelay: 0.7
+  _beforeDelay: 1.2
   _afterDelay: 0.7
-  _requireMP: 1
+  _requireMP: 0
   _checkBoxCenter: {x: 0, y: 0}
-  _checkBoxSize: {x: 30, y: 30}
+  _checkBoxSize: {x: 0, y: 0}
   _hitBoxCenter: {x: 0, y: 0}
-  _hitBoxSize: {x: 1, y: 1}
-  _damage: 2
-  missilePrefab: {fileID: 1941211119430951607, guid: 79bd5dbc4da377c4d9e1de615713fa4b, type: 3}
+  _hitBoxSize: {x: 0, y: 0}
+  _damage: 7
+  prefab: {fileID: 8174002704321683750, guid: c9e691fadb0ad3c438ec479f2fd8e41b, type: 3}
+  speed: 10
+  delay: 0
+  targetIndex: 0
+  lifespan: 2
   targetLayer:
     serializedVersion: 2
     m_Bits: 256
-  duration: 1
-  missileCount: 5
-  range: 20
-  bezierDelta: 10
-  bezierDelta2: 10
+  range: 10
+  interval: 0.7

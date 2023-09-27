@@ -18,7 +18,8 @@ public class StatManager
 	private float[] _invincibleTimers = new float[2];
 	private Coroutine _invincibleCR;
 
-	private Character[] characters = new Character[2];
+	private Character[] _characters = new Character[2];
+	public Character[] Characters { get => _characters; }
 
 	public delegate void OnCharacterEvent(int actorIndex);
 	public event OnCharacterEvent onBlockDamage;
@@ -37,6 +38,9 @@ public class StatManager
 
 		if (_invincibleCR != null) Managers.Instance.StopCoroutine(_invincibleCR);
 		_invincibleCR = Managers.Instance.StartCoroutine(CR_TickInvincibleTimers());
+
+		_characters[0] = GameObject.Find("Player 1").GetComponent<Character>();
+		_characters[1] = GameObject.Find("Player 2").GetComponent<Character>();
 	}
 
 	public void SoftResetStats()
@@ -80,12 +84,20 @@ public class StatManager
 			//대미지 적용
 			_currentHps[playerIndex] -= finalDamage;
 			_currentHps[playerIndex] = Mathf.Clamp(_currentHps[playerIndex], 0, _finalMaxHps[playerIndex]);
+			if(playerIndex == 0)
+			{
+				GameManager.Instance.player1RoundHPUI.value = _currentHps[playerIndex];
+			}
+			else
+			{
+				GameManager.Instance.player2RoundHPUI.value = _currentHps[playerIndex];
+			}
 			Debug.Log($"Player {playerIndex} took total {finalDamage} damage.");
 			onTakeDamage?.Invoke(playerIndex);
 			//죽음 체크
 			if (_currentHps[playerIndex] <= 0)
 			{
-				GameManager.Instance.SetRoundWinner(characters[(playerIndex + 1) % 2]);
+				GameManager.Instance.SetRoundWinner(_characters[(playerIndex + 1) % 2]);
 				GameManager.Instance.ChangeState(GameManager.GameState.RoundOver);
 				Debug.Log($"Player {playerIndex} died.");
 			}
@@ -96,6 +108,14 @@ public class StatManager
 	{
 		_currentHps[playerIndex] += baseAmount;
 		_currentHps[playerIndex] = Mathf.Clamp(_currentHps[playerIndex], 0, _finalMaxHps[playerIndex]);
+		if(playerIndex == 0)
+		{
+			GameManager.Instance.player1RoundHPUI.value = _currentHps[playerIndex];
+		}
+		else
+		{
+			GameManager.Instance.player2RoundHPUI.value = _currentHps[playerIndex];
+		}
 	}
 
 	public void GiveManaHeal(int playerIndex, int baseAmount)
@@ -141,7 +161,5 @@ public class StatManager
 			_finalMaxHps[i] = _baseMaxHps[i] + totalLowModifier;
 		}
 	}
-
-
 
 }

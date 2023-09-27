@@ -61,6 +61,7 @@ public class HeavyStrike : SkillBase, IActiveSkill
 
 			// Todo : Charactorstatus 쪽에 스턴 요청
 			character.Status.SetKnockbackEffect(2, 50, transform.position);
+			character.Status.SetFaintEffect(5);
 		}
 
 		// 후딜

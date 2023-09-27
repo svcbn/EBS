@@ -44,7 +44,7 @@ public class SniperShot : SkillBase, IActiveSkill
 			effect.transform.position = Owner.transform.position;
 		}
 
-		Owner.GetComponent<CharacterStatus>().SetKnockbackEffect(0.1f, 5f, Owner.Target.transform.position);
+		Owner.GetComponent<CharacterStatus>().SetKnockbackEffect(0.5f, 10f, Owner.Target.transform.position);
 
 		// 실제 피해
 
