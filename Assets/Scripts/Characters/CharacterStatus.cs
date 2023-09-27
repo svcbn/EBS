@@ -35,6 +35,8 @@ public class CharacterStatus : MonoBehaviour
 	private float _originSpeed;
 
 	private Coroutine _blinkCR;
+	private Coroutine _faintCR;
+	private Coroutine _slowCR;
 
 	private void Awake()
 	{
@@ -107,6 +109,13 @@ public class CharacterStatus : MonoBehaviour
 		{ 
 			_movement.CurrentSpeed = _originSpeed * (1 - maxRatio);
 			CurrentStatus[StatusType.Slow] = true;
+
+			if (_slowCR != null)
+			{
+				StopCoroutine(_slowCR); 
+			}
+			_slowCR = StartCoroutine(PlayEffectCo("Stat_Slow", 1, new Vector2(0,0), _character.transform.localScale.x));
+
 		}
 	}
 	#endregion
@@ -132,6 +141,12 @@ public class CharacterStatus : MonoBehaviour
 		if (_currentFaintEffect.IsEffectActive())
 		{
 			CurrentStatus[StatusType.Faint] = true;
+
+			if (_faintCR != null)
+			{
+				StopCoroutine(_faintCR);
+			}
+			_faintCR = StartCoroutine(PlayEffectCo("Stat_Faint", 1, new Vector2(0, 1), _character.transform.localScale.x));
 
 			// 선딜 취소
 			var currentSkill = (SkillBase)_character.CurrentSkill;
@@ -217,6 +232,29 @@ public class CharacterStatus : MonoBehaviour
 	#region Freez Effect
 
 	#endregion
+
+
+	IEnumerator PlayEffectCo(string effName, float duration, Vector2 offset, float sign)
+	{
+
+		Transform parent = _character.transform;
+		GameObject effect = Managers.Resource.Instantiate("Skills/" + effName, parent); // paraent를 character.gameObject로
+
+		if (effect)
+		{
+			effect.transform.localPosition = Vector3.zero;
+		}
+		else
+		{
+			Debug.LogError($"effect is null. effName :{effName}");
+		}
+
+		effect.transform.localPosition += (Vector3)offset;
+		effect.transform.localScale = new Vector3(sign * 0.2f, 0.2f, 0.2f);
+
+		yield return new WaitForSeconds(duration); // 이펙트 재생 시간
+		Managers.Resource.Release(effect);
+	}
 }
 
 public class SlowEffect
@@ -300,4 +338,6 @@ public class KnockbackEffect
 		return LeftDuration / _originDuration;
 	}
 }
+
+
 
