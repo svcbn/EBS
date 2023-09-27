@@ -13,17 +13,17 @@ MonoBehaviour:
   m_Name: BlockData
   m_EditorClassIdentifier: 
   _id: 4
-  _cooldown: 20
+  _cooldown: 8
   _effect: {fileID: 7180918455190229007, guid: bff970e8de41a004e8774b6d907b113f, type: 3}
   _priority: 1
   _type: 0
   _isRestrictMoving: 1
   _beforeDelay: 0
-  _afterDelay: 2
+  _afterDelay: 0.7
   _requireMP: 1
   _checkBoxCenter: {x: 0, y: 0}
   _checkBoxSize: {x: 5, y: 3}
   _hitBoxCenter: {x: 0, y: 0}
   _hitBoxSize: {x: 1, y: 1}
   _damage: 0
-  Duration: 2
+  Duration: 0.7

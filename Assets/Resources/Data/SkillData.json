@@ -118,7 +118,7 @@
       "Id": 20,
       "Name": "삼중 파이어볼",
       "Description": "화염구 3개를 발사한다. 적을 밀쳐낸다",
-      "SpriteName": "TripleFireBall"
+      "SpriteName": "TripleFireball"
     },
     {
       "Id": 21,
