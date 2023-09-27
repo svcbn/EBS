@@ -107,6 +107,14 @@ public class StatManager
 	{
 		_currentHps[playerIndex] += baseAmount;
 		_currentHps[playerIndex] = Mathf.Clamp(_currentHps[playerIndex], 0, _finalMaxHps[playerIndex]);
+		if(playerIndex == 0)
+		{
+			GameManager.Instance.player1RoundHPUI.value = _currentHps[playerIndex];
+		}
+		else
+		{
+			GameManager.Instance.player2RoundHPUI.value = _currentHps[playerIndex];
+		}
 	}
 
 	public void GiveManaHeal(int playerIndex, int baseAmount)
