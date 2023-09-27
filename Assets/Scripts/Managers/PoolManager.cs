@@ -21,6 +21,17 @@ public class PoolManager
 		}
 	}
 
+	public void Init()
+	{
+		foreach (var original in _registeredPools.Values)
+		{
+			original.Clear();
+		}
+		
+		_originals.Clear();
+		_registeredPools.Clear();
+	}
+
 	public Poolable Get(string name)
 	{
 		if (!_originals.TryGetValue(name, out var original))

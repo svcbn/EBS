@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HeavyStrikeData
   m_EditorClassIdentifier: 
   _id: 5
-  _cooldown: 7
+  _cooldown: 22
   _effect: {fileID: 4438304891251975632, guid: e27068f661a96e84b87aae11c884e34e, type: 3}
   _priority: 1
   _type: 1
@@ -25,4 +25,4 @@ MonoBehaviour:
   _checkBoxSize: {x: 10, y: 10}
   _hitBoxCenter: {x: 4, y: 2}
   _hitBoxSize: {x: 10, y: 12}
-  _damage: 20
+  _damage: 28

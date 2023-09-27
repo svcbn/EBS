@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: ManaShowerData
   m_EditorClassIdentifier: 
   _id: 29
-  _cooldown: 12
+  _cooldown: 7
   _effect: {fileID: 7623069860143548831, guid: 67203d99b9c257b45bc9d49d9f706169, type: 3}
   _priority: 3
   _type: 0
   _isRestrictMoving: 1
-  _beforeDelay: 1
+  _beforeDelay: 1.2
   _afterDelay: 0.5
   _requireMP: 0
   _checkBoxCenter: {x: 0, y: 0}
