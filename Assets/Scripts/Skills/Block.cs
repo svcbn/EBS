@@ -32,7 +32,7 @@ public class Block : SkillBase, IActiveSkill
 
 	public override IEnumerator ExecuteImplCo()
 	{
-		if (_data.Effect != null){ PlayEffect("Block_Green", Duration); }
+		if (_data.Effect != null){ PlayEffect("Block_Green", Duration, Vector2.zero); }
 
 		Managers.Stat.BeInvincible(Owner.playerIndex ,Duration);
 

@@ -28,14 +28,14 @@ public class TeleportEvacuate : SkillBase, IActiveSkill
 	{		
 		base.Execute();
 
-		if (_data.beforeEffect != null) { PlayEffect("Teleport_Before", 1f ); }
+		if (_data.beforeEffect != null) { PlayEffect("Teleport_Before", 1f, Vector2.zero); }
 	}
 
 	public override IEnumerator ExecuteImplCo()
 	{
 		Owner.transform.position = CalcTeleportPos();
 
-		if (_data.afterEffect != null) { PlayEffect("Teleport_After", 1f); }
+		if (_data.afterEffect != null) { PlayEffect("Teleport_After", 1f, _data.Offset); }
 
 		yield return new WaitForSeconds(AfterDelay);
 	}

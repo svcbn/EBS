@@ -19,6 +19,8 @@ public class ActiveSkillData : ScriptableSkillData
 	[SerializeField] private Vector2 _hitBoxCenter;
 	[SerializeField] private Vector2 _hitBoxSize;
 
+	[SerializeField] private Vector2 _offset;
+
 	
 	[SerializeField] private int _damage;
 
@@ -36,6 +38,7 @@ public class ActiveSkillData : ScriptableSkillData
 
 	public Vector2 HitBoxCenter => _hitBoxCenter;
 	public Vector2 HitBoxSize => _hitBoxSize;
+	public Vector2 Offset => _offset;
 
 	
 	public int Damage => _damage;
