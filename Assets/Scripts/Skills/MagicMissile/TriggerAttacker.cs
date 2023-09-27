@@ -18,16 +18,18 @@ public class TriggerAttacker : MonoBehaviour
             return;
         }
 
-        //설정한 damageLayer와 충돌체의 레이어가 같으면 피해를 줍니다.
-        if(collision.GetComponent<Character>() != null && collision.GetComponent<Character>().playerIndex != owner.playerIndex)
-        {
-            //DamageToTarget(collision.gameObject);
-            if (isDestroyedOnCollision)
+		//설정한 damageLayer와 충돌체의 레이어가 같으면 피해를 줍니다.
+		if (collision.GetComponent<Character>() != null && collision.GetComponent<Character>().playerIndex != owner.playerIndex)
+		{
+			//DamageToTarget(collision.gameObject);
+			if (isDestroyedOnCollision)
             {
 				// 피격 판정.
 
 				// TODO: 데미지 추가
 				Managers.Stat.GiveDamage(1 - owner.playerIndex, damage);
+
+				owner.Target.GetComponent<CharacterStatus>().SetKnockbackEffect(1f, 30f, transform.position);
 
 				Destroy(this.gameObject);
             }

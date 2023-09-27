@@ -126,12 +126,12 @@ public abstract class SkillBase : MonoBehaviour, ISkill
 		CancelInvoke("ExecuteImpl");
 	}
 
-	protected void PlayEffect(string effName, float duration)
+	protected void PlayEffect(string effName, float duration, Vector2 offset, float sign = 1)
 	{
-		StartCoroutine(PlayEffectCo(effName, duration ));
+		StartCoroutine(PlayEffectCo(effName, duration, offset, sign));
 	}
 
-	IEnumerator PlayEffectCo(string effName, float duration)
+	IEnumerator PlayEffectCo(string effName, float duration, Vector2 offset, float sign)
 	{
 
 		Transform parent = Owner.transform;
@@ -142,6 +142,9 @@ public abstract class SkillBase : MonoBehaviour, ISkill
 		}else{
 			Debug.LogError($"effect is null. effName :{effName}");
 		}
+
+		effect.transform.localPosition += (Vector3)offset;
+		effect.transform.localScale = new Vector3(sign * Owner.transform.localScale.x, Owner.transform.localScale.y, Owner.transform.localScale.z);
 
 		yield return new WaitForSeconds(duration); // 이펙트 재생 시간
 		Managers.Resource.Release(effect);

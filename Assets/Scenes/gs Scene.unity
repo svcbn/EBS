@@ -1028,6 +1028,10 @@ PrefabInstance:
       propertyPath: _target
       value: 
       objectReference: {fileID: 978807059}
+    - target: {fileID: 2600167445854114992, guid: be07f44340fb0634db155948b11077b2, type: 3}
+      propertyPath: playerIndex
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2600167445854114994, guid: be07f44340fb0634db155948b11077b2, type: 3}
       propertyPath: m_Name
       value: Player 1
