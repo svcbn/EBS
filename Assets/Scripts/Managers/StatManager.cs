@@ -19,6 +19,7 @@ public class StatManager
 	private Coroutine _invincibleCR;
 
 	private Character[] _characters = new Character[2];
+	public Character[] Characters { get => _characters; }
 
 	public delegate void OnCharacterEvent(int actorIndex);
 	public event OnCharacterEvent onBlockDamage;

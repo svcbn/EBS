@@ -1,0 +1,83 @@
+using BehaviorDesigner.Runtime.Tasks.Unity.UnityVector2;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class TripleFireball : SkillBase, IActiveSkill
+{
+	private TripleFireballData _data;
+
+	public override void Init()
+	{
+		base.Init();
+
+		_data = Managers.Resource.Load<TripleFireballData>("Data/TripleFireballData");
+		if (_data == null) { Debug.LogWarning($"Fail load Data/TripleFireballData"); return; }
+
+		Id = _data.Id;
+		Type = _data.Type;
+		Priority = _data.Priority;
+		IsRestrictMoving = _data.IsRestrictMoving;
+
+		Cooldown = _data.Cooldown;
+		BeforeDelay = _data.BeforeDelay;
+		AfterDelay = _data.AfterDelay;
+		RequireMP = _data.RequireMP;
+	}
+
+	public override void Execute()
+	{
+		base.Execute();
+	}
+
+	public override IEnumerator ExecuteImplCo()
+	{
+		int colCount = 0;
+		for (int i = 0; i < 3; i++)
+		{
+			FireBallProjectile f = Instantiate(_data.prefab, Owner.transform.position, Quaternion.identity);
+
+			f.speed = _data.speed;
+			f.delay = _data.delay;
+			f.targetIndex = 1- Owner.playerIndex;
+			f.lifespan = _data.lifespan;
+
+			yield return new WaitForSeconds(_data.interval);
+		}
+
+		// 후딜
+		yield return new WaitForSeconds(AfterDelay);
+	}
+
+
+	IEnumerator PlayEffect(Transform pos)
+	{
+		GameObject effect = null;
+		if (_data.Effect != null)
+		{
+			effect = Managers.Resource.Instantiate("Skills/" + _data.Effect.name);
+			effect.transform.position = Owner.transform.position;
+		}
+
+		yield return null; //new WaitForSeconds(0.5f); // 이펙트 재생 시간
+
+		Managers.Resource.Release(effect);
+	}
+
+
+	public override bool CheckCanUse()
+	{
+		float dist = Vector2.Distance((Vector2)Managers.Stat.Characters[0].transform.position, (Vector2)Managers.Stat.Characters[1].transform.position);
+		bool isEnemyInRange = (dist <= _data.range);
+
+		return isEnemyInRange;
+	}
+
+	private void OnDrawGizmos()
+	{
+		Gizmos.color = Color.red;
+		Vector3 checkboxPos = Owner.transform.position;
+		Gizmos.DrawWireCube(checkboxPos + (Vector3)_data.CheckBoxCenter, (Vector3)_data.CheckBoxSize);
+	}
+}
+
