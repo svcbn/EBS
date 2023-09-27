@@ -23,7 +23,7 @@ public class FireBallProjectile : MonoBehaviour
 		_actualSpeed = 0;
 		_direction = _targetCharacter.transform.position - transform.position;
 		float angle = Mathf.Atan2(_direction.y, _direction.x) * Mathf.Rad2Deg;
-		transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+		transform.rotation = Quaternion.AngleAxis(angle + 180, Vector3.forward);
 
 		Invoke("ShootProjectile", delay);
 	}

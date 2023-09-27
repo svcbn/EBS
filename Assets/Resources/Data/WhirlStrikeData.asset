@@ -18,11 +18,12 @@ MonoBehaviour:
   _priority: 1
   _type: 1
   _isRestrictMoving: 1
-  _beforeDelay: 1
+  _beforeDelay: 1.4
   _afterDelay: 0.5
   _requireMP: 10
   _checkBoxCenter: {x: 0, y: 0}
   _checkBoxSize: {x: 30, y: 8}
   _hitBoxCenter: {x: 0, y: 0}
   _hitBoxSize: {x: 30, y: 8}
+  _offset: {x: 0, y: 0}
   _damage: 25

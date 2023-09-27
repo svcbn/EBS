@@ -537,7 +537,7 @@ GameObject:
   - component: {fileID: 969127619}
   - component: {fileID: 969127618}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: '@Game Manager'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -870,10 +870,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1868505982199079640, guid: 26db5d2878de77f47b2f5d4e464f7fae, type: 3}
-      propertyPath: m_SortingOrder
-      value: -1
-      objectReference: {fileID: 0}
     - target: {fileID: 1868505982199079643, guid: 26db5d2878de77f47b2f5d4e464f7fae, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -958,10 +954,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1868505982199079646, guid: 26db5d2878de77f47b2f5d4e464f7fae, type: 3}
-      propertyPath: m_BlockingMask.m_Bits
-      value: 4599
-      objectReference: {fileID: 0}
     - target: {fileID: 1868505982199079647, guid: 26db5d2878de77f47b2f5d4e464f7fae, type: 3}
       propertyPath: m_Name
       value: BattleCanvas
@@ -970,6 +962,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1868505982574859490, guid: 26db5d2878de77f47b2f5d4e464f7fae, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1868505982574859490, guid: 26db5d2878de77f47b2f5d4e464f7fae, type: 3}
+      propertyPath: m_Color.g
+      value: 0.25410828
+      objectReference: {fileID: 0}
+    - target: {fileID: 1868505982574859490, guid: 26db5d2878de77f47b2f5d4e464f7fae, type: 3}
+      propertyPath: m_Color.r
+      value: 0.19339621
+      objectReference: {fileID: 0}
     - target: {fileID: 1868505982574859491, guid: 26db5d2878de77f47b2f5d4e464f7fae, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -977,6 +981,14 @@ PrefabInstance:
     - target: {fileID: 1868505982574859491, guid: 26db5d2878de77f47b2f5d4e464f7fae, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1868505984177606785, guid: 26db5d2878de77f47b2f5d4e464f7fae, type: 3}
+      propertyPath: m_Color.b
+      value: 0.19339621
+      objectReference: {fileID: 0}
+    - target: {fileID: 1868505984177606785, guid: 26db5d2878de77f47b2f5d4e464f7fae, type: 3}
+      propertyPath: m_Color.g
+      value: 0.35570955
       objectReference: {fileID: 0}
     - target: {fileID: 1868505984177606790, guid: 26db5d2878de77f47b2f5d4e464f7fae, type: 3}
       propertyPath: m_AnchorMax.x
