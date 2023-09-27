@@ -39,17 +39,6 @@ public class Managers : MonoBehaviour
 
 	public static StatManager Stat => Instance._stat;
 
-	private void Awake()
-	{
-		SceneManager.sceneLoaded += OnSceneLoaded;
-	}
-
-	private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
-	{
-		// s_Instance._stat.Init();
-		s_Instance._pool.Init();
-	}
-
 	private static void Init()
 	{
 		if (s_Instance == null)

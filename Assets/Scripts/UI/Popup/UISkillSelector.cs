@@ -8,14 +8,22 @@ public class UISkillSelector : UIPopup
 	private enum Elements
 	{
 		Items,
+		Card,
 	}
 
 	private enum Texts
 	{
-		PickerText
+		PickerText,
+		Up,
+		Down,
+		Left,
+		Right,
+		Select
 	}
 	
 	private static readonly Color[] s_Colors = new[] { Color.red, Color.blue };
+	
+	private static readonly Vector3 s_InitialScale = new(0.95f, 0.95f, 0.95f);
 	
 	private int _playerIndex = 0;
 	
@@ -28,6 +36,18 @@ public class UISkillSelector : UIPopup
 	private UISkillDescriptor _descriptor;
 
 	private TextMeshProUGUI _pickerText;
+	
+	private TextMeshProUGUI _upText;
+	
+	private TextMeshProUGUI _downText;
+	
+	private TextMeshProUGUI _leftText;
+	
+	private TextMeshProUGUI _rightText;
+	
+	private TextMeshProUGUI _selectText;
+	
+	private RectTransform _card;
 
 	private int _currentIndex = -1;
 
@@ -40,7 +60,6 @@ public class UISkillSelector : UIPopup
 			return;
 		}
 		
-		_pickerText.text = _input.Owner;
 		HandleDirectionInput();
 		HandleSelect();
 	}
@@ -105,6 +124,13 @@ public class UISkillSelector : UIPopup
 		Bind<TextMeshProUGUI, Texts>();
 
 		_pickerText = Get<TextMeshProUGUI>((int)Texts.PickerText);
+		_upText = Get<TextMeshProUGUI>((int)Texts.Up);
+		_downText = Get<TextMeshProUGUI>((int)Texts.Down);
+		_leftText = Get<TextMeshProUGUI>((int)Texts.Left);
+		_rightText = Get<TextMeshProUGUI>((int)Texts.Right);
+		_selectText = Get<TextMeshProUGUI>((int)Texts.Select);
+
+		_card = Get<GameObject>((int)Elements.Card).GetComponent<RectTransform>();
 		
 		InitializeSlots();
 	}
@@ -120,11 +146,35 @@ public class UISkillSelector : UIPopup
 				_playerIndex %= s_Colors.Length;
 				_input = _selector.Input;
 			}
+
+			SetInputText();
 			
 			_slots[_currentIndex].SetBorderColor(s_Colors[_playerIndex]);
 		};
 		_input = selector.Input;
+		SetInputText();
 		InitializeSlots();
+	}
+
+	private void SetInputText()
+	{
+		_pickerText.text = _input.Owner;
+		foreach (var text in System.Enum.GetValues(typeof(Texts)).
+			         Cast<Texts>().
+			         Select(text => Get<TextMeshProUGUI>((int)text)))
+		{
+			text.color = s_Colors[_playerIndex];
+		}
+		
+		_upText.text = _input.Up.ToString();
+		_downText.text = _input.Down.ToString();
+		_leftText.text = _input.Left.ToString();
+		_rightText.text = _input.Right.ToString();
+		_selectText.text = _input.Select.ToString();
+		if (_card != null)
+		{
+			Utility.Lerp(s_InitialScale, Vector3.one, 0.1f, scale => _card.localScale = scale);
+		}
 	}
 
 	private void InitializeSlots()

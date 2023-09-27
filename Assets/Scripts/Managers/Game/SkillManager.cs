@@ -22,6 +22,8 @@ public class SkillManager
 
 	public void Init()
 	{
+		_skills.Clear();
+		_skillCache.Clear();
 		GetAllSkills();
 		_skillData = Managers.Data.Load<SkillData>();
 	}
