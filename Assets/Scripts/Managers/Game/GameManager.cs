@@ -233,6 +233,7 @@ public class GameManager : MonoBehaviour
 	public void StartGame()
 	{
 		CurrentRound = 1;
+		_skill.Init();
 		_skill.SetCharacters(player1, player2);
 		canvas.SetActive(true);
 		ChangeState(GameState.PickSkill);
@@ -263,10 +264,11 @@ public class GameManager : MonoBehaviour
 	    
 	    // TODO: 라운드별 승자 처리
 	    Character winner = _roundWinner;
+	    Character loser = winner == player1 ? player2 : player1;
 		// if round1, player1 is first
-		// else, last round's winner is first
-		_currentPicker = CurrentRound == 1 ? player1 : winner;
-		_isPlayer1Pick = CurrentRound == 1 || winner == player1;
+		// else, last round's loser is first
+		_currentPicker = CurrentRound == 1 ? player1 : loser;
+		_isPlayer1Pick = CurrentRound == 1 || loser == player1;
 
 		var list = CurrentRound == 1 ? _firstPickCountList : _otherPickCountList;
 		_pickCountIndex = 0;

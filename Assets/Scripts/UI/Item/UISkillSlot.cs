@@ -59,6 +59,13 @@ public partial class UISkillSlot : UIBase
 		{
 			SetSkillInfo();
 		}
+		
+		var rect = Get<Image>((int)Elements.Icon).GetComponent<RectTransform>();
+		if (_skill != null && rect != null)
+		{
+			rect.offsetMin = new(8, 8);
+			rect.offsetMax = -rect.offsetMin;
+		}
 	}
 
 	public void SetSkill(ISkill skill)

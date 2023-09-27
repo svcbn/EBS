@@ -9,7 +9,6 @@ public class UIGameEnd : UIPopup
 {
 	private enum Buttons
 	{
-		StartButton,
 		ExitButton
 	}
 	
@@ -27,7 +26,6 @@ public class UIGameEnd : UIPopup
 		Bind<Button, Buttons>();
 		Bind<TextMeshProUGUI, Texts>();
 
-		Get<Button>((int)Buttons.StartButton).onClick.AddListener(OnClickStartButton);
 		Get<Button>((int)Buttons.ExitButton).onClick.AddListener(OnClickExitButton);
 		
 		_winnerText = Get<TextMeshProUGUI>((int)Texts.WinnerText);
@@ -36,11 +34,6 @@ public class UIGameEnd : UIPopup
 	public void SetWinner(Character winner)
 	{
 		_winnerText.text = $"{winner.name} Win";
-	}
-
-	private void OnClickStartButton()
-	{
-		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
 	
 	private void OnClickExitButton()
