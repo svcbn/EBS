@@ -41,6 +41,7 @@ public class TripleFireball : SkillBase, IActiveSkill
 			f.delay = _data.delay;
 			f.targetIndex = 1- Owner.playerIndex;
 			f.lifespan = _data.lifespan;
+			f.damage = _data.Damage;
 
 			yield return new WaitForSeconds(_data.interval);
 		}
