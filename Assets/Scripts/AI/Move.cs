@@ -40,8 +40,8 @@ public class Move : Action
 
 			_movement.PlayerInput = directionToTarget.normalized;
 
-			if (GetProbabilitySuccess(1f))
-				_jump.OnJump(_movement.PlayerInput);
+			//if (GetProbabilitySuccess(1f))
+			//	_jump.OnJump(_movement.PlayerInput);
 
 			return TaskStatus.Running;
 		}
