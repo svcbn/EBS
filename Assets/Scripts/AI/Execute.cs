@@ -5,12 +5,14 @@ using System.Collections.Generic;
 public class Execute : Action
 {
 	private Character _character;
+	private CharacterMovement _movement;
 
 	private IActiveSkill _selectedSkill;
 
 	public override void OnAwake()
 	{
 		_character = GetComponent<Character>();
+		_movement = GetComponent<CharacterMovement>();
 	}
 
 	public override void OnStart()
@@ -18,6 +20,8 @@ public class Execute : Action
 		_selectedSkill = SelectRandomSkill(_character.GetHighPrioritySkill());
 		
 		_selectedSkill.Init();
+
+		_movement.LookMoveDirction((_character.Target.transform.position - transform.position).normalized);
 	}
 
 	public override TaskStatus OnUpdate()

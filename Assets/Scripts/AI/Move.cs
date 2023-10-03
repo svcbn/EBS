@@ -46,13 +46,12 @@ public class Move : Action
 			return TaskStatus.Running;
 		}
 
-		_movement.PlayerInput = Vector2.zero;
 		return TaskStatus.Success;
 	}
 
 	public override void OnEnd()
 	{
-		_movement.PlayerInput = (_target.Value.transform.position - transform.position).normalized;
+		_movement.PlayerInput = Vector2.zero;
 	}
 
 	private bool GetProbabilitySuccess(float probability)
