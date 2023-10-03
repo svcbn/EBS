@@ -13,7 +13,10 @@ public class CharacterMovement : MonoBehaviour
 		set
 		{
 			_playerInput = Vector2.ClampMagnitude(value, 1f);
-		} 
+			
+			if (_playerInput.x != 0)
+				LookMoveDirction(_playerInput);
+		}
 	}
 	Vector2 _playerInput;
 
@@ -41,11 +44,9 @@ public class CharacterMovement : MonoBehaviour
 
 		Vector3 displacement = _velocity * Time.deltaTime;
 		transform.localPosition += displacement;
-
-		LookMoveDirction(displacement);
 	}
 
-	private void LookMoveDirction(Vector3 moveDirction)
+	public void LookMoveDirction(Vector3 moveDirction)
 	{
 		LookDirction = new Vector2(Mathf.Abs(transform.localScale.x) * (moveDirction.x > 0 ? 1 : -1), 0) ; 
 		transform.localScale = new Vector3(LookDirction.x, transform.localScale.y, transform.localScale.z);

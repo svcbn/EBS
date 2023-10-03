@@ -27,7 +27,7 @@ public class Character : MonoBehaviour
 
 	private readonly ObservableCollection<ISkill> _skills = new();
 	
-	private bool _hasCooldowmSkill;
+	public bool _hasCooldowmSkill;
 
 	public IReadOnlyList<ISkill> Skills => _skills;
 
@@ -41,16 +41,6 @@ public class Character : MonoBehaviour
 
 	private void Awake()
 	{
-		//temp
-		// _skills.Add(gameObject.AddComponent<Slash>());
-		// _skills.Add(gameObject.AddComponent<TripleStrike>());
-		// _skills.Add(gameObject.AddComponent<TeleportBack>());
-		// _skills.Add(gameObject.AddComponent<Block>());
-		// _skills.Add(gameObject.AddComponent<ManaShower>());
-		// _skills.Add(gameObject.AddComponent<HeavyStrike>());
-		// _skills.Add(gameObject.AddComponent<MagicMissile>());
-		
-		
 		_moveBehavior = GetComponent<BehaviorTree>();
 		_rigidbody2 = GetComponent<Rigidbody2D>();
 		Status = GetComponent<CharacterStatus>();
@@ -69,7 +59,6 @@ public class Character : MonoBehaviour
 
 	private void Update()
 	{
-		SetMoveBTVariables();
 		CurrentSkillIsNotNull = CurrentSkill is not null;
 	}
 
@@ -80,11 +69,6 @@ public class Character : MonoBehaviour
 	//		skill.OnDrawGizmos(transform);
 	//	}
 	//}
-
-	public void UseSkill()
-	{
-		
-	}
 
 	private IEnumerator CheckSkills()
 	{
@@ -113,71 +97,6 @@ public class Character : MonoBehaviour
 
 			yield return new WaitForSeconds(0.2f);
 		}
-	}
-
-	public void SetMoveBTVariables()
-	{
-		var direction = _target.transform.position - transform.position;
-		var distance = direction.magnitude;
-
-		_moveBehavior.SetVariableValue("Direction", direction);
-		_moveBehavior.SetVariableValue("Distance", distance);
-		_moveBehavior.SetVariableValue("HasCooldownSkill", _hasCooldowmSkill);
-		_moveBehavior.SetVariableValue("Target", _target);
-
-		// CanUseSkill Control
-		if (CanUseSkills != null && CanUseSkills.Count > 0
-			&& Status.CurrentStatus[StatusType.Faint] == false
-			&& Status.CurrentStatus[StatusType.Knockback] == false)
-		{
-			_moveBehavior.SetVariableValue("CanUseSkill", true);
-		}
-		else
-		{
-			_moveBehavior.SetVariableValue("CanUseSkill", false);
-		}
-
-		// IsAction Control 
-		if (CurrentSkill != null)
-		{
-			_moveBehavior.SetVariableValue("IsActing", true);
-		}
-		else
-		{ 
-			_moveBehavior.SetVariableValue("IsActing", false);
-		}
-
-		// CanMove Control
-		if (CurrentSkill != null)
-		{
-			if (CurrentSkill.IsRestrictMoving == true
-				|| Status.CurrentStatus[StatusType.Faint] == true
-				|| Status.CurrentStatus[StatusType.Knockback] == true)
-			{
-				CanMove = false;
-				_moveBehavior.SetVariableValue("CanMove", false);
-			}
-			else
-			{
-				CanMove = true;
-				_moveBehavior.SetVariableValue("CanMove", true);
-			}
-		}
-		else
-		{
-			if (Status.CurrentStatus[StatusType.Faint] == true
-				|| Status.CurrentStatus[StatusType.Knockback] == true)
-			{
-				CanMove = false;
-				_moveBehavior.SetVariableValue("CanMove", false);
-			}
-			else
-			{ 
-				CanMove = true;
-				_moveBehavior.SetVariableValue("CanMove", true);
-			}
-		}
-
 	}
 
 	public List<IActiveSkill> GetHighPrioritySkill()

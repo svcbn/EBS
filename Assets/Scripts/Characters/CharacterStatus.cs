@@ -52,6 +52,7 @@ public class CharacterStatus : MonoBehaviour
 
 		CurrentStatus.Add(StatusType.Slow, false);
 		CurrentStatus.Add(StatusType.Faint, false);
+		CurrentStatus.Add(StatusType.Knockback, false);
 	}
 
 	private void OnEnable()
