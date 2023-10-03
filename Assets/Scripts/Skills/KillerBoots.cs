@@ -26,7 +26,7 @@ public class KillerBoots : PassiveSkillBase
 
 	void Excute(int playerIndex)
 	{
-		if (_owner.playerIndex != playerIndex)
+		if (Owner.playerIndex != playerIndex)
 		{
 			_activeTime = 0;
 
