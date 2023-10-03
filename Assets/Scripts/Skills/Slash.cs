@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Slash : ActiveSkillBase, IActiveSkill
+public class Slash : ActiveSkillBase
 {
 	private SlashData _data;
 
@@ -15,7 +15,7 @@ public class Slash : ActiveSkillBase, IActiveSkill
 		Id                = _data.Id;
 		Type              = _data.Type;
 		Priority          = _data.Priority;
-		IsRestrictMoving = _data.IsRestrictMoving;
+		IsRestrictMoving  = _data.IsRestrictMoving;
 
 		Cooldown          = _data.Cooldown;
 		BeforeDelay       = _data.BeforeDelay;
@@ -32,17 +32,11 @@ public class Slash : ActiveSkillBase, IActiveSkill
 	{
 		float x = Owner.transform.localScale.x < 0 ? -1 : 1;
 
-		GameObject effect = null;
 		// 애니메이션 재생
-		if (_data.Effect != null)
-		{
+		if (_data.Effect != null){
 			PlayEffect(_data.Effect.name, 1, _data.Offset, Owner.transform.localScale.x);
-
-			//effect = Managers.Resource.Instantiate("Skills/"+_data.Effect.name);
-			//effect.transform.position = Owner.transform.position;
 		}
 
-		yield return new WaitForSeconds(0);
 		// 실제 피해
 		Vector2 centerInWorld = (Vector2)Owner.transform.position + new Vector2(x * _data.HitBoxCenter.x, _data.HitBoxCenter.y);
 		var boxes = Physics2D.OverlapBoxAll(centerInWorld, _data.HitBoxSize, 0);
@@ -63,15 +57,12 @@ public class Slash : ActiveSkillBase, IActiveSkill
 
 		// 후딜
 		yield return new WaitForSeconds(AfterDelay);
-
-		Managers.Resource.Release(effect);
 	}
 
 	public override bool CheckCanUse()
 	{
 		bool isEnemyInBox = CheckEnemyInBox(_data.CheckBoxCenter, _data.CheckBoxSize);
-
-		bool isEnoughMP = CheckEnoughMP(RequireMP);
+		bool isEnoughMP   = CheckEnoughMP(RequireMP);
 
 		return isEnemyInBox && isEnoughMP;
 	}

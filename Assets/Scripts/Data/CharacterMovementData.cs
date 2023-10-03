@@ -2,8 +2,8 @@ using UnityEngine;
 using System;
 
 
-[Serializable, CreateAssetMenu(fileName = nameof(CharactorMovementData), menuName = "ScriptableObjects/Charactors/" + nameof(CharactorMovementData))]
-public class CharactorMovementData : ScriptableObject
+[Serializable, CreateAssetMenu(fileName = nameof(CharacterMovementData), menuName = "ScriptableObjects/Charactors/" + nameof(CharacterMovementData))]
+public class CharacterMovementData : ScriptableObject
 {
 	[Header ("Movement")]
 	[SerializeField, Range(0f, 100f)]

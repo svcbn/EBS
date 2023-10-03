@@ -2,14 +2,14 @@ using BehaviorDesigner.Runtime.Tasks;
 
 public class Jump : Action
 {
-	private CharactorJump _jump;
+	private CharacterJump _jump;
 	private CharacterMovement _movement;
 
 	public override void OnStart()
 	{
 		base.OnStart();
 
-		_jump = GetComponent<CharactorJump>();
+		_jump = GetComponent<CharacterJump>();
 		_movement = GetComponent<CharacterMovement>();
 	}
 
