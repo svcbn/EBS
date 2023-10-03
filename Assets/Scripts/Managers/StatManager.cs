@@ -1,6 +1,7 @@
 using BehaviorDesigner.Runtime;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
@@ -17,6 +18,8 @@ public class StatManager
 	private int[] _finalMaxHps = new int[2];
 	private int[] _finalMaxMps = new int[2];
 
+	public List<Modifier>[] damageModifiers = new List<Modifier>[2];
+
 	private float[] _invincibleTimers = new float[2];
 	private Coroutine _invincibleCR;
 
@@ -29,6 +32,9 @@ public class StatManager
 
 	private Coroutine _roundEndCR;
 
+	//Skill Specific
+	public bool[] isYinYangCore = new bool[2];
+
 
 	public void Init()
 	{
@@ -36,6 +42,8 @@ public class StatManager
 		{
 			_maxHpModifiers[i] = new List<int>();
 			_maxMpModifiers[i] = new List<int>();
+
+			damageModifiers[i] = new List<Modifier>();
 		}
 		LoadData();
 		HardResetStats();
@@ -84,8 +92,24 @@ public class StatManager
 		}
 		else
 		{
-			//최종 대미지 계산
-			int finalDamage = baseDamage;
+			/*------최종 대미지 계산 (적용 순서상 정렬)------*/
+			float totalPercentage = 0f;
+			//대미지 n%증가 버프 합연산
+			foreach (var modifier in damageModifiers[1 - playerIndex])
+			{
+				totalPercentage += modifier.percentage;
+			}
+			int finalDamage = Mathf.CeilToInt(baseDamage * ((100f + totalPercentage)/100f));
+			//YinYanCore 효과 적용
+			if (isYinYangCore[1 - playerIndex])
+			{
+				finalDamage *= 2;
+				isYinYangCore[1 - playerIndex] = false;
+				//TODO: YinYangCore 타이머 재시작 함수 호출
+				//_characters[1-playerIndex].GetComponentInChildren<YinYangCore>().~~
+			}
+
+			/*------최종 대미지 계산 끝-----*/
 
 			//대미지 적용
 			GameManager.UI.ShowHealthPopup(_characters[playerIndex], -finalDamage);
@@ -100,6 +124,7 @@ public class StatManager
 				GameManager.Instance.player2RoundHPUI.value = _currentHps[playerIndex];
 			}
 			onTakeDamage?.Invoke(playerIndex);
+
 			//죽음 체크
 			if (_currentHps[playerIndex] <= 0)
 			{
@@ -209,4 +234,28 @@ public class StatManager
 	{
 		return _finalMaxHps[playerIndex];
 	}
+
+	public Modifier GetDamageModifier(int playerIndex, string modifierName) 
+	{
+		List<Modifier> modifiers = damageModifiers[playerIndex];
+		Modifier modifier = modifiers.SingleOrDefault(modifer => modifer.modifierName == modifierName);
+		if (modifier == null)
+		{
+			//modifier 더하기
+			modifier = new Modifier()
+			{
+				modifierName = modifierName,
+				percentage = 0
+			};
+			modifiers.Add(modifier);
+		}
+		return modifier;
+	}
+
+}
+
+public class Modifier
+{
+	public string modifierName;
+	public float percentage;
 }
