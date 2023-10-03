@@ -10,24 +10,7 @@ public class DashStrike : ActiveSkillBase
 	{
 		base.Init();
 
-		_data = Managers.Resource.Load<DashStrikeData>("Data/DashStrikeData");
-
-		if (_data == null) { Debug.LogWarning($"Fail load Data/DashStrikeData"); return; }
-
-		Id = _data.Id;
-		Type = _data.Type;
-		Priority = _data.Priority;
-		IsRestrictMoving = _data.IsRestrictMoving;
-
-		Cooldown = _data.Cooldown;
-		BeforeDelay = _data.BeforeDelay;
-		AfterDelay = _data.AfterDelay;
-		RequireMP = _data.RequireMP;
-	}
-
-	public override void Execute()
-	{
-		base.Execute();
+		_data = LoadData<DashStrikeData>();
 	}
 
 	public override IEnumerator ExecuteImplCo()

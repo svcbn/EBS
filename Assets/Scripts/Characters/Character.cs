@@ -60,6 +60,7 @@ public class Character : MonoBehaviour
 	public void AddSkill(ISkill skill)
 	{
 		skill.Owner = this;
+		skill.Init();
 		_skills.Add(skill);
 	}
 

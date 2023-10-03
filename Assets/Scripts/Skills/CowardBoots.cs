@@ -16,10 +16,7 @@ public class CowardBoots : PassiveSkillBase
 	{
 		_status = GetComponent<CharacterStatus>();
 
-		_data = Managers.Resource.Load<CowardBootsData>("Data/CowardBootsData");
-		if (_data == null) { Debug.LogWarning($"Fail load Data/CowardBootsData"); return; }
-
-		Id = _data.Id;
+		_data = LoadData<CowardBootsData>();
 
 		Managers.Stat.onTakeDamage += Excute;
 	}
@@ -29,6 +26,8 @@ public class CowardBoots : PassiveSkillBase
 		if (Owner.playerIndex == playerIndex)
 		{
 			_activeTime = 0;
+
+			IsEnabled = true;
 
 			if (_hasteCR == null)
 				_hasteCR = StartCoroutine(nameof(HasteEffect));
@@ -46,5 +45,6 @@ public class CowardBoots : PassiveSkillBase
 		}
 
 		_status.HasteRatio -= _data.SpeedUpRatio;
+		_hasteCR = null;
 	}
 }

@@ -9,18 +9,7 @@ public class Slash : ActiveSkillBase
 	{
 		base.Init();
 
-		_data = Managers.Resource.Load<SlashData>("Data/SlashData");
-		if (_data == null){ Debug.LogWarning($"Fail load Data/SlashData"); return;  }
-
-		Id                = _data.Id;
-		Type              = _data.Type;
-		Priority          = _data.Priority;
-		IsRestrictMoving  = _data.IsRestrictMoving;
-
-		Cooldown          = _data.Cooldown;
-		BeforeDelay       = _data.BeforeDelay;
-		AfterDelay        = _data.AfterDelay;
-		RequireMP		  = _data.RequireMP;
+		_data = LoadData<SlashData>();
 	}
 
 	public override void Execute()

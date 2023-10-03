@@ -25,5 +25,6 @@ MonoBehaviour:
   _checkBoxSize: {x: 18, y: 16}
   _hitBoxCenter: {x: 4, y: 0}
   _hitBoxSize: {x: 18, y: 16}
-  _damage: 5
-  _amount: 40
+  _offset: {x: 0, y: 0}
+  _damage: 15
+  _amount: 10

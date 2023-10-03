@@ -10,18 +10,7 @@ public class HealingShower : ActiveSkillBase
 	{
 		base.Init();
 
-		_data = Managers.Resource.Load<HealingShowerData>("Data/HealingShowerData");
-		if (_data == null) { Debug.LogWarning($"Fail load Data/HealingShowerData"); return; }
-
-		Id               = _data.Id;
-		Type             = _data.Type;
-		Priority         = _data.Priority;
-		IsRestrictMoving = _data.IsRestrictMoving;
-
-		Cooldown         = _data.Cooldown;
-		BeforeDelay      = _data.BeforeDelay;
-		AfterDelay       = _data.AfterDelay;
-		RequireMP        = _data.RequireMP;
+		_data = LoadData<HealingShowerData>();
 
 		Duration         = _data.effectDuration;
 	}

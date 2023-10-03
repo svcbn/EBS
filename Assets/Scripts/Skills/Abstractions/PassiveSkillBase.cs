@@ -7,8 +7,9 @@ using UnityEngine;
 public abstract class PassiveSkillBase : SkillBase, IPassiveSkill
 {
 	private int _presentNumber;
+	
 	private bool _isEnabled;
-
+	
 
 	public bool IsEnabled
 	{
@@ -33,12 +34,17 @@ public abstract class PassiveSkillBase : SkillBase, IPassiveSkill
 			RaisePropertyChanged();
 		}
 	}
-	
-	public event PropertyChangedEventHandler PropertyChanged;
 
-	protected virtual void RaisePropertyChanged([CallerMemberName] string propertyName = null)
+	protected override T LoadData<T>()
 	{
-		PropertyChanged?.Invoke(this, new(propertyName));
+		T data = base.LoadData<T>();
+		if (data is PassiveSkillData passiveSkillData)
+		{
+			HasPresentNumber = passiveSkillData.HasPresentNumber;
+			_presentNumber = passiveSkillData.PresentNumber;
+		}
+
+		return data;
 	}
 
 	protected void PlayEffect(string effName, float duration, Transform parent, Vector2 offset, float sign = 1)
@@ -49,10 +55,13 @@ public abstract class PassiveSkillBase : SkillBase, IPassiveSkill
 	IEnumerator PlayEffectCo(string effName, float duration, Transform parent, Vector2 offset, float sign)
 	{
 		GameObject effect = Managers.Resource.Instantiate("Skills/"+effName, parent ); // paraent를 character.gameObject로
-		
-		if(effect){
+
+		if (effect)
+		{
 			effect.transform.localPosition = Vector3.zero;
-		}else{
+		}
+		else
+		{
 			Debug.LogError($"effect is null. effName :{effName}");
 		}
 
@@ -65,5 +74,33 @@ public abstract class PassiveSkillBase : SkillBase, IPassiveSkill
 		yield return new WaitForSeconds(duration); // 이펙트 재생 시간
 		Managers.Resource.Release(effect);
 		
+	}
+
+	protected void PlayEffect(string effName, float duration, float sign = 1, Vector2 offset = default)
+	{
+		StartCoroutine(PlayEffectCo(effName, duration, sign, offset));
+	}
+
+	IEnumerator PlayEffectCo(string effName, float duration, float sign, Vector2 offset)
+	{
+		
+		Transform parent = Owner.transform;
+		GameObject effect = Managers.Resource.Instantiate("Skills/" + effName, parent); // paraent를 character.gameObject로
+
+		if (effect)
+		{
+			effect.transform.localPosition = Vector3.zero;
+		}
+		else
+		{
+			Debug.LogError($"effect is null. effName :{effName}");
+		}
+
+		effect.transform.localPosition += (Vector3)offset;
+		effect.transform.localScale = new Vector3(sign * Owner.transform.localScale.x, Owner.transform.localScale.y, Owner.transform.localScale.z);
+
+		yield return new WaitForSeconds(duration); // 이펙트 재생 시간
+		Managers.Resource.Release(effect);
+
 	}
 }

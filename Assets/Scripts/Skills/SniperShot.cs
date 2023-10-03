@@ -10,18 +10,7 @@ public class SniperShot : ActiveSkillBase
 	{
 		base.Init();
 
-		_data = Managers.Resource.Load<SniperShotData>("Data/SniperShotData");
-		if (_data == null) { Debug.LogWarning($"Fail load Data/SniperShotData"); return; }
-
-		Id = _data.Id;
-		Type = _data.Type;
-		Priority = _data.Priority;
-		IsRestrictMoving = _data.IsRestrictMoving;
-
-		Cooldown = _data.Cooldown;
-		BeforeDelay = _data.BeforeDelay;
-		AfterDelay = _data.AfterDelay;
-		RequireMP = _data.RequireMP;
+		_data = LoadData<SniperShotData>();
 	}
 
 	public override void Execute()

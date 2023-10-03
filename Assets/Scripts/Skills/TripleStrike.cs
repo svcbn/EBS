@@ -9,18 +9,7 @@ public class TripleStrike : ActiveSkillBase
 	{
 		base.Init();
 
-		_data = Managers.Resource.Load<TripleStrikeData>("Data/TripleStrikeData");
-		if (_data == null) { Debug.LogWarning($"Fail load Data/TripleStrikeData"); return; }
-
-		Id = _data.Id;
-		Type = _data.Type;
-		Priority = _data.Priority;
-		IsRestrictMoving = _data.IsRestrictMoving;
-
-		Cooldown = _data.Cooldown;
-		BeforeDelay = _data.BeforeDelay;
-		AfterDelay = _data.AfterDelay;
-		RequireMP = _data.RequireMP;
+		_data = LoadData<TripleStrikeData>();
 	}
 
 	public override void Execute()

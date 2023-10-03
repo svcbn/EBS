@@ -1,11 +1,6 @@
 public interface IActiveSkill : ISkill
 {
 	/// <summary>
-	/// 스킬의 타입
-	/// </summary>
-	SkillType Type { get; }
-
-	/// <summary>
 	/// 스킬의 우선순위
 	/// </summary>
 	int Priority { get; }

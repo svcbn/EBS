@@ -3,7 +3,6 @@ using UnityEngine;
 public class ActiveSkillData : ScriptableSkillData
 {
 	[SerializeField] private int _priority;
-	[SerializeField] private SkillType _type;
 	[SerializeField] private bool _isRestrictMoving;
 	[SerializeField] private float _beforeDelay;
 	[SerializeField] private float _afterDelay;
@@ -26,7 +25,6 @@ public class ActiveSkillData : ScriptableSkillData
 
 
 	public int Priority => _priority;
-	public SkillType Type => _type;
 	public bool IsRestrictMoving => _isRestrictMoving;
 	public float BeforeDelay => _beforeDelay;
 	public float AfterDelay => _afterDelay;
