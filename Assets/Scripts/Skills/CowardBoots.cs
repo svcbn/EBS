@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SolarCloak : PassiveSkillBase, IPassiveSkill
+public class CowardBoots : PassiveSkillBase
 {
 
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using Random = UnityEngine.Random;
 
 public enum StatusType
@@ -10,11 +11,43 @@ public enum StatusType
 	Slow,
 	Faint,
 	Knockback,
+	Haste,
 }
 
 public class CharacterStatus : MonoBehaviour
 {
 	public Dictionary<StatusType, bool> CurrentStatus = new();
+
+	public float SlowRatio
+	{ 
+		get => _slowRatio;
+		private set
+		{
+			_slowRatio = Mathf.Clamp(value, 0f, 1f);
+		}
+	}
+	private float _slowRatio;
+
+	public float HastRatio
+	{
+		get => _hastRatio;
+		set
+		{
+			_hastRatio = Mathf.Max(value, 0f);
+		}
+	}
+	private float _hastRatio;
+
+	public float SpeedChangeBySkill
+	{
+		get
+		{
+			if (HastRatio == 0 && SlowRatio == 0)
+				return 1;
+			else
+				return (1 + HastRatio) * (1 - SlowRatio);
+		}
+	}
 
 	[SerializeField, Range(0f, 1f)]
 	private float _stopBounceTimeRatio = 0.9f;
@@ -22,18 +55,6 @@ public class CharacterStatus : MonoBehaviour
 	[SerializeField, Range(0f, 1f)]
 	private float _bouncinesss = 0.8f;
 	
-	private float _maxRatio = 0;
-
-	public float MaxRatio
-	{ 
-		get => _maxRatio;
-		private set
-		{
-			_maxRatio = Mathf.Clamp(value, 0f, 1f);
-		}
-	}
-
-
 	private List<SlowEffect> _currentSlowEffects = new();
 	private FaintEffect _currentFaintEffect;
 	private KnockbackEffect _currentKnockbackEffect;
@@ -43,8 +64,6 @@ public class CharacterStatus : MonoBehaviour
 	private Rigidbody2D _rigidbody2;
 	private List<SpriteRenderer> _spriteRenderers = new();
 	private List<Color> _originalColors = new();
-
-	private float _originSpeed;
 
 	private Coroutine _blinkCR;
 	private Coroutine _faintCR;
@@ -60,8 +79,6 @@ public class CharacterStatus : MonoBehaviour
 
 	private void Start()
 	{
-		_originSpeed = _movement.ChractorMovementData.MaxSpeed;
-
 		CurrentStatus.Add(StatusType.Slow, false);
 		CurrentStatus.Add(StatusType.Faint, false);
 		CurrentStatus.Add(StatusType.Knockback, false);
@@ -93,41 +110,43 @@ public class CharacterStatus : MonoBehaviour
 	#region Slow Effect
 	public void SetSlowEffect(float duration, float slowRatio)
 	{
+		if (_character.Skills.Any(skill => skill.Id == 117))
+		{
+			var immuneSkill = (PassiveSkillBase)_character.Skills.First(skill => skill.Id == 117);
+			immuneSkill.IsEnabled = true;
+
+			return;
+		}
+
 		slowRatio = Mathf.Clamp(slowRatio, 0, 1); 
 		_currentSlowEffects.Add(new SlowEffect(duration, slowRatio));
 	}
 
 	private void ApplySlowEffect()
 	{
+		// slow 활성화 된 slow 상태이상이 있는지 확인 
 		if (_currentSlowEffects.Count == 0)
 		{
 			CurrentStatus[StatusType.Slow] = false;
-			_movement.CurrentSpeed = _originSpeed;
 			return;
 		}
+		CurrentStatus[StatusType.Slow] = true;
 
-		// 활성화 된 slow 상태이상이 있는지 확인 && 가장 높은 적용 비율 가져오기
+		// 가장 높은 슬로우 상태이상 적용 비율 가져오기
 		foreach (var currentSlowEffect in _currentSlowEffects.ToList())
 		{
 			if (currentSlowEffect.IsEffectActive())
-				_maxRatio = Mathf.Max(_maxRatio, currentSlowEffect.Ratio);
+				SlowRatio = Mathf.Max(SlowRatio, currentSlowEffect.Ratio);
 			else
 				_currentSlowEffects.Remove(currentSlowEffect);
 		}
 
-		// slow 비율에 따라 플레이어 속도 늦추기
-		if (_maxRatio > 0)
-		{ 
-			_movement.CurrentSpeed = _originSpeed * (1 - _maxRatio);
-			CurrentStatus[StatusType.Slow] = true;
-
-			if (_slowCR != null)
-			{
-				StopCoroutine(_slowCR); 
-			}
-			_slowCR = StartCoroutine(PlayEffectCo("Stat_Slow", 1, new Vector2(0,0), _character.transform.localScale.x));
-
+		// 슬로우 상태 이펙트 표시
+		if (_slowCR != null)
+		{
+			StopCoroutine(_slowCR); 
 		}
+		_slowCR = StartCoroutine(PlayEffectCo("Stat_Slow", 1, new Vector2(0,0), _character.transform.localScale.x));
 	}
 	#endregion
 
