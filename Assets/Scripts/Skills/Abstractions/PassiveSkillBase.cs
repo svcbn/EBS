@@ -34,7 +34,7 @@ public abstract class PassiveSkillBase : MonoBehaviour, IPassiveSkill
 	{
 		get => _isEnabled;
 
-		protected set
+		set
 		{
 			_isEnabled = value;
 			RaisePropertyChanged();
