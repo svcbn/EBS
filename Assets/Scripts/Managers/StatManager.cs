@@ -151,6 +151,7 @@ public class StatManager
 
 	private void CalculateFinalHps()
 	{
+
 		for (int i = 0; i < 2; i++)
 		{
 			int totalLowModifier = 0;
@@ -160,6 +161,11 @@ public class StatManager
 			}
 			_finalMaxHps[i] = _baseMaxHps[i] + totalLowModifier;
 		}
+	}
+
+	public void AddMaxHp(int playerNumber)
+	{
+
 	}
 
 }
