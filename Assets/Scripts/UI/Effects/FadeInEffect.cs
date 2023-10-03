@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,8 @@ public class FadeInEffect : MonoBehaviour
 
 	private float _alpha;
 
+	private Coroutine _colorHandler;
+
 	private void Awake()
 	{
 		_image = GetComponent<Image>();
@@ -18,11 +21,16 @@ public class FadeInEffect : MonoBehaviour
 
 	private void OnEnable()
 	{
-		Utility.Lerp(0, _alpha, _duration, (value) =>
+		_colorHandler = Utility.Lerp(0, _alpha, _duration, (value) =>
 		{
 			var color = _image.color;
 			color.a = value;
 			_image.color = color;
 		});
+	}
+
+	private void OnDisable()
+	{
+		Utility.StopCoroutine(_colorHandler);
 	}
 }

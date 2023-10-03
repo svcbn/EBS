@@ -6,21 +6,23 @@ using UnityEngine.UI;
 
 public partial class UISkillSlot
 {
-	public bool IsEnabled { get; private set; }
-
+	private const float Duration = 0.07f;
+	
 	private Coroutine _scaleHandler;
+	
+	public bool IsEnabled { get; private set; }
 
 	public void ShowChoiceEffect()
 	{
 		Vector3 scale = transform.localScale;
 		Vector3 targetScale = Vector3.one * 0.95f;
-		float duration = 0.07f;
-		System.Action callback = () => _scaleHandler = Utility.Lerp(targetScale, scale, duration, vector2 => transform.localScale = vector2);
-		_scaleHandler = Utility.Lerp(scale, targetScale, duration, vector => transform.localScale = vector, callback);
+		System.Action callback = () => _scaleHandler = Utility.Lerp(targetScale, scale, Duration, vector2 => transform.localScale = vector2);
+		_scaleHandler = Utility.Lerp(scale, targetScale, Duration, vector => transform.localScale = vector, callback);
 	}
 
 	public void Disable()
 	{
+		Utility.StopCoroutine(_scaleHandler);
 		IsEnabled = false;
 		Get<Image>((int)Elements.Dim).gameObject.SetActive(true);
 	}
