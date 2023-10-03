@@ -72,6 +72,20 @@ public abstract class PassiveSkillBase : MonoBehaviour, IPassiveSkill
 		PropertyChanged?.Invoke(this, new(propertyName));
 	}
 
+	protected T LoadData<T>()
+		where T : PassiveSkillData
+	{
+		T data = Managers.Resource.Load<T>($"Data/{typeof(T).Name}");
+		
+		if (data == null)
+		{
+			Debug.LogWarning($"{name} is not found");
+			return null;
+		}
+
+		return data;
+	}
+
 	protected void PlayEffect(string effName, float duration, Transform parent, Vector2 offset, float sign = 1)
 	{
 		StartCoroutine(PlayEffectCo(effName, duration, parent, offset, sign));
