@@ -254,15 +254,14 @@ public class StatManager
 		return modifier;
 	}
 
+	public void AddMaxHp(int playerIndex, int amount)
+	{
+		_maxHpModifiers[playerIndex].Add(amount);
+	}
 }
 
 public class Modifier
 {
 	public string modifierName;
 	public float percentage;
-
-    public void AddMaxHp(int playerIndex, int amount)
-    {
-		_maxHpModifiers[playerIndex].Add(amount);
-    }
 }
