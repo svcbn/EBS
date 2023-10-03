@@ -4,32 +4,11 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public abstract class PassiveSkillBase : MonoBehaviour, IPassiveSkill
+public abstract class PassiveSkillBase : SkillBase, IPassiveSkill
 {
-	private Character _owner;
-
-	public uint Id { get; protected set; }
-
-
 	private int _presentNumber;
 	private bool _isEnabled;
-	
 
-	public Character Owner
-	{
-		get => _owner;
-		set
-		{
-			if (_owner != null && _owner != value)
-			{
-				throw new InvalidOperationException($"Owner is already set. Owner: {_owner.name}");
-			}
-
-			_owner = value;
-		}
-	}
-	
-	public float Cooldown { get; protected set; }
 
 	public bool IsEnabled
 	{
@@ -42,8 +21,6 @@ public abstract class PassiveSkillBase : MonoBehaviour, IPassiveSkill
 		}
 	}
 
-	public float CurrentCooldown { get; protected set; }
-	
 	public bool HasPresentNumber { get; protected set; }
 
 	public int PresentNumber
@@ -58,32 +35,10 @@ public abstract class PassiveSkillBase : MonoBehaviour, IPassiveSkill
 	}
 	
 	public event PropertyChangedEventHandler PropertyChanged;
-	
-	public virtual void Init()
-	{
-	}
-
-	public virtual void Reset()
-	{
-	}
 
 	protected virtual void RaisePropertyChanged([CallerMemberName] string propertyName = null)
 	{
 		PropertyChanged?.Invoke(this, new(propertyName));
-	}
-
-	protected T LoadData<T>()
-		where T : PassiveSkillData
-	{
-		T data = Managers.Resource.Load<T>($"Data/{typeof(T).Name}");
-		
-		if (data == null)
-		{
-			Debug.LogWarning($"{name} is not found");
-			return null;
-		}
-
-		return data;
 	}
 
 	protected void PlayEffect(string effName, float duration, Transform parent, Vector2 offset, float sign = 1)
