@@ -14,8 +14,6 @@ public abstract class PassiveSkillBase : MonoBehaviour, IPassiveSkill
 	private int _presentNumber;
 	private bool _isEnabled;
 	
-	
-	private Character _owner;
 
 	public Character Owner
 	{
