@@ -9,4 +9,6 @@ public class ManaShowerData : ActiveSkillData
 	[SerializeField] private int _amount;
 
 	public int Amount => _amount;
+
+	public float effectDuration = 0.5f; // 이펙트 지속시간
 }
