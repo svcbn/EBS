@@ -98,7 +98,6 @@ public class StatManager
 			{
 				GameManager.Instance.player2RoundHPUI.value = _currentHps[playerIndex];
 			}
-			Debug.Log($"Player {playerIndex} took total {finalDamage} damage.");
 			onTakeDamage?.Invoke(playerIndex);
 			//죽음 체크
 			if (_currentHps[playerIndex] <= 0)
@@ -166,12 +165,14 @@ public class StatManager
 			character.GetComponent<CharacterMovement>().PlayerInput = Vector2.zero;
 		}
 
+		float delay = 3f;
+		GameManager.Instance.SetRoundWinner(_characters[(playerIndex + 1) % 2]);
+		GameManager.Instance.ShowRoundWinnerUI(delay);
 
-		yield return new WaitForSeconds(2f);
+		yield return new WaitForSeconds(delay);
 
 		foreach (SpriteRenderer renderer in renderers) renderer.enabled = true;
 
-		GameManager.Instance.SetRoundWinner(_characters[(playerIndex + 1) % 2]);
 		GameManager.Instance.ChangeState(GameManager.GameState.RoundOver);
 
 		Managers.Instance.StopCoroutine(_roundEndCR);
