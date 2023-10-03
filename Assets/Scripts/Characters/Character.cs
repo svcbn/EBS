@@ -91,7 +91,6 @@ public class Character : MonoBehaviour
 
 			foreach (var skill in _skills.OfType<IActiveSkill>())
 			{
-				// TODO : 쿨다운 체크
 				if (skill.IsCoolReady)
 					_hasCooldowmSkill = true;
 

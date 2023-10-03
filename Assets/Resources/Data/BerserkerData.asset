@@ -9,15 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45273174704ba68469a28f27dc78edbe, type: 3}
-  m_Name: IceHandsData
+  m_Script: {fileID: 11500000, guid: bcb148fe6661ac146ac6a7ee4263cdd2, type: 3}
+  m_Name: BerserkerData
   m_EditorClassIdentifier: 
-  _id: 107
+  _id: 106
+  _type: 2
   _cooldown: 0
   _effect: {fileID: 0}
-  _type: 2
-  _amount: 0
   _presentNumber: 0
   _hasPresentNumber: 0
-  _speedDownRatio: 0.9
-  _effectDurationTime: 2
+  _speedUpRatio: 0.4
+  _cooldownRatio: 0.2
+  _powerUpRatio: 0.2
