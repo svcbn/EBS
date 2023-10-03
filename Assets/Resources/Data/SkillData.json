@@ -177,7 +177,7 @@
     {
       "Id": 101,
       "Name": "마법학 전공책",
-      "Description": "액티브 스킬 사용마다 매직미사일 5개",
+      "Description": "액티브 스킬 사용마다 레이저 공격",
       "SpriteName": "MagicBook"
     },
     {
