@@ -26,14 +26,14 @@ public class CustomFlee : Action
 	private SharedVector3 _selectedTarget;
 
 	private CharacterMovement _movement;
-	private CharactorJump _jump;
+	private CharacterJump _jump;
 
 	public override void OnAwake()
 	{
 		base.OnAwake();
 
 		_movement = GetComponent<CharacterMovement>();
-		_jump = GetComponent<CharactorJump>();
+		_jump = GetComponent<CharacterJump>();
 	}
 
 	public override void OnStart()

@@ -1,12 +1,13 @@
 using UnityEngine;
 
-public class CharactorJump : MonoBehaviour
+public class CharacterJump : MonoBehaviour
 {
 	public Vector3 velocity;
 	
 	CharacterGround _charaterGround;
 	CharacterMovement _charactorMovement;
-	CharactorMovementData _charactorMovementData;
+	CharacterMovementData _charactorMovementData;
+	CharacterStatus _status;
 	Rigidbody2D _body;
 
 	bool _desiredJump;
@@ -16,6 +17,7 @@ public class CharactorJump : MonoBehaviour
 		_charaterGround = GetComponent<CharacterGround>();
 		_charactorMovement = GetComponent<CharacterMovement>();
 		_charactorMovementData = _charactorMovement.ChractorMovementData;
+		_status = GetComponent<CharacterStatus>();
 		_body = GetComponent<Rigidbody2D>();
 	}
 
@@ -24,7 +26,11 @@ public class CharactorJump : MonoBehaviour
 		if (_charaterGround.GetOnGround())
 		{
 			_body.velocity = new Vector2(_body.velocity.x, 0);
-			_body.AddForce(Vector2.up * _charactorMovementData.JumpPower, ForceMode2D.Impulse);
+
+			if (_status.CurrentStatus[StatusType.Slow] == true)
+				_body.AddForce(Vector2.up * _charactorMovementData.JumpPower * (1 - _status.MaxRatio), ForceMode2D.Impulse);
+			else
+				_body.AddForce(Vector2.up * _charactorMovementData.JumpPower, ForceMode2D.Impulse);
 		}
 	}
 
