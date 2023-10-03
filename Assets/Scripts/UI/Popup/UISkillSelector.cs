@@ -24,6 +24,8 @@ public class UISkillSelector : UIPopup
 	private static readonly Color[] s_Colors = new[] { Color.red, Color.blue };
 	
 	private static readonly Vector3 s_InitialScale = new(0.95f, 0.95f, 0.95f);
+
+	private Color _color;
 	
 	private int _playerIndex = 0;
 	
@@ -52,6 +54,8 @@ public class UISkillSelector : UIPopup
 	private int _currentIndex = -1;
 
 	private int _columnCount = 3;
+	
+	private Coroutine _scaleHandler;
 
 	private void Update()
 	{
@@ -67,6 +71,7 @@ public class UISkillSelector : UIPopup
 	private void OnDisable()
 	{
 		ClearSlots();
+		Utility.StopCoroutine(_scaleHandler);
 		if (_descriptor != null)
 		{
 			Managers.UI.ClosePopupUI(_descriptor);
@@ -82,7 +87,7 @@ public class UISkillSelector : UIPopup
 			if (slot.IsEnabled)
 			{
 				_selector.SelectSkill(_currentIndex);
-				slot.SetBorderColor(s_Colors[_playerIndex]);
+				slot.SetBorderColor(_color);
 				slot.ShowChoiceEffect();
 				slot.Disable();
 			}
@@ -142,16 +147,17 @@ public class UISkillSelector : UIPopup
 		{
 			if (_input != _selector.Input)
 			{
-				_playerIndex++;
-				_playerIndex %= s_Colors.Length;
 				_input = _selector.Input;
+				_playerIndex = ++_playerIndex % s_Colors.Length;
+				_color = _input.Color.a > 0 ? _input.Color : s_Colors[_playerIndex];
 			}
 
 			SetInputText();
 			
-			_slots[_currentIndex].SetBorderColor(s_Colors[_playerIndex]);
+			_slots[_currentIndex].SetBorderColor(_color);
 		};
 		_input = selector.Input;
+		_color = _input.Color.a > 0 ? _input.Color : s_Colors[_playerIndex];
 		SetInputText();
 		InitializeSlots();
 	}
@@ -163,7 +169,7 @@ public class UISkillSelector : UIPopup
 			         Cast<Texts>().
 			         Select(text => Get<TextMeshProUGUI>((int)text)))
 		{
-			text.color = s_Colors[_playerIndex];
+			text.color = _color;
 		}
 		
 		_upText.text = _input.Up.ToString();
@@ -173,7 +179,7 @@ public class UISkillSelector : UIPopup
 		_selectText.text = _input.Select.ToString();
 		if (_card != null)
 		{
-			Utility.Lerp(s_InitialScale, Vector3.one, 0.1f, scale => _card.localScale = scale);
+			_scaleHandler = Utility.Lerp(s_InitialScale, Vector3.one, 0.1f, scale => _card.localScale = scale);
 		}
 	}
 
@@ -271,7 +277,7 @@ public class UISkillSelector : UIPopup
 		}
 
 		_currentIndex = newIndex;
-		_slots[_currentIndex].SetBorderColor(s_Colors[_playerIndex]);
+		_slots[_currentIndex].SetBorderColor(_color);
 		_slots[_currentIndex].Select();
 
 		ShowDescriptionUI();
@@ -279,13 +285,13 @@ public class UISkillSelector : UIPopup
 
 	private void ShowDescriptionUI()
 	{
-		if (_descriptor != null)
+		if (_descriptor is not null)
 		{
 			Managers.UI.ClosePopupUI(_descriptor);
 		}
 
-		var items = Get<GameObject>((int)Elements.Items);
-		if (!items.TryGetComponent<RectTransform>(out var parent))
+		GameObject items = Get<GameObject>((int)Elements.Items);
+		if (!items.TryGetComponent<RectTransform>(out RectTransform parent))
 		{
 			return;
 		}

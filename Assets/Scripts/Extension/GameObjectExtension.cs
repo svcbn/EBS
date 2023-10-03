@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public static class GameObjectExtension
@@ -15,7 +16,7 @@ public static class GameObjectExtension
 
 	public static GameObject FindChild(this GameObject gameObject, string name = null, bool recursive = true)
 	{
-		if (gameObject.FindChild<Transform>(name, recursive) is Transform transform)
+		if (gameObject.FindChild<Transform>(name, recursive) is { } transform)
 		{
 			return transform.gameObject;
 		}
@@ -33,25 +34,22 @@ public static class GameObjectExtension
 
 		if (recursive)
 		{
-			foreach (T component in gameObject.GetComponentsInChildren<T>(true))
-			{
-				if (string.IsNullOrEmpty(name) || component.name == name)
-				{
-					return component;
-				}
-			}
+			return gameObject.GetComponentsInChildren<T>(true).
+				FirstOrDefault(component => string.IsNullOrEmpty(name) || component.name == name);
 		}
 		else
 		{
 			for (int index = 0; index < gameObject.transform.childCount; index++)
 			{
 				Transform transform = gameObject.transform.GetChild(index);
-				if (string.IsNullOrEmpty(name) || transform.name == name)
+				if (!string.IsNullOrEmpty(name) && transform.name != name)
 				{
-					if (transform.TryGetComponent(out T component))
-					{
-						return component;
-					}
+					continue;
+				}
+
+				if (transform.TryGetComponent(out T component))
+				{
+					return component;
 				}
 			}
 		}

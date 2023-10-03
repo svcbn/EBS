@@ -13,6 +13,14 @@ public static class Utility
 		return Managers.Instance.StartCoroutine(LerpCoroutine(from, to, duration, action, callback));
 	}
 
+	public static void StopCoroutine(Coroutine coroutine)
+	{
+		if (coroutine != null)
+		{
+			Managers.Instance.StopCoroutine(coroutine);
+		}
+	}
+
 	private static IEnumerator LerpCoroutine(float from, float to, float duration, System.Action<float> action, System.Action callback)
 	{
 		float time = 0;
@@ -28,7 +36,7 @@ public static class Utility
 		callback?.Invoke();
 	}
 
-	public static IEnumerator LerpCoroutine(Vector3 from, Vector3 to, float duration, System.Action<Vector3> action, System.Action callback)
+	private static IEnumerator LerpCoroutine(Vector3 from, Vector3 to, float duration, System.Action<Vector3> action, System.Action callback)
 	{
 		float time = 0;
 		while (time < duration)
