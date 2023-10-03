@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// 마나샤워 이름 바꾸기 -> 힐링 샤워로 
-public class HealingShower : ActiveSkillBase, IActiveSkill
+public class HealingShower : ActiveSkillBase
 {
 	private HealingShowerData _data;
 
