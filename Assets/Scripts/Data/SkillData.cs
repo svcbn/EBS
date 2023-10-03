@@ -27,7 +27,7 @@ public class SkillInfo : ISerializationCallbackReceiver
 
 	public Sprite Sprite;
 
-	public ActiveSkillData Data;
+	public ScriptableSkillData Data;
 
 	public void OnBeforeSerialize()
 	{
@@ -36,15 +36,16 @@ public class SkillInfo : ISerializationCallbackReceiver
 	public void OnAfterDeserialize()
 	{
 		Sprite = Managers.Resource.Load<Sprite>($"Sprites/{SpriteName}");
-		Data = Managers.Resource.Load<ActiveSkillData>($"Data/{SpriteName}Data");
-		if (Data != null)
+		Data = Managers.Resource.Load<ScriptableSkillData>($"Data/{SpriteName}Data");
+		switch (Data)
 		{
-			SkillType = "Active";
-			CoolDown = Data.Cooldown;
-		}
-		else
-		{
-			SkillType = "Passive";
+			case ActiveSkillData:
+				SkillType = "Active";
+				CoolDown = Data.Cooldown;
+				break;
+			case PassiveSkillData:
+				SkillType = "Passive";
+				break;
 		}
 	}
 }

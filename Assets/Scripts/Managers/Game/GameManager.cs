@@ -426,6 +426,15 @@ public class GameManager : MonoBehaviour
 
 		player1.GetComponent<CharacterMovement>().PlayerInput = Vector2.zero;
 		player2.GetComponent<CharacterMovement>().PlayerInput = Vector2.zero;
+		foreach (var skill in player1.Skills)
+		{
+			skill.Init();
+		}
+		
+		foreach (var skill in player2.Skills)
+		{
+			skill.Init();
+		}
 		
 		player1.transform.position = spawnPoints[0].position;
 		player2.transform.position = spawnPoints[1].position;
