@@ -1,4 +1,6 @@
 using System;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GameUIManager
 {
@@ -29,6 +31,34 @@ public class GameUIManager
 	{
 		var list = Managers.UI.ShowSceneUI<UISkillList>();
 		list.RegisterCharacter(left, right);
+	}
+
+	/// <summary>
+	/// Show a popup that shows the amount of damage or healing.
+	/// </summary>
+	/// <param name="character"></param>
+	/// <param name="number">대미지면 0 이하의 숫자, 힐이면 0 이상의 숫자를 입력</param>
+	public void ShowHealthPopup(Character character, int number)
+	{
+		Color color;
+		if (number < 0)
+		{
+			color = number <= -10 ? Color.red : Color.white;
+		}
+		else
+		{
+			color = Color.green;
+		}
+
+		number = Mathf.Abs(number);
+
+		float xRange = Random.Range(-1, 1f);
+		float yRange = Random.Range(2f, 2.5f);
+		Vector3 offset = new(xRange, yRange, 0f);
+		Vector3 position = character.transform.position + offset;
+		var balloon = Managers.UI.ShowSceneUI<UINumberBalloon>();
+		balloon.SetInitialPosition(position);
+		balloon.SetText(number.ToString(), color);
 	}
 
 	public void ShowTitle(Action onStart)

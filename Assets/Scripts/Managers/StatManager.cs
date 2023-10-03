@@ -88,6 +88,7 @@ public class StatManager
 			int finalDamage = baseDamage;
 
 			//대미지 적용
+			GameManager.UI.ShowHealthPopup(_characters[playerIndex], -finalDamage);
 			_currentHps[playerIndex] -= finalDamage;
 			_currentHps[playerIndex] = Mathf.Clamp(_currentHps[playerIndex], 0, _finalMaxHps[playerIndex]);
 			if(playerIndex == 0)
@@ -112,6 +113,7 @@ public class StatManager
 
 	public void GiveHeal(int playerIndex, int baseAmount)
 	{
+		GameManager.UI.ShowHealthPopup(_characters[playerIndex], baseAmount);
 		_currentHps[playerIndex] += baseAmount;
 		_currentHps[playerIndex] = Mathf.Clamp(_currentHps[playerIndex], 0, _finalMaxHps[playerIndex]);
 		if(playerIndex == 0)
