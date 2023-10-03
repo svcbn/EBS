@@ -106,11 +106,15 @@ public partial class DebugController : MonoBehaviour
 				format: "shine",
 				execute: () =>
 				{
-					var methodInfo = typeof(UISkillSlot).GetMethod("ShowEnableEffect",
+					MethodInfo methodInfo = typeof(UISkillSlot).GetMethod("ShowEnableEffect",
 						BindingFlags.Instance | BindingFlags.NonPublic);
-					foreach (var slot in FindObjectsOfType<UISkillSlot>())
+					
+					if (methodInfo != null)
 					{
-						methodInfo.Invoke(slot, null);
+						foreach (UISkillSlot slot in FindObjectsOfType<UISkillSlot>())
+						{
+							methodInfo.Invoke(slot, null);
+						}
 					}
 				}),
 			

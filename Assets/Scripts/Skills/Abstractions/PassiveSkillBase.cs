@@ -63,10 +63,8 @@ public abstract class PassiveSkillBase : MonoBehaviour, IPassiveSkill
 	{
 	}
 
-	public virtual void Init(Character owner)
+	public virtual void Reset()
 	{
-		Owner = owner;
-
 	}
 
 	protected virtual void RaisePropertyChanged([CallerMemberName] string propertyName = null)
