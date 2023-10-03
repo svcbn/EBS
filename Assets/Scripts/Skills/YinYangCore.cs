@@ -13,9 +13,9 @@ public class YinYangCore : PassiveSkillBase
     bool effectOn;
     GameObject effect;
 
-	public override void Init(Character owner)
+	public override void Init()
 	{
-		base.Init(owner);
+		base.Init();
 
 		_data = Managers.Resource.Load<YinYangCoreData>("Data/YinYangCoreData");
 		if (_data == null) { Debug.LogWarning($"Fail load Data/YinYangCoreData"); return; }
