@@ -3,35 +3,13 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 
-public abstract class ActiveSkillBase : MonoBehaviour, IActiveSkill
+public abstract class ActiveSkillBase : SkillBase, IActiveSkill
 {
-	private Character _owner;
-
-	public uint Id { get; protected set; }
-
-	public Character Owner
-	{
-		get => _owner;
-		set
-		{
-			if (_owner != null && _owner != value)
-			{
-				throw new InvalidOperationException($"Owner is already set. Owner: {_owner.name}");
-			}
-
-			_owner = value;
-		}
-	}
-
 	public SkillType Type { get; protected set; }
 
 	public int Priority { get; protected set; }
 
 	public bool IsRestrictMoving { get; protected set; }
-
-	public float Cooldown { get; protected set; }
-
-	public float CurrentCooldown { get; protected set; }
 
 	public float BeforeDelay { get; protected set; }
 
@@ -52,14 +30,6 @@ public abstract class ActiveSkillBase : MonoBehaviour, IActiveSkill
 	protected virtual void Awake()
 	{
 		IsCoolReady = true;
-	}
-
-	public virtual void Init()
-	{
-	}
-
-	public virtual void Reset()
-	{
 	}
 
 	public virtual void Execute()
