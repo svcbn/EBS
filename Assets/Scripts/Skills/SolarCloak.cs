@@ -7,6 +7,7 @@ public class SolarCloak : PassiveSkillBase
 {
 	private SolarCloakData _data;
 	public bool IsCoolReady { get; protected set; } = true;
+	public int Damage { get; protected set; }
 
 	public override void Init()
 	{
@@ -23,8 +24,15 @@ public class SolarCloak : PassiveSkillBase
 
 		GameObject effect = Managers.Resource.Instantiate("Skills/" + _data.DefaultEffect.name);
 		effect.transform.SetParent(Owner.transform);
+		effect.transform.localPosition = Vector3.zero;
 
-		Managers.Stat.AddMaxHp(Owner.playerIndex);
+		Managers.Stat.AddMaxHp(Owner.playerIndex, _data.MaxHp);
+	}
+
+	public override void Reset()
+	{
+		base.Reset();
+		Damage = (int)MathF.Ceiling(Managers.Stat.GetMaxHp(Owner.playerIndex) * 0.03f);
 	}
 
 	private void Update()
@@ -34,7 +42,7 @@ public class SolarCloak : PassiveSkillBase
 			IsCoolReady = false;
 			if (_data.Effect != null)
 			{
-				PlayEffect(_data.Effect.name, 1);
+				PlayEffect(_data.Effect.name, 1, 1, Vector2.down * 1f);
 			}
 			DoDamage();
 			CalculateCoolTime();
@@ -45,6 +53,7 @@ public class SolarCloak : PassiveSkillBase
 	{
 		float x = Owner.transform.localScale.x < 0 ? -1 : 1;
 
+
 		Vector2 centerInWorld = (Vector2)Owner.transform.position + new Vector2(x * _data.HitBoxCenter.x, _data.HitBoxCenter.y);
 		var boxes = Physics2D.OverlapBoxAll(centerInWorld, _data.HitBoxSize, 0);
 		foreach (var box in boxes)
@@ -54,8 +63,7 @@ public class SolarCloak : PassiveSkillBase
 				continue;
 			}
 
-			//StatManager 쪽에 데미지 연산 요청
-			Managers.Stat.GiveDamage(1 - Owner.playerIndex, _data.Damage);
+			Managers.Stat.GiveDamage(1 - Owner.playerIndex, Damage);
 		}
 	}
 
