@@ -112,7 +112,9 @@ public class CharacterStatus : MonoBehaviour
 	{
 		if (_character.Skills.Any(skill => skill.Id == 117))
 		{
-			Debug.Log("Slow Immune!");
+			var immuneSkill = (PassiveSkillBase)_character.Skills.First(skill => skill.Id == 117);
+			immuneSkill.IsEnabled = true;
+
 			return;
 		}
 
