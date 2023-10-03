@@ -9,22 +9,6 @@ public abstract class PassiveSkillBase : SkillBase, IPassiveSkill
 	private int _presentNumber;
 	private bool _isEnabled;
 	
-	
-	public Character Owner
-	{
-		get => _owner;
-		set
-		{
-			if (_owner != null && _owner != value)
-			{
-				throw new InvalidOperationException($"Owner is already set. Owner: {_owner.name}");
-			}
-
-			_owner = value;
-		}
-	}
-	
-	public float Cooldown { get; protected set; }
 
 	public bool IsEnabled
 	{
@@ -58,19 +42,25 @@ public abstract class PassiveSkillBase : SkillBase, IPassiveSkill
 	}
 
 	protected void PlayEffect(string effName, float duration, Transform parent, Vector2 offset, float sign = 1)
+	{
+		StartCoroutine(PlayEffectCo(effName, duration, parent, offset, sign));
+	}
 
 	public virtual void Init()
 	{
-		StartCoroutine(PlayEffectCo(effName, duration, parent, offset, sign));
+
 	}
 
 	IEnumerator PlayEffectCo(string effName, float duration, Transform parent, Vector2 offset, float sign)
 	{
 		GameObject effect = Managers.Resource.Instantiate("Skills/"+effName, parent ); // paraent를 character.gameObject로
-		
-		if(effect){
+
+		if (effect)
+		{
 			effect.transform.localPosition = Vector3.zero;
-		}else{
+		}
+		else
+		{
 			Debug.LogError($"effect is null. effName :{effName}");
 		}
 
