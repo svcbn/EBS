@@ -16,6 +16,14 @@ public class Character : MonoBehaviour
 	public bool CanMove { get; private set; } = true;
 	public CharacterStatus Status { get; private set; }
 
+	public delegate void OnActiveSkillExcuteType();
+	public event OnActiveSkillExcuteType OnActiveSkillExcute;
+	public void NotifyActiveSkillExcute()
+	{
+        Debug.Log( "NotifyActiveSkillExcute to Invoke" );
+
+		OnActiveSkillExcute?.Invoke();
+	}
 
 	[SerializeField]
 	private GameObject _target;
