@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TripleFireball : ActiveSkillBase, IActiveSkill
+public class TripleFireball : ActiveSkillBase
 {
 	private TripleFireballData _data;
 

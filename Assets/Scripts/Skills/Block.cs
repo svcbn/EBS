@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Block : ActiveSkillBase, IActiveSkill
+public class Block : ActiveSkillBase
 {
 	private BlockData _data;
 

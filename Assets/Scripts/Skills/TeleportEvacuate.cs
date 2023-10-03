@@ -2,7 +2,7 @@ using BehaviorDesigner.Runtime.Tasks.Unity.UnityQuaternion;
 using System.Collections;
 using UnityEngine;
 
-public class TeleportEvacuate : ActiveSkillBase, IActiveSkill
+public class TeleportEvacuate : ActiveSkillBase
 {
 	private TeleportEvacuateData _data;
 
