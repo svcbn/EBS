@@ -540,7 +540,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Evolve
+  m_text: Evolving
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7f33fea75e0e829409d1d762d87a277f, type: 2}
   m_sharedMaterial: {fileID: 8910940094424991130, guid: 7f33fea75e0e829409d1d762d87a277f, type: 2}
