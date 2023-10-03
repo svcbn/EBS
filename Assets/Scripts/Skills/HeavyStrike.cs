@@ -11,18 +11,7 @@ public class HeavyStrike : ActiveSkillBase
 	{
 		base.Init();
 
-		_data = Managers.Resource.Load<HeavyStrikeData>("Data/HeavyStrikeData");
-		if (_data == null) { Debug.LogWarning($"Fail load Data/HeavyStrikeData"); return; }
-
-		Id = _data.Id;
-		Type = _data.Type;
-		Priority = _data.Priority;
-		IsRestrictMoving = _data.IsRestrictMoving;
-
-		Cooldown = _data.Cooldown;
-		BeforeDelay = _data.BeforeDelay;
-		AfterDelay = _data.AfterDelay;
-		RequireMP = _data.RequireMP;
+		_data = LoadData<HeavyStrikeData>();
 	}
 
 	public override void Execute()

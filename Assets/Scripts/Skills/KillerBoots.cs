@@ -16,10 +16,7 @@ public class KillerBoots : PassiveSkillBase
 	{
 		_status = GetComponent<CharacterStatus>();
 
-		_data = Managers.Resource.Load<KillerBootsData>("Data/KillerBootsData");
-		if (_data == null) { Debug.LogWarning($"Fail load Data/KillerBootsData"); return; }
-
-		Id = _data.Id;
+		_data = LoadData<KillerBootsData>();
 
 		Managers.Stat.onTakeDamage += Excute;
 	}

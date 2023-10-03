@@ -10,19 +10,7 @@ public class MagicMissile : ActiveSkillBase
 	{
 		base.Init();
 
-		_data = Managers.Resource.Load<MagicMissileData>("Data/MagicMissileData");
-		if (_data == null){ Debug.LogWarning($"Fail load Data/MagicMissileData"); return;  }
-
-		Id                = _data.Id;
-		Type              = _data.Type;
-		Priority          = _data.Priority;
-		IsRestrictMoving  = _data.IsRestrictMoving;
-
-		Cooldown          = _data.Cooldown;
-		BeforeDelay       = _data.BeforeDelay;
-		AfterDelay        = _data.AfterDelay;
-		RequireMP		  = _data.RequireMP;
-		
+		_data = LoadData<MagicMissileData>();
 	}
 
 	public override void Execute()

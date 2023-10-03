@@ -16,10 +16,7 @@ public class CowardBoots : PassiveSkillBase
 	{
 		_status = GetComponent<CharacterStatus>();
 
-		_data = Managers.Resource.Load<CowardBootsData>("Data/CowardBootsData");
-		if (_data == null) { Debug.LogWarning($"Fail load Data/CowardBootsData"); return; }
-
-		Id = _data.Id;
+		_data = LoadData<CowardBootsData>();
 
 		Managers.Stat.onTakeDamage += Excute;
 	}

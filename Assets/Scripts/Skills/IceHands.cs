@@ -12,10 +12,7 @@ public class IceHands : PassiveSkillBase
 	{
 		_status = GetComponent<CharacterStatus>();
 
-		_data = Managers.Resource.Load<IceHandsData>("Data/IceHandsData");
-		if (_data == null) { Debug.LogWarning($"Fail load Data/IceHandsData"); return; }
-
-		Id = _data.Id;
+		_data = LoadData<IceHandsData>();
 
 		Managers.Stat.onTakeDamage += Excute;
 	}

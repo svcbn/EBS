@@ -10,23 +10,7 @@ public class ArrowShoot : ActiveSkillBase
 	{
 		base.Init();
 
-		_data = Managers.Resource.Load<ArrowShootData>("Data/ArrowShootData");
-		if (_data == null){ Debug.LogWarning($"Fail load Data/ArrowShootData"); return;  }
-
-		Id                = _data.Id;
-		Type              = _data.Type;
-		Priority          = _data.Priority;
-		IsRestrictMoving  = _data.IsRestrictMoving;
-
-		Cooldown          = _data.Cooldown;
-		BeforeDelay       = _data.BeforeDelay;
-		AfterDelay        = _data.AfterDelay;
-		RequireMP		  = _data.RequireMP;
-	}
-
-	public override void Execute()
-	{
-		base.Execute();
+		_data = LoadData<ArrowShootData>();
 	}
 
 	public override IEnumerator ExecuteImplCo()

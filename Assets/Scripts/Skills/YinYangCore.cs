@@ -17,12 +17,7 @@ public class YinYangCore : PassiveSkillBase
 	{
 		base.Init();
 
-		_data = Managers.Resource.Load<YinYangCoreData>("Data/YinYangCoreData");
-		if (_data == null) { Debug.LogWarning($"Fail load Data/YinYangCoreData"); return; }
-
-		Id               = _data.Id;
-		Cooldown         = _data.Cooldown;         // 15초 
-        HasPresentNumber = _data.HasPresentNumber; // false: 사용 횟수 없음
+		_data = LoadData<YinYangCoreData>();
 
         EnableYinYangCore();
 	}

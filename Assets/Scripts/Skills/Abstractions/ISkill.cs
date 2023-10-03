@@ -9,6 +9,11 @@ public interface ISkill : INotifyPropertyChanged
 	uint Id { get; }
 
 	/// <summary>
+	/// 스킬의 타입
+	/// </summary>
+	SkillType SkillType { get; }
+
+	/// <summary>
 	/// 스킬을 소유한 캐릭터
 	/// </summary>
 	Character Owner { get; set; }

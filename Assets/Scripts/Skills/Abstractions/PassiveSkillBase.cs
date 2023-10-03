@@ -7,9 +7,9 @@ using UnityEngine;
 public abstract class PassiveSkillBase : SkillBase, IPassiveSkill
 {
 	private int _presentNumber;
+	
 	private bool _isEnabled;
-
-
+	
 	public bool IsEnabled
 	{
 		get => _isEnabled;

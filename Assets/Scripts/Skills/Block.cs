@@ -9,25 +9,9 @@ public class Block : ActiveSkillBase
 	{
 		base.Init();
 
-		_data = Managers.Resource.Load<BlockData>("Data/BlockData");
-		if (_data == null){ Debug.LogWarning($"Fail load Data/BlockData"); return;  }
+		_data = LoadData<BlockData>();
 
-		Id                = _data.Id;
-		Type              = _data.Type;
-		Priority          = _data.Priority;
-		IsRestrictMoving  = _data.IsRestrictMoving;
-
-		Duration		  = _data.Duration;
-
-		Cooldown          = _data.Cooldown;
-		BeforeDelay       = _data.BeforeDelay;
-		AfterDelay        = _data.AfterDelay;
-		RequireMP		  = _data.RequireMP;
-	}
-
-	public override void Execute()
-	{
-		base.Execute();
+		Duration = _data.Duration;
 	}
 
 	public override IEnumerator ExecuteImplCo()

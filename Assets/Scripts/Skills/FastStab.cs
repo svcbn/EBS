@@ -10,23 +10,7 @@ public class FastStab : ActiveSkillBase
 	{
 		base.Init();
 
-		_data = Managers.Resource.Load<FastStabData>("Data/FastStabData");
-		if (_data == null) { Debug.LogWarning($"Fail load Data/FastStabData"); return; }
-
-		Id = _data.Id;
-		Type = _data.Type;
-		Priority = _data.Priority;
-		IsRestrictMoving = _data.IsRestrictMoving;
-
-		Cooldown = _data.Cooldown;
-		BeforeDelay = _data.BeforeDelay;
-		AfterDelay = _data.AfterDelay;
-		RequireMP = _data.RequireMP;
-	}
-
-	public override void Execute()
-	{
-		base.Execute();
+		_data = LoadData<FastStabData>();
 	}
 
 	public override IEnumerator ExecuteImplCo()

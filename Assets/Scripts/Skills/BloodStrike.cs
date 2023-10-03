@@ -10,23 +10,7 @@ public class BloodStrike : ActiveSkillBase
 	{
 		base.Init();
 
-		_data = Managers.Resource.Load<BloodStrikeData>("Data/BloodStrikeData");
-		if (_data == null) { Debug.LogWarning($"Fail load Data/BloodStrikeData"); return; }
-
-		Id = _data.Id;
-		Type = _data.Type;
-		Priority = _data.Priority;
-		IsRestrictMoving = _data.IsRestrictMoving;
-
-		Cooldown = _data.Cooldown;
-		BeforeDelay = _data.BeforeDelay;
-		AfterDelay = _data.AfterDelay;
-		RequireMP = _data.RequireMP;
-	}
-
-	public override void Execute()
-	{
-		base.Execute();
+		_data = LoadData<BloodStrikeData>();
 	}
 
 	public override IEnumerator ExecuteImplCo()

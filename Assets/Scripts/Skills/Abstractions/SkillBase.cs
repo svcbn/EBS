@@ -12,6 +12,8 @@ public abstract class SkillBase : MonoBehaviour, ISkill
 	private Character _owner;
 	
 	public uint Id { get; protected set; }
+	
+	public SkillType SkillType { get; protected set; }
 
 	public Character Owner
 	{
@@ -59,6 +61,10 @@ public abstract class SkillBase : MonoBehaviour, ISkill
 			Debug.LogWarning($"{name} is not found");
 			return null;
 		}
+
+		Id = data.Id;
+		Cooldown = data.Cooldown;
+		SkillType = data.Type;
 
 		return data;
 	}

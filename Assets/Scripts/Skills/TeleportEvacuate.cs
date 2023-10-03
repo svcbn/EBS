@@ -10,18 +10,7 @@ public class TeleportEvacuate : ActiveSkillBase
 	{
 		base.Init();
 
-		_data = Managers.Resource.Load<TeleportEvacuateData>("Data/TeleportEvacuateData");
-		if (_data == null){ Debug.LogWarning($"Fail load Data/TeleportEvacuateData"); return; }
-
-		Id                = _data.Id;
-		Type              = _data.Type;
-		Priority          = _data.Priority;
-		IsRestrictMoving = _data.IsRestrictMoving;
-
-		Cooldown		  = _data.Cooldown;
-		BeforeDelay       = _data.BeforeDelay;
-		AfterDelay        = _data.AfterDelay;
-
+		_data = LoadData<TeleportEvacuateData>();
 	}
 
 	public override void Execute()
