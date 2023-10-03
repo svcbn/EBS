@@ -15,7 +15,7 @@ public class Move : Action
 	private SharedBool _canMove;
 
 	private CharacterMovement _movement;
-	private CharactorJump _jump;
+	private CharacterJump _jump;
 
 
 	public override void OnAwake()
@@ -23,7 +23,7 @@ public class Move : Action
 		base.OnAwake();
 
 		_movement =  GetComponent<CharacterMovement>();
-		_jump = GetComponent<CharactorJump>();
+		_jump = GetComponent<CharacterJump>();
 	}
 
 	public override void OnStart()

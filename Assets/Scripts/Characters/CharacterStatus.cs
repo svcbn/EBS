@@ -21,6 +21,18 @@ public class CharacterStatus : MonoBehaviour
 	
 	[SerializeField, Range(0f, 1f)]
 	private float _bouncinesss = 0.8f;
+	
+	private float _maxRatio = 0;
+
+	public float MaxRatio
+	{ 
+		get => _maxRatio;
+		private set
+		{
+			_maxRatio = Mathf.Clamp(value, 0f, 1f);
+		}
+	}
+
 
 	private List<SlowEffect> _currentSlowEffects = new();
 	private FaintEffect _currentFaintEffect;
@@ -96,19 +108,18 @@ public class CharacterStatus : MonoBehaviour
 		}
 
 		// 활성화 된 slow 상태이상이 있는지 확인 && 가장 높은 적용 비율 가져오기
-		float maxRatio = 0;
 		foreach (var currentSlowEffect in _currentSlowEffects.ToList())
 		{
 			if (currentSlowEffect.IsEffectActive())
-				maxRatio = Mathf.Max(maxRatio, currentSlowEffect.Ratio);
+				_maxRatio = Mathf.Max(_maxRatio, currentSlowEffect.Ratio);
 			else
 				_currentSlowEffects.Remove(currentSlowEffect);
 		}
 
 		// slow 비율에 따라 플레이어 속도 늦추기
-		if (maxRatio > 0)
+		if (_maxRatio > 0)
 		{ 
-			_movement.CurrentSpeed = _originSpeed * (1 - maxRatio);
+			_movement.CurrentSpeed = _originSpeed * (1 - _maxRatio);
 			CurrentStatus[StatusType.Slow] = true;
 
 			if (_slowCR != null)

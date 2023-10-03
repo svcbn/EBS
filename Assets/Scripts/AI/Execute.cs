@@ -19,7 +19,8 @@ public class Execute : Action
 	{
 		_selectedSkill = SelectRandomSkill(_character.GetHighPrioritySkill());
 		
-		_selectedSkill.Init();
+		if ( _selectedSkill != null )
+			_selectedSkill.Init();
 
 		_movement.LookMoveDirction((_character.Target.transform.position - transform.position).normalized);
 	}
