@@ -1,15 +1,21 @@
 using System;
 using System.ComponentModel;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public partial class UISkillSlot : UIBase
 {
-	private enum Elements
+	private enum Images
 	{
 		Icon,
 		Dim,
-		CooldownIndicator
+		CooldownIndicator,
+	}
+
+	private enum Texts
+	{
+		PresentText
 	}
 
 	private static readonly Color s_SelectedColor = new(1, 0, 0, 0.5f);
@@ -50,7 +56,7 @@ public partial class UISkillSlot : UIBase
 		{
 			_border.color = s_UnselectedColor;
 		}
-		Get<Image>((int)Elements.Dim).gameObject.SetActive(false);
+		Get<Image>((int)Images.Dim).gameObject.SetActive(false);
 	}
 
 	private void OnDisable()
@@ -60,7 +66,8 @@ public partial class UISkillSlot : UIBase
 
 	public override void Init()
 	{
-		Bind<Image, Elements>();
+		Bind<Image, Images>();
+		Bind<TextMeshProUGUI, Texts>();
 
 		if (_info != null)
 		{
@@ -75,8 +82,12 @@ public partial class UISkillSlot : UIBase
 
 	public void SetSkill(ISkill skill)
 	{
+		UnregisterSkillEvents();
 		_skill = skill;
+		RegisterSkillEvents();
 		RemoveBorderRect();
+
+		Get<TextMeshProUGUI, Texts>(Texts.PresentText).enabled = _skill is IPassiveSkill;
 	}
 
 	public void SetInfo(SkillInfo info)
@@ -98,7 +109,7 @@ public partial class UISkillSlot : UIBase
 
 	private void SetSkillIcon()
 	{
-		var icon = Get<Image>((int)Elements.Icon);
+		var icon = Get<Image>((int)Images.Icon);
 		if (_info != null)
 		{
 			icon.sprite = _info.Sprite;
@@ -107,7 +118,7 @@ public partial class UISkillSlot : UIBase
 
 	private void RemoveBorderRect()
 	{
-		var rect = Get<Image>((int)Elements.Icon).GetComponent<RectTransform>();
+		var rect = Get<Image>((int)Images.Icon).GetComponent<RectTransform>();
 		if (rect == null)
 		{
 			return;

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -99,6 +100,20 @@ public partial class DebugController : MonoBehaviour
 	{
 		_commands = new()
 		{
+			new DebugCommand(
+				id: "shine",
+				description: "Shine the all skill slots",
+				format: "shine",
+				execute: () =>
+				{
+					var methodInfo = typeof(UISkillSlot).GetMethod("ShowEnableEffect",
+						BindingFlags.Instance | BindingFlags.NonPublic);
+					foreach (var slot in FindObjectsOfType<UISkillSlot>())
+					{
+						methodInfo.Invoke(slot, null);
+					}
+				}),
+			
 			new TransformObjectCommand(
 				id: "move",
 				description: "Move the position of specified GameObject",

@@ -23,7 +23,7 @@ public partial class UISkillSlot
 	public void Disable()
 	{
 		IsEnabled = false;
-		Get<Image>((int)Elements.Dim).gameObject.SetActive(true);
+		Get<Image>((int)Images.Dim).gameObject.SetActive(true);
 	}
 
 	public void Select()
