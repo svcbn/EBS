@@ -28,7 +28,7 @@ public class CharacterStatus : MonoBehaviour
 	}
 	private float _slowRatio;
 
-	public float HastRatio
+	public float HasteRatio
 	{
 		get => _hastRatio;
 		set
@@ -42,10 +42,10 @@ public class CharacterStatus : MonoBehaviour
 	{
 		get
 		{
-			if (HastRatio == 0 && SlowRatio == 0)
+			if (HasteRatio == 0 && SlowRatio == 0)
 				return 1;
 			else
-				return (1 + HastRatio) * (1 - SlowRatio);
+				return (1 + HasteRatio) * (1 - SlowRatio);
 		}
 	}
 
@@ -68,6 +68,18 @@ public class CharacterStatus : MonoBehaviour
 	private Coroutine _blinkCR;
 	private Coroutine _faintCR;
 	private Coroutine _slowCR;
+	private Coroutine _hasteCR;
+
+	public void Init()
+	{
+		SlowRatio = 0;
+		HasteRatio = 0;
+
+		foreach (var status in CurrentStatus.Keys)
+		{
+			CurrentStatus[status] = false;
+		}
+	}
 
 	private void Awake()
 	{
@@ -96,6 +108,7 @@ public class CharacterStatus : MonoBehaviour
 		ApplySlowEffect();
 		ApplyFaintEffect();
 		ApplyKnockbackEffect();
+		ApplyHasteEffect();
 	}
 
 	private void GetRenderers()
@@ -128,6 +141,7 @@ public class CharacterStatus : MonoBehaviour
 		if (_currentSlowEffects.Count == 0)
 		{
 			CurrentStatus[StatusType.Slow] = false;
+			SlowRatio = 0;
 			return;
 		}
 		CurrentStatus[StatusType.Slow] = true;
@@ -146,7 +160,7 @@ public class CharacterStatus : MonoBehaviour
 		{
 			StopCoroutine(_slowCR); 
 		}
-		_slowCR = StartCoroutine(PlayEffectCo("Stat_Slow", 1, new Vector2(0,0), _character.transform.localScale.x));
+		_slowCR = StartCoroutine(PlayEffectCo("Stat_Slow", 1, new Vector2(0,-1), _character.transform.localScale.x));
 	}
 	#endregion
 
@@ -231,7 +245,7 @@ public class CharacterStatus : MonoBehaviour
 
 	#region Blink Effect
 
-	public void SetBlinkEffect(int index)
+	private void SetBlinkEffect(int index)
 	{
 		if (index != _character.playerIndex)
 		{
@@ -263,6 +277,27 @@ public class CharacterStatus : MonoBehaviour
 
 	#endregion
 
+	#region Haste Effect
+
+	private void ApplyHasteEffect()
+	{
+		// Haste 상태인지 확인 
+		if (HasteRatio == 0)
+		{
+			CurrentStatus[StatusType.Haste] = false;
+			return;
+		}
+		CurrentStatus[StatusType.Haste] = true;
+
+		// Haste 상태 이펙트 표시
+		if (_hasteCR != null)
+		{
+			StopCoroutine(_hasteCR);
+		}
+		_hasteCR = StartCoroutine(PlayEffectCo("Stat_Haste", 1, new Vector2(0, -1), _character.transform.localScale.x));
+	}
+
+	#endregion
 
 	IEnumerator PlayEffectCo(string effName, float duration, Vector2 offset, float sign)
 	{
