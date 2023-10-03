@@ -6,11 +6,14 @@ using UnityEngine;
 
 public abstract class PassiveSkillBase : MonoBehaviour, IPassiveSkill
 {
-	private int _presentNumber;
+	private Character _owner;
 
+	public uint Id { get; protected set; }
+
+
+	private int _presentNumber;
 	private bool _isEnabled;
 	
-	public uint Id { get; protected set; }
 	
 	private Character _owner;
 
@@ -33,7 +36,8 @@ public abstract class PassiveSkillBase : MonoBehaviour, IPassiveSkill
 	public bool IsEnabled
 	{
 		get => _isEnabled;
-		protected set
+
+		set
 		{
 			_isEnabled = value;
 			RaisePropertyChanged();
@@ -47,6 +51,7 @@ public abstract class PassiveSkillBase : MonoBehaviour, IPassiveSkill
 	public int PresentNumber
 	{
 		get => _presentNumber;
+		
 		protected set
 		{
 			_presentNumber = value;

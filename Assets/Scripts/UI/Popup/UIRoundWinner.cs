@@ -23,6 +23,7 @@ public class UIRoundWinner : UIPopup
 	
 	public void SetWinner(Character winner)
 	{
+		Debug.Log(winner);
 		_winnerText.text = $"{winner.name} Win";
 	}
 }

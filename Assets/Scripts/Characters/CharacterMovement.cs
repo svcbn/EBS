@@ -21,11 +21,14 @@ public class CharacterMovement : MonoBehaviour
 	Vector2 _playerInput;
 
 	Vector3 _velocity;
+
 	Character _character;
+	CharacterStatus _status;
 
 	private void Awake()
 	{
 		_character = GetComponent<Character>();
+		_status = GetComponent<CharacterStatus>();
 	}
 
 	private void Start()
@@ -37,6 +40,7 @@ public class CharacterMovement : MonoBehaviour
 	{
 		if (_character.CanMove == false) return;
 
+		CurrentSpeed = ChractorMovementData.MaxSpeed * _status.SpeedChangeBySkill;
 		Vector3 desiredVelocity = new Vector3(PlayerInput.x, 0, 0) * CurrentSpeed;
 		float maxSpeedChange = ChractorMovementData.MaxAcceleration * Time.deltaTime;
 
