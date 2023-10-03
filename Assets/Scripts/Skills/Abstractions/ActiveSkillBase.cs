@@ -58,6 +58,10 @@ public abstract class ActiveSkillBase : MonoBehaviour, IActiveSkill
 	{
 	}
 
+	public virtual void Reset()
+	{
+	}
+
 	public virtual void Execute()
 	{
 		//Debug.Log(GetType().Name);
@@ -74,6 +78,8 @@ public abstract class ActiveSkillBase : MonoBehaviour, IActiveSkill
 
 	void ExecuteImpl()
 	{
+		Owner.NotifyActiveSkillExcute();
+
 		IsBeforeDelay = false;
 		UsingSkillCo = Owner.StartCoroutine(ExecuteImplCo());
 	}

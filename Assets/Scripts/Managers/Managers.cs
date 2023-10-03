@@ -33,7 +33,7 @@ public class Managers : MonoBehaviour
 
 	public static PoolManager Pool => Instance._pool;
 
-	public static ResourceManager Resource => Instance._resource;
+	public static ResourceManager Resource => Instance._resource; 
 
 	public static UIManager UI => Instance._ui;
 

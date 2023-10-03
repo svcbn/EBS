@@ -109,6 +109,12 @@ public class SkillManager
 		foreach (var type in skillTypes)
 		{
 			ScriptableSkillData data = Managers.Resource.Load<ScriptableSkillData>($"Data/{type.Name}Data");
+			if (data == null)
+			{
+				Debug.LogWarning($"{type.Name}Data is not found.");
+				continue;
+			}
+			
 			_skillCache.Add(data.Id, type);
 		} 
 	}
