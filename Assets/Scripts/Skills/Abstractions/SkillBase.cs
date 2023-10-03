@@ -33,7 +33,7 @@ public abstract class SkillBase : MonoBehaviour, ISkill
 	{
 	}
 
-	protected T LoadData<T>()
+	protected virtual T LoadData<T>()
 		where T : ScriptableSkillData
 	{
 		T data = Managers.Resource.Load<T>($"Data/{typeof(T).Name}");
