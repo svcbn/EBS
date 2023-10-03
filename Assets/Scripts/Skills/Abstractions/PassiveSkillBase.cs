@@ -34,6 +34,18 @@ public abstract class PassiveSkillBase : SkillBase, IPassiveSkill
 		}
 	}
 
+	protected override T LoadData<T>()
+	{
+		T data = base.LoadData<T>();
+		if (data is PassiveSkillData passiveSkillData)
+		{
+			HasPresentNumber = passiveSkillData.HasPresentNumber;
+			_presentNumber = passiveSkillData.PresentNumber;
+		}
+
+		return data;
+	}
+
 	protected void PlayEffect(string effName, float duration, Transform parent, Vector2 offset, float sign = 1)
 	{
 		StartCoroutine(PlayEffectCo(effName, duration, parent, offset, sign));
