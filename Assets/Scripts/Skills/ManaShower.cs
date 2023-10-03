@@ -37,7 +37,9 @@ public class ManaShower : ActiveSkillBase, IActiveSkill
 		float x = Owner.transform.localScale.x < 0 ? -1 : 1;
 
 		// 애니메이션 재생
-		PlayEffect( _data.Effect.name, Duration, Vector3.zero, x );
+		if (_data.Effect != null){
+			PlayEffect( _data.Effect.name, Duration, Vector3.zero, x );
+		}
 
 		// Todo : statmanager 쪽에 마나 회복 요청
 		Managers.Stat.GiveHeal(Owner.playerIndex, _data.Amount);
