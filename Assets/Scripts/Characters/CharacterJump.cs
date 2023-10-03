@@ -27,7 +27,7 @@ public class CharacterJump : MonoBehaviour
 		{
 			_body.velocity = new Vector2(_body.velocity.x, 0);
 
-			_body.AddForce(Vector2.up * _charactorMovementData.JumpPower * Mathf.Sqrt(_status.SpeedChangeBySkill), ForceMode2D.Impulse);
+			_body.AddForce(Vector2.up * _charactorMovementData.JumpPower * Mathf.Sqrt(_status.SpeedChange), ForceMode2D.Impulse);
 		}
 	}
 

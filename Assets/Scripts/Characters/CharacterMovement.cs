@@ -40,7 +40,7 @@ public class CharacterMovement : MonoBehaviour
 	{
 		if (_character.CanMove == false) return;
 
-		CurrentSpeed = ChractorMovementData.MaxSpeed * _status.SpeedChangeBySkill;
+		CurrentSpeed = ChractorMovementData.MaxSpeed * _status.SpeedChange;
 		Vector3 desiredVelocity = new Vector3(PlayerInput.x, 0, 0) * CurrentSpeed;
 		float maxSpeedChange = ChractorMovementData.MaxAcceleration * Time.deltaTime;
 

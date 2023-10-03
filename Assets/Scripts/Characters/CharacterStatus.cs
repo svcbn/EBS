@@ -38,7 +38,7 @@ public class CharacterStatus : MonoBehaviour
 	}
 	private float _hastRatio;
 
-	public float SpeedChangeBySkill
+	public float SpeedChange
 	{
 		get
 		{
@@ -48,6 +48,20 @@ public class CharacterStatus : MonoBehaviour
 				return (1 + HasteRatio) * (1 - SlowRatio);
 		}
 	}
+
+	
+	public float CooldownChange 
+	{
+		get 
+		{
+			return _coolDownChange;
+		}
+		set
+		{
+			_coolDownChange = value; 
+		}
+	}
+	private float _coolDownChange = 1;
 
 	[SerializeField, Range(0f, 1f)]
 	private float _stopBounceTimeRatio = 0.9f;
@@ -74,6 +88,7 @@ public class CharacterStatus : MonoBehaviour
 	{
 		SlowRatio = 0;
 		HasteRatio = 0;
+		CooldownChange = 1;
 
 		foreach (var status in CurrentStatus.Keys)
 		{
