@@ -10,5 +10,4 @@ public class MagicBookData : PassiveSkillData
 
 	public float effectDuration;
 
-	public bool HasPresentNumber;
 }
