@@ -27,6 +27,7 @@ public class SolarCloak : PassiveSkillBase
 		effect.transform.localPosition = Vector3.zero;
 
 		Managers.Stat.AddMaxHp(Owner.playerIndex, _data.MaxHp);
+
 	}
 
 	public override void Reset()
