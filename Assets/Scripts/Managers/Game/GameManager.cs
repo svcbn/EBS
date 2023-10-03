@@ -314,6 +314,7 @@ public class GameManager : MonoBehaviour
 		}
 		
 		skill.Init();
+		skill.Init(_currentPicker);
 		_currentPicker.AddSkill(skill);
 		if (--_pickCount > 0 && _selector.CanSelect)
 		{

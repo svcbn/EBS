@@ -20,6 +20,8 @@ public abstract class ActiveSkillBase : MonoBehaviour, IActiveSkill
 			}
 
 			_owner = value;
+			Debug.Log( $"Active Owner : {_owner.name}" );
+
 		}
 	}
 
@@ -58,6 +60,10 @@ public abstract class ActiveSkillBase : MonoBehaviour, IActiveSkill
 	{
 	}
 
+	public virtual void Init(Character owner) // todo: init()과 통합
+	{
+	}
+
 	public virtual void Execute()
 	{
 		//Debug.Log(GetType().Name);
@@ -74,6 +80,8 @@ public abstract class ActiveSkillBase : MonoBehaviour, IActiveSkill
 
 	void ExecuteImpl()
 	{
+		Owner.NotifyActiveSkillExcute();
+
 		IsBeforeDelay = false;
 		UsingSkillCo = Owner.StartCoroutine(ExecuteImplCo());
 	}
