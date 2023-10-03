@@ -150,7 +150,7 @@ public class CharacterStatus : MonoBehaviour
 			_faintCR = StartCoroutine(PlayEffectCo("Stat_Faint", 1, new Vector2(0, 1), _character.transform.localScale.x));
 
 			// 선딜 취소
-			var currentSkill = (SkillBase)_character.CurrentSkill;
+			var currentSkill = (ActiveSkillBase)_character.CurrentSkill;
 			if (currentSkill != null && currentSkill.IsBeforeDelay == true)
 			{
 				currentSkill.CancelInvoke();
@@ -182,7 +182,7 @@ public class CharacterStatus : MonoBehaviour
 
 		// 선딜 취소
 		CurrentStatus[StatusType.Knockback] = true;
-		var currentSkill = (SkillBase)_character.CurrentSkill;
+		var currentSkill = (ActiveSkillBase)_character.CurrentSkill;
 		if (currentSkill != null && currentSkill.IsBeforeDelay == true)
 		{
 			currentSkill.CancelInvoke();

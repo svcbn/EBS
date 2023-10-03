@@ -40,7 +40,7 @@ public class GameUIManager
 		title.StartButtonClicked += onStart;
 	}
 
-	public void ShowMenu()
+	public void ShowMenu(Action goback = null, Action exit = null)
 	{
 		if (_menu != null)
 		{
@@ -48,7 +48,18 @@ public class GameUIManager
 			_menu = null;
 		}
 
-		_menu = Managers.UI.ShowPopupUI<UIMenu>();
+		_menu = Managers.UI.ShowPopupUI<UIMenu>(usePool: false);
+		RegisterMenuEvents(_menu);
+		_menu.GoBackButtonClicked += goback;
+		_menu.ExitButtonClicked += exit;
+		
+		return;
+
+		static void RegisterMenuEvents(UIMenu menu)
+		{
+			menu.GoBackButtonClicked += () => Managers.UI.ClosePopupUI(menu);
+			menu.ExitButtonClicked += () => Managers.UI.ClosePopupUI(menu);
+		}
 	}
 	
 	public void SetSkillPresenter(Character character)

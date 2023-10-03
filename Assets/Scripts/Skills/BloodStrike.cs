@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BloodStrike : SkillBase, IActiveSkill
+public class BloodStrike : ActiveSkillBase, IActiveSkill
 {
 	private BloodStrikeData _data;
 

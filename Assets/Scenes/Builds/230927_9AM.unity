@@ -562,6 +562,7 @@ MonoBehaviour:
     _right: 100
     _select: 32
     _owner: Player 1
+    _color: {r: 1, g: 0.35686275, b: 0.19215687, a: 1}
   _player2Input:
     _up: 273
     _down: 274
@@ -569,6 +570,7 @@ MonoBehaviour:
     _right: 275
     _select: 13
     _owner: Player 2
+    _color: {r: 0.27058825, g: 0.3254902, b: 1, a: 1}
   _firstPickCountList: 010000000200000001000000
   _otherPickCountList: 0100000001000000
   totalRounds: 0

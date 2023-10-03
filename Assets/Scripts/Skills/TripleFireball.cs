@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TripleFireball : SkillBase, IActiveSkill
+public class TripleFireball : ActiveSkillBase, IActiveSkill
 {
 	private TripleFireballData _data;
 
@@ -32,7 +32,6 @@ public class TripleFireball : SkillBase, IActiveSkill
 
 	public override IEnumerator ExecuteImplCo()
 	{
-		int colCount = 0;
 		for (int i = 0; i < 3; i++)
 		{
 			FireBallProjectile f = Instantiate(_data.prefab, Owner.transform.position, Quaternion.identity);

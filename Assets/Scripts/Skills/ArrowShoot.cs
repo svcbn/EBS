@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArrowShoot : SkillBase, IActiveSkill
+public class ArrowShoot : ActiveSkillBase, IActiveSkill
 {
 	private ArrowShootData _data;
 

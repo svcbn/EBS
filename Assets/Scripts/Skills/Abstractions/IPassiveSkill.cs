@@ -1,4 +1,10 @@
-public interface IPassiveSkill : ISkill
+using System.ComponentModel;
+
+public interface IPassiveSkill : ISkill, INotifyPropertyChanged
 {
-	float Amount { get; }
+	bool IsEnabled { get; }
+
+	bool HasPresentNumber { get; }
+
+	int PresentNumber { get; }
 }

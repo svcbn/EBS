@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SniperShot : SkillBase, IActiveSkill
+public class SniperShot : ActiveSkillBase, IActiveSkill
 {
 	private SniperShotData _data;
 

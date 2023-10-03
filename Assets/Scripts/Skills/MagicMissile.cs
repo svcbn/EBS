@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MagicMissile : SkillBase, IActiveSkill
+public class MagicMissile : ActiveSkillBase, IActiveSkill
 {
 	private MagicMissileData _data;
 

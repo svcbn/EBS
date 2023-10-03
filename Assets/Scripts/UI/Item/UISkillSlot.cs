@@ -1,3 +1,5 @@
+using System;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -51,49 +53,66 @@ public partial class UISkillSlot : UIBase
 		Get<Image>((int)Elements.Dim).gameObject.SetActive(false);
 	}
 
+	private void OnDisable()
+	{
+		Utility.StopCoroutine(_scaleHandler);
+	}
+
 	public override void Init()
 	{
 		Bind<Image, Elements>();
 
 		if (_info != null)
 		{
-			SetSkillInfo();
+			SetSkillIcon();
 		}
-		
-		var rect = Get<Image>((int)Elements.Icon).GetComponent<RectTransform>();
-		if (_skill != null && rect != null)
+
+		if (_skill != null)
 		{
-			rect.offsetMin = new(8, 8);
-			rect.offsetMax = -rect.offsetMin;
+			RemoveBorderRect();
 		}
 	}
 
 	public void SetSkill(ISkill skill)
 	{
 		_skill = skill;
+		RemoveBorderRect();
 	}
 
 	public void SetInfo(SkillInfo info)
 	{
 		_info = info;
-		SetSkillInfo();
+		SetSkillIcon();
 	}
 	
 	public void SetBorderColor(Color color, bool overrideAlpha = false)
 	{
-		if (_border != null)
+		if (_border is null)
 		{
-			_selectedColor = overrideAlpha ? color : new Color(color.r, color.g, color.b, s_SelectedColor.a);
-			_border.color = _selectedColor;
+			return;
 		}
+
+		_selectedColor = overrideAlpha ? color : new Color(color.r, color.g, color.b, s_SelectedColor.a);
+		_border.color = _selectedColor;
 	}
 
-	private void SetSkillInfo()
+	private void SetSkillIcon()
 	{
 		var icon = Get<Image>((int)Elements.Icon);
 		if (_info != null)
 		{
 			icon.sprite = _info.Sprite;
 		}
+	}
+
+	private void RemoveBorderRect()
+	{
+		var rect = Get<Image>((int)Elements.Icon).GetComponent<RectTransform>();
+		if (rect == null)
+		{
+			return;
+		}
+
+		rect.offsetMin = rect.offsetMax = Vector2.zero;
 	}
 }

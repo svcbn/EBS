@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -13,15 +14,15 @@ public class UISkillDescriptor : UIPopup
 
 	private static readonly Vector3 s_InitialScale = new(0.95f, 0.95f, 0.95f);
 
+	private Coroutine _scaleHandler;
+
 	private SkillInfo _skillInfo;
 
-	private void OnEnable()
+	private RectTransform _card;
+
+	private void OnDisable()
 	{
-		var card = gameObject.FindChild<RectTransform>("Card");
-		if (card != null)
-		{
-			Utility.Lerp(s_InitialScale, Vector3.one, 0.1f, scale => card.localScale = scale);
-		}
+		Utility.StopCoroutine(_scaleHandler);
 	}
 
 	public override void Init()
@@ -29,12 +30,15 @@ public class UISkillDescriptor : UIPopup
 		base.Init();
 		Bind<TextMeshProUGUI, Elements>();
 		SetText();
+		
+		_card = gameObject.FindChild<RectTransform>("Card");
 	}
 
 	public void SetSkillInfo(SkillInfo skillInfo)
 	{
 		_skillInfo = skillInfo;
 		SetText();
+		SetScaleEffect();
 	}
 
 	private void SetText()
@@ -48,5 +52,13 @@ public class UISkillDescriptor : UIPopup
 		Get<TextMeshProUGUI>((int)Elements.SkillType).text = _skillInfo.SkillType;
 		Get<TextMeshProUGUI>((int)Elements.Cooldown).text = $"쿨타임: {_skillInfo.CoolDown}초";
 		Get<TextMeshProUGUI>((int)Elements.Description).text = _skillInfo.Description;
+	}
+
+	private void SetScaleEffect()
+	{
+		if (_card != null)
+		{
+			_scaleHandler = Utility.Lerp(s_InitialScale, Vector3.one, 0.1f, scale => _card.localScale = scale);
+		}
 	}
 }

@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Block : SkillBase, IActiveSkill
+public class Block : ActiveSkillBase, IActiveSkill
 {
 	private BlockData _data;
 
@@ -48,7 +48,7 @@ public class Block : SkillBase, IActiveSkill
 		if(enemy              == null){ return false; }
 		if(enemy.CurrentSkill == null){ return false; }
 
-		bool isEnemyInBeforeDelay = ((SkillBase)enemy.CurrentSkill).IsBeforeDelay; 
+		bool isEnemyInBeforeDelay = ((ActiveSkillBase)enemy.CurrentSkill).IsBeforeDelay; 
 
 		return isEnemyInBeforeDelay;
 	}

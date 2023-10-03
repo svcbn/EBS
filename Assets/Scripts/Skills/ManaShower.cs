@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ManaShower : SkillBase, IActiveSkill
+public class ManaShower : ActiveSkillBase, IActiveSkill
 {
 	private ManaShowerData _data;
 

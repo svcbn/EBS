@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DashStrike : SkillBase, IActiveSkill
+public class DashStrike : ActiveSkillBase, IActiveSkill
 {
 	private DashStrikeData _data;
 
