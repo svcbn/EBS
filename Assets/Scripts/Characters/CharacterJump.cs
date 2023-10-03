@@ -28,7 +28,7 @@ public class CharacterJump : MonoBehaviour
 			_body.velocity = new Vector2(_body.velocity.x, 0);
 
 			if (_status.CurrentStatus[StatusType.Slow] == true)
-				_body.AddForce(Vector2.up * _charactorMovementData.JumpPower * (1 - _status.MaxRatio), ForceMode2D.Impulse);
+				_body.AddForce(Vector2.up * _charactorMovementData.JumpPower * (1 - _status.SlowRatio), ForceMode2D.Impulse);
 			else
 				_body.AddForce(Vector2.up * _charactorMovementData.JumpPower, ForceMode2D.Impulse);
 		}
