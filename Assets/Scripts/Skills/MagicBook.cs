@@ -11,10 +11,8 @@ public class MagicBook : PassiveSkillBase
 
     private static bool isRegistered = false;
 
-	public override void Init(Character owner)
+	public override void Init()
 	{
-		base.Init(owner);
-
 		_data = Managers.Resource.Load<MagicBookData>("Data/MagicBookData");
 		if (_data == null) { Debug.LogWarning($"Fail load Data/MagicBookData"); return; }
 

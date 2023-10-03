@@ -58,7 +58,7 @@ public abstract class ActiveSkillBase : MonoBehaviour, IActiveSkill
 	{
 	}
 
-	public virtual void Init(Character owner) // todo: init()과 통합
+	public virtual void Reset()
 	{
 	}
 

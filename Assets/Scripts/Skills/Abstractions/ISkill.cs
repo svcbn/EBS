@@ -28,7 +28,7 @@ public interface ISkill
 	void Init();
 
 	/// <summary>
-	/// 스킬 초기화 시 호출
+	/// 매 전투 시작 시 호출
 	/// </summary>
-	void Init(Character owner);
+	void Reset();
 }
