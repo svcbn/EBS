@@ -6,7 +6,7 @@ using UnityEngine;
 
 public abstract class PassiveSkillBase : MonoBehaviour, IPassiveSkill
 {
-	private Character _owner;
+	protected Character _owner;
 
 	public uint Id { get; protected set; }
 
