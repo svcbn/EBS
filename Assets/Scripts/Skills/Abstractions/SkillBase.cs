@@ -1,11 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public abstract class SkillBase : MonoBehaviour, ISkill
 {
+	private float _currentCooldown;
+	
 	private Character _owner;
+	
 	public uint Id { get; protected set; }
 
 	public Character Owner
@@ -23,7 +28,18 @@ public abstract class SkillBase : MonoBehaviour, ISkill
 	}
 
 	public float Cooldown { get; protected set; }
-	public float CurrentCooldown { get; protected set; }
+
+	public float CurrentCooldown
+	{
+		get => _currentCooldown;
+		protected set
+		{
+			_currentCooldown = value;
+			RaisePropertyChanged();
+		}
+	}
+	
+	public event PropertyChangedEventHandler PropertyChanged;
 
 	public virtual void Init()
 	{
@@ -45,5 +61,10 @@ public abstract class SkillBase : MonoBehaviour, ISkill
 		}
 
 		return data;
+	}
+	
+	protected virtual void RaisePropertyChanged([CallerMemberName] string propertyName = null)
+	{
+		PropertyChanged?.Invoke(this, new(propertyName));
 	}
 }

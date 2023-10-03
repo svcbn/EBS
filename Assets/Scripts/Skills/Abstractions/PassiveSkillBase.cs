@@ -33,13 +33,6 @@ public abstract class PassiveSkillBase : SkillBase, IPassiveSkill
 			RaisePropertyChanged();
 		}
 	}
-	
-	public event PropertyChangedEventHandler PropertyChanged;
-
-	protected virtual void RaisePropertyChanged([CallerMemberName] string propertyName = null)
-	{
-		PropertyChanged?.Invoke(this, new(propertyName));
-	}
 
 	protected void PlayEffect(string effName, float duration, Transform parent, Vector2 offset, float sign = 1)
 	{

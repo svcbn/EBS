@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-public interface IPassiveSkill : ISkill, INotifyPropertyChanged
+public interface IPassiveSkill : ISkill
 {
 	bool IsEnabled { get; set; }
 

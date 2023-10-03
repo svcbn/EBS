@@ -1,6 +1,7 @@
+using System.ComponentModel;
 using UnityEngine;
 
-public interface ISkill
+public interface ISkill : INotifyPropertyChanged
 {
 	/// <summary>
 	/// 스킬의 아이디
