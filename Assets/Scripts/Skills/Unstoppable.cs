@@ -17,6 +17,6 @@ public class Unstoppable : PassiveSkillBase
 
 		Id = _data.Id;
 
-		_status.HastRatio += _data.SpeedUpRatio;
+		_status.HasteRatio += _data.SpeedUpRatio;
 	}
 }
