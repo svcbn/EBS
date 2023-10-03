@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WhirlStrike : SkillBase, IActiveSkill
+public class WhirlStrike : ActiveSkillBase, IActiveSkill
 {
 	private WhirlStrikeData _data;
 

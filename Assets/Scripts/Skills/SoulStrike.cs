@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoulStrike : SkillBase, IActiveSkill
+public class SoulStrike : ActiveSkillBase, IActiveSkill
 {
 	private SoulStrikeData _data;
 

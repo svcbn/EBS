@@ -17,10 +17,9 @@ public class ResourceManager
 		}
 		else
 		{
-			GameObject original = Load<GameObject>($"Prefabs/{name}");
-			if (original == null)
+			if (Load<GameObject>($"Prefabs/{name}") is not {} original)
 			{
-				Debug.Log($"Failed to load: {original}");
+				Debug.Log($"Failed to load: {name}");
 				return null;
 			}
 

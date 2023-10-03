@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class TripleStrike : SkillBase, IActiveSkill
+public class TripleStrike : ActiveSkillBase, IActiveSkill
 {
 	private TripleStrikeData _data;
 

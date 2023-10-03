@@ -3,7 +3,7 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 
-public abstract class SkillBase : MonoBehaviour, ISkill
+public abstract class ActiveSkillBase : MonoBehaviour, IActiveSkill
 {
 	private Character _owner;
 

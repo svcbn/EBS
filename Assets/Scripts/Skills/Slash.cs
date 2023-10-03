@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Slash : SkillBase, IActiveSkill
+public class Slash : ActiveSkillBase, IActiveSkill
 {
 	private SlashData _data;
 

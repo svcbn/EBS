@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
@@ -197,14 +198,23 @@ public class GameManager : MonoBehaviour
 	{
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{
-			_ui.ShowMenu();
+			_ui.ShowMenu(
+				exit: () =>
+				{
+#if UNITY_EDITOR
+					UnityEditor.EditorApplication.isPlaying = false;
+#else
+					Application.Quit(),
+#endif
+				}
+				);
 		}
 		
 		if(State == GameState.Battle)
 		{
 			timer -= Time.deltaTime;
 			timerText.text = (int)timer + "";
-			if(timer <= 0)
+			if (timer <= 0)
 			{
 				ChangeState(GameState.RoundOver);
 				timer = 0;

@@ -52,6 +52,18 @@ public abstract class UIBase : MonoBehaviour
 		}
 	}
 
+	protected T Get<T, TEnum>(TEnum index)
+		where T : UnityEngine.Object
+		where TEnum : Enum
+	{
+		if (!_objects.TryGetValue(typeof(T), out var objects))
+		{
+			return null;
+		}
+
+		return objects[Convert.ToInt32(index)] as T;
+	}
+
 	protected T Get<T>(int index)
 		where T : UnityEngine.Object
 	{

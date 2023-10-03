@@ -2,52 +2,45 @@ using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class UIMenu : UIPopup
 {
-	private enum Elements
+	private enum Buttons
 	{
-		ButtonPanel,
+		ExitButton,
+		GoBackButton
 	}
 
-	private string[] _menuNames = new string[] { "다시하기", "그만하기" };
+	public event Action ExitButtonClicked;
+	
+	public event Action GoBackButtonClicked;
 
 	public override void Init()
 	{
 		base.Init();
 
-		Bind<GameObject, Elements>();
-		GameObject panel = Get<GameObject>((int)Elements.ButtonPanel);
-		foreach (Transform child in panel.transform)
-		{
-			Managers.Resource.Release(child.gameObject);
-		}
+		Bind<Button, Buttons>();
 
-		SetMenuButton();
+		RegisterButtonEvents();
 	}
 
-	private void SetMenuButton()
+	private void RegisterButtonEvents()
 	{
-		GameObject panel = Get<GameObject>((int)Elements.ButtonPanel);
-		foreach (int index in Enumerable.Range(0, _menuNames.Length))
+		foreach (Buttons buttonType in Enum.GetValues(typeof(Buttons)))
 		{
-			var button = Managers.Resource.Instantiate("UI/Popup/BasicButton", panel.transform).GetOrAddComponent<UIButton>();
-			button.SetText(_menuNames[index]);
-			button.RegisterEvent(GetEvent(index));
+			Button button = Get<Button>((int)buttonType);
+			switch (buttonType)
+			{
+				case Buttons.ExitButton:
+					button.onClick.AddListener(() => ExitButtonClicked?.Invoke());
+					break;
+				case Buttons.GoBackButton:
+					button.onClick.AddListener(() => GoBackButtonClicked?.Invoke());
+					break;
+				default:
+					throw new ArgumentOutOfRangeException();
+			}
 		}
-	}
-
-	private Action<PointerEventData> GetEvent(int index)
-	{
-		return index switch
-		{
-			0 => null,
-#if UNITY_EDITOR
-			1 => data => UnityEditor.EditorApplication.isPlaying = false,
-#else
-			1 => data => Application.Quit(),
-#endif
-			_ => null
-		};
 	}
 }

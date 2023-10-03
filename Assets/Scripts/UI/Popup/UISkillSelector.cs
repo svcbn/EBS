@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -9,6 +10,7 @@ public class UISkillSelector : UIPopup
 	{
 		Items,
 		Card,
+		Descriptor
 	}
 
 	private enum Texts
@@ -72,26 +74,25 @@ public class UISkillSelector : UIPopup
 	{
 		ClearSlots();
 		Utility.StopCoroutine(_scaleHandler);
-		if (_descriptor != null)
-		{
-			Managers.UI.ClosePopupUI(_descriptor);
-			_descriptor = null;
-		}
 	}
 
 	private void HandleSelect()
 	{
-		if (_currentIndex != -1 && Input.GetKeyDown(_input.Select))
+		if (_currentIndex == -1 || !Input.GetKeyDown(_input.Select))
 		{
-			var slot = _slots[_currentIndex];
-			if (slot.IsEnabled)
-			{
-				_selector.SelectSkill(_currentIndex);
-				slot.SetBorderColor(_color);
-				slot.ShowChoiceEffect();
-				slot.Disable();
-			}
+			return;
 		}
+
+		var slot = _slots[_currentIndex];
+		if (!slot.IsEnabled)
+		{
+			return;
+		}
+
+		_selector.SelectSkill(_currentIndex);
+		slot.SetBorderColor(_color);
+		slot.ShowChoiceEffect();
+		slot.Disable();
 	}
 
 	private void HandleDirectionInput()
@@ -136,6 +137,8 @@ public class UISkillSelector : UIPopup
 		_selectText = Get<TextMeshProUGUI>((int)Texts.Select);
 
 		_card = Get<GameObject>((int)Elements.Card).GetComponent<RectTransform>();
+		
+		_descriptor = Get<GameObject>((int)Elements.Descriptor).GetOrAddComponent<UISkillDescriptor>();
 		
 		InitializeSlots();
 	}
@@ -280,32 +283,11 @@ public class UISkillSelector : UIPopup
 		_slots[_currentIndex].SetBorderColor(_color);
 		_slots[_currentIndex].Select();
 
-		ShowDescriptionUI();
+		SetDescriptor();
 	}
 
-	private void ShowDescriptionUI()
+	private void SetDescriptor()
 	{
-		if (_descriptor is not null)
-		{
-			Managers.UI.ClosePopupUI(_descriptor);
-		}
-
-		GameObject items = Get<GameObject>((int)Elements.Items);
-		if (!items.TryGetComponent<RectTransform>(out RectTransform parent))
-		{
-			return;
-		}
-
-		_descriptor = Managers.UI.ShowPopupUI<UISkillDescriptor>(usePool: true);
-		var card = _descriptor.gameObject.FindChild("Card");
-		if (!card.TryGetComponent<RectTransform>(out var child))
-		{
-			return;
-		}
-
-		float width = (parent.rect.width / 2f) + (child.rect.width / 2f);
-		float space = 10f;
-		child.transform.localPosition = new(parent.localPosition.x + width + space, 0, 0);
 		_descriptor.SetSkillInfo(_slots[_currentIndex].SkillInfo);
 	}
 }

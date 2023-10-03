@@ -35,9 +35,9 @@ public class FireBallProjectile : MonoBehaviour
 
 	private void Update()
 	{
-		transform.position += (Vector3) _direction * _actualSpeed * Time.deltaTime;
+		transform.position += (Vector3)_direction * (_actualSpeed * Time.deltaTime);
 
-		if(Time.time > _startTime + lifespan)
+		if (Time.time > _startTime + lifespan)
 		{
 			gameObject.SetActive(false);
 			Destroy(gameObject);
@@ -46,7 +46,7 @@ public class FireBallProjectile : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if(collision.TryGetComponent<Character>(out var hitCharacter))
+		if (collision.TryGetComponent<Character>(out var hitCharacter))
 		{
 			if (hitCharacter.playerIndex == targetIndex)
 			{

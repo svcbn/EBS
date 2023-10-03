@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FastStab : SkillBase, IActiveSkill
+public class FastStab : ActiveSkillBase, IActiveSkill
 {
 	private FastStabData _data;
 

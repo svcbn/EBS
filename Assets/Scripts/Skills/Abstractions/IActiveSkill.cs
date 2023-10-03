@@ -44,4 +44,15 @@ public interface IActiveSkill : ISkill
 	/// 스킬 사용에 필요한 mp
 	/// </summary>
 	int RequireMP { get; }
+	
+	/// <summary>
+	/// 스킬을 사용할 수 있는지 여부를 반환
+	/// </summary>
+	/// <returns>스킬을 사용할 수 있는지 여부</returns>
+	bool CheckCanUse();
+	
+	/// <summary>
+	/// 스킬을 실행
+	/// </summary>
+	void Execute();
 }

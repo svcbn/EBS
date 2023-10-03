@@ -16,13 +16,12 @@ public partial class UISkillSlot
 	{
 		Vector3 scale = transform.localScale;
 		Vector3 targetScale = Vector3.one * 0.95f;
-		System.Action callback = () => _scaleHandler = Utility.Lerp(targetScale, scale, Duration, vector2 => transform.localScale = vector2);
-		_scaleHandler = Utility.Lerp(scale, targetScale, Duration, vector => transform.localScale = vector, callback);
+		void Callback() => _scaleHandler = Utility.Lerp(targetScale, scale, Duration, vector2 => transform.localScale = vector2);
+		_scaleHandler = Utility.Lerp(scale, targetScale, Duration, vector => transform.localScale = vector, Callback);
 	}
 
 	public void Disable()
 	{
-		Utility.StopCoroutine(_scaleHandler);
 		IsEnabled = false;
 		Get<Image>((int)Elements.Dim).gameObject.SetActive(true);
 	}
@@ -35,21 +34,12 @@ public partial class UISkillSlot
 			_scaleHandler = null;
 		}
 
-		if (_border != null)
+		if (_border is not null)
 		{
 			_border.color = _selectedColor;
 		}
-		_scaleHandler = Utility.Lerp(Vector3.one, Vector3.one * s_SelectedScale, 0.1f, vector =>
-		{
-			try
-			{
-				transform.localScale = vector;
-			}
-			catch
-			{
-				// ignored
-			}
-		});
+		
+		_scaleHandler = Utility.Lerp(Vector3.one, Vector3.one * s_SelectedScale, 0.1f, vector => transform.localScale = vector);
 	}
 
 	public void Unselect()

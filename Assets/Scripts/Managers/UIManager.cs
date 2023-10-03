@@ -3,9 +3,11 @@ using UnityEngine;
 
 public class UIManager
 {
+	private readonly Stack<UIPopup> _popupStack = new();
+	
+	private GameObject _root;
+	
 	private UIScene _sceneUI;
-
-	private Stack<UIPopup> _popupStack = new();
 
 	private int _order = 0;
 
@@ -13,12 +15,17 @@ public class UIManager
 	{
 		get
 		{
-			if (GameObject.Find("@UI_Root") is not GameObject root)
+			if (_root is null)
 			{
-				root = new() { name = "@UI_Root" };
+				if (GameObject.Find("@UI_Root") is not { } root)
+				{
+					root = new() { name = "@UI_Root" };
+				}
+
+				_root = root;
 			}
 
-			return root;
+			return _root;
 		}
 	}
 
@@ -78,20 +85,14 @@ public class UIManager
 			return;
 		}
 
-		while (_popupStack.TryPeek(out var last) && last != popup)
+		if (_popupStack.Peek() != popup)
 		{
-			last = _popupStack.Pop();
-			Managers.Resource.Release(last.gameObject);
+			Debug.Log($"Can't close popup: {popup.name}");
 		}
 
-		if (_popupStack.TryPop(out popup))
-		{
-			//popup = _popupStack.Pop();
-			if (popup != null && popup.gameObject != null)
-			{
-				Managers.Resource.Release(popup.gameObject);
-			}
-		}
+		popup = _popupStack.Pop();
+		Managers.Resource.Release(popup.gameObject);
+
 		_order--;
 	}
 
