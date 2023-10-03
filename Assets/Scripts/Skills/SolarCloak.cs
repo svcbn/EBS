@@ -69,7 +69,7 @@ public class SolarCloak : PassiveSkillBase
 	{
 		float timer = 0;
 		while (timer < time)
-		{
+{
 			yield return null;
 			timer += Time.deltaTime;
 			onUpdate?.Invoke(timer);
