@@ -98,21 +98,6 @@ public class ArrowShoot : ActiveSkillBase
 	}
 
 	
-	IEnumerator PlayEffect(Transform pos)
-	{
-		GameObject effect = null;
-		if (_data.Effect != null)
-		{
-			effect = Managers.Resource.Instantiate("Skills/"+_data.Effect.name);
-			effect.transform.position = Owner.transform.position;
-		}
-
-		yield return null; //new WaitForSeconds(0.5f); // 이펙트 재생 시간
-
-		Managers.Resource.Release(effect);
-	}
-
-
 	public override bool CheckCanUse()
 	{
 		bool isEnemyInBox = CheckEnemyInBox(_data.CheckBoxCenter, _data.CheckBoxSize);
