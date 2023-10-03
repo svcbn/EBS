@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using TMPro;
 using UnityEngine;
@@ -9,7 +7,7 @@ partial class UISkillSlot
 {
 	private void CheckCooldown()
 	{
-		var image = Get<Image>((int)Images.CooldownIndicator);
+		Image image = Get<Image>((int)Images.CooldownIndicator);
 		image.fillAmount = 1-  _skill.CurrentCooldown / _skill.Cooldown;
 	}
 
@@ -62,7 +60,7 @@ partial class UISkillSlot
 
 	private void SetPresentText(IPassiveSkill skill)
 	{
-		var textBox = Get<TextMeshProUGUI, Texts>(Texts.PresentText);
+		TextMeshProUGUI textBox = Get<TextMeshProUGUI, Texts>(Texts.PresentText);
 		textBox.text = skill.PresentNumber.ToString();
 	}
 }
