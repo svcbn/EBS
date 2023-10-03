@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e559455c29065434d87ce9a2bd6b6b42, type: 3}
-  m_Name: ManaShowerData
+  m_Name: HealingShowerData
   m_EditorClassIdentifier: 
   _id: 29
   _cooldown: 7
