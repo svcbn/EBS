@@ -46,5 +46,6 @@ public class CowardBoots : PassiveSkillBase
 		}
 
 		_status.HasteRatio -= _data.SpeedUpRatio;
+		_hasteCR = null;
 	}
 }
