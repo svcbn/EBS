@@ -114,7 +114,6 @@ public class SkillManager
 				Debug.LogWarning($"{type.Name}Data is not found.");
 				continue;
 			}
-			
 			_skillCache.Add(data.Id, type);
 		} 
 	}
