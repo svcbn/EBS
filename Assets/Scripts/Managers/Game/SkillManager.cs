@@ -108,7 +108,7 @@ public class SkillManager
 
 		foreach (var type in skillTypes)
 		{
-			ActiveSkillData data = Managers.Resource.Load<ActiveSkillData>($"data/{type.Name}Data");
+			ScriptableSkillData data = Managers.Resource.Load<ScriptableSkillData>($"Data/{type.Name}Data");
 			_skillCache.Add(data.Id, type);
 		} 
 	}
