@@ -40,6 +40,7 @@ public class SolarCloak : PassiveSkillBase
 	{
 		if (IsCoolReady)
 		{
+			IsEnabled = true;
 			IsCoolReady = false;
 			if (_data.Effect != null)
 			{
