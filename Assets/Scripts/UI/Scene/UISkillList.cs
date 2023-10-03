@@ -84,7 +84,6 @@ public class UISkillList : UIScene
 			var info = GameManager.Skill.GetInfo(skill.Id);
 			var slot = CreateSlot(info);
 			slot.SetSkill(skill);
-			slot.SetInfo(info);
 			slot.transform.SetParent(panel.transform);
 			slot.transform.localScale = Vector3.one;
 		}

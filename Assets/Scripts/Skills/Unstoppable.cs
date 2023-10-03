@@ -12,10 +12,7 @@ public class Unstoppable : PassiveSkillBase
 	{
 		_status = GetComponent<CharacterStatus>();
 
-		_data = Managers.Resource.Load<UnstoppableData>("Data/UnstoppableData");
-		if (_data == null) { Debug.LogWarning($"Fail load Data/UnstoppableData"); return; }
-
-		Id = _data.Id;
+		_data = LoadData<UnstoppableData>();
 
 		_status.HasteRatio += _data.SpeedUpRatio;
 	}

@@ -10,19 +10,7 @@ public class SoulStrike : ActiveSkillBase
 	{
 		base.Init();
 
-		_data = Managers.Resource.Load<SoulStrikeData>($"Data/{nameof(SoulStrikeData)}");
-		if (_data == null) { Debug.LogWarning($"Fail load Data/SoulStrike"); return; }
-
-		Id = _data.Id;
-		Type = _data.Type;
-		Priority = _data.Priority;
-		IsRestrictMoving = _data.IsRestrictMoving;
-
-		Cooldown = _data.Cooldown;
-		BeforeDelay = _data.BeforeDelay;
-		AfterDelay = _data.AfterDelay;
-		RequireMP = _data.RequireMP;
-
+		_data = LoadData<SoulStrikeData>();
 	}
 
 	public override void Execute()

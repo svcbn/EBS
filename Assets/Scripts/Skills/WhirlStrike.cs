@@ -10,18 +10,7 @@ public class WhirlStrike : ActiveSkillBase
 	{
 		base.Init();
 
-		_data = Managers.Resource.Load<WhirlStrikeData>("Data/WhirlStrikeData");
-		if (_data == null) { Debug.LogWarning($"Fail load Data/WhirlStrikeData"); return; }
-
-		Id = _data.Id;
-		Type = _data.Type;
-		Priority = _data.Priority;
-		IsRestrictMoving = _data.IsRestrictMoving;
-
-		Cooldown = _data.Cooldown;
-		BeforeDelay = _data.BeforeDelay;
-		AfterDelay = _data.AfterDelay;
-		RequireMP = _data.RequireMP;
+		_data = LoadData<WhirlStrikeData>();
 	}
 
 	public override void Execute()

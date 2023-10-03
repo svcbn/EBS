@@ -16,10 +16,7 @@ public class KillerBoots : PassiveSkillBase
 	{
 		_status = GetComponent<CharacterStatus>();
 
-		_data = Managers.Resource.Load<KillerBootsData>("Data/KillerBootsData");
-		if (_data == null) { Debug.LogWarning($"Fail load Data/KillerBootsData"); return; }
-
-		Id = _data.Id;
+		_data = LoadData<KillerBootsData>();
 
 		Managers.Stat.onTakeDamage += Excute;
 	}
@@ -29,6 +26,8 @@ public class KillerBoots : PassiveSkillBase
 		if (Owner.playerIndex != playerIndex)
 		{
 			_activeTime = 0;
+
+			IsEnabled = true;
 
 			if (_hasteCR == null)
 				_hasteCR = StartCoroutine(nameof(HasteEffect));

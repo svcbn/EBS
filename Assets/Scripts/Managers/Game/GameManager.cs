@@ -334,7 +334,6 @@ public class GameManager : MonoBehaviour
 		}
 		
 		_currentPicker.AddSkill(skill);
-		skill.Init();
 		
 		if (--_pickCount > 0 && _selector.CanSelect)
 		{
@@ -364,6 +363,7 @@ public class GameManager : MonoBehaviour
     {
 		// reset something
 		canvas.SetActive(true);
+		ResetPlayerSkills();
 
 		// do something
 
@@ -396,6 +396,21 @@ public class GameManager : MonoBehaviour
 		ChangeState(GameState.PickSkill);
 	}
 
+    private void ResetPlayerSkills()
+    {
+	    ResetSkills(player1);
+	    ResetSkills(player2);
+	    
+	    return;
+
+	    static void ResetSkills(Character character)
+	    {
+		    foreach (ISkill skill in character.Skills)
+		    {
+			    skill.Reset();
+		    }
+	    }
+    }
 
 	private void OnGameOver()
     {

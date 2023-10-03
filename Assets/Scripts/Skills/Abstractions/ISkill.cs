@@ -1,11 +1,17 @@
+using System.ComponentModel;
 using UnityEngine;
 
-public interface ISkill
+public interface ISkill : INotifyPropertyChanged
 {
 	/// <summary>
 	/// 스킬의 아이디
 	/// </summary>
 	uint Id { get; }
+
+	/// <summary>
+	/// 스킬의 타입
+	/// </summary>
+	SkillType SkillType { get; }
 
 	/// <summary>
 	/// 스킬을 소유한 캐릭터

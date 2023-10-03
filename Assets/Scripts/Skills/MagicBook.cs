@@ -13,15 +13,9 @@ public class MagicBook : PassiveSkillBase
 
 	public override void Init()
 	{
-		_data = Managers.Resource.Load<MagicBookData>("Data/MagicBookData");
-		if (_data == null) { Debug.LogWarning($"Fail load Data/MagicBookData"); return; }
-
-		Id               = _data.Id;
-		Cooldown         = _data.Cooldown;
-        HasPresentNumber = _data.HasPresentNumber; // 사용 횟수 없음
+		_data = LoadData<MagicBookData>();
 
         IsEnabled = true;
-
 
         if( !isRegistered )
         {

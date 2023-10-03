@@ -7,6 +7,7 @@ using UnityEngine;
 public abstract class PassiveSkillBase : SkillBase, IPassiveSkill
 {
 	private int _presentNumber;
+	
 	private bool _isEnabled;
 	
 
@@ -34,21 +35,21 @@ public abstract class PassiveSkillBase : SkillBase, IPassiveSkill
 		}
 	}
 
-	public event PropertyChangedEventHandler PropertyChanged;
-
-	protected virtual void RaisePropertyChanged([CallerMemberName] string propertyName = null)
+	protected override T LoadData<T>()
 	{
-		PropertyChanged?.Invoke(this, new(propertyName));
+		T data = base.LoadData<T>();
+		if (data is PassiveSkillData passiveSkillData)
+		{
+			HasPresentNumber = passiveSkillData.HasPresentNumber;
+			_presentNumber = passiveSkillData.PresentNumber;
+		}
+
+		return data;
 	}
 
 	protected void PlayEffect(string effName, float duration, Transform parent, Vector2 offset, float sign = 1)
 	{
 		StartCoroutine(PlayEffectCo(effName, duration, parent, offset, sign));
-	}
-
-	public virtual void Init()
-	{
-
 	}
 
 	IEnumerator PlayEffectCo(string effName, float duration, Transform parent, Vector2 offset, float sign)

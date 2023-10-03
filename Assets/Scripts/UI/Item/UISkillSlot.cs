@@ -41,14 +41,6 @@ public partial class UISkillSlot : UIBase
 		_border = GetComponent<Image>();
 	}
 
-	private void Update()
-	{
-		if (_skill != null)
-		{
-			CheckCooldown();
-		}
-	}
-
 	private void OnEnable()
 	{
 		IsEnabled = true;
@@ -61,6 +53,7 @@ public partial class UISkillSlot : UIBase
 
 	private void OnDisable()
 	{
+		UnregisterSkillEvents();
 		Utility.StopCoroutine(_scaleHandler);
 	}
 
@@ -87,6 +80,7 @@ public partial class UISkillSlot : UIBase
 		RegisterSkillEvents();
 		RemoveBorderRect();
 
+		Get<Image, Images>(Images.CooldownIndicator).fillAmount = _skill is IPassiveSkill ? 0 : 1;
 		Get<TextMeshProUGUI, Texts>(Texts.PresentText).enabled = _skill is IPassiveSkill { HasPresentNumber: true };
 	}
 

@@ -5,8 +5,6 @@ using UnityEngine;
 
 public abstract class ActiveSkillBase : SkillBase, IActiveSkill
 {
-	public SkillType Type { get; protected set; }
-
 	public int Priority { get; protected set; }
 
 	public bool IsRestrictMoving { get; protected set; }
@@ -44,7 +42,7 @@ public abstract class ActiveSkillBase : SkillBase, IActiveSkill
 		IsBeforeDelay = true;
 
 		Invoke("ExecuteImpl", BeforeDelay);
-	}	
+	}
 
 	void ExecuteImpl()
 	{
@@ -53,7 +51,7 @@ public abstract class ActiveSkillBase : SkillBase, IActiveSkill
 		IsBeforeDelay = false;
 		UsingSkillCo = Owner.StartCoroutine(ExecuteImplCo());
 	}
-	
+
 	public abstract IEnumerator ExecuteImplCo();
 
 
@@ -69,7 +67,7 @@ public abstract class ActiveSkillBase : SkillBase, IActiveSkill
 	protected virtual bool CheckEnemyInBox(Vector2 center, Vector2 size)
 	{
 		float x = Owner.transform.localScale.x < 0 ? -1 : 1;
-		
+
 		Vector2 centerInWorld = (Vector2)Owner.transform.position + new Vector2(x * center.x, center.y);
 
 		var boxes = Physics2D.OverlapBoxAll(centerInWorld, size, 0);
@@ -102,6 +100,22 @@ public abstract class ActiveSkillBase : SkillBase, IActiveSkill
 		CancelInvoke("ExecuteImpl");
 	}
 
+	protected override T LoadData<T>()
+	{
+		T data = base.LoadData<T>();
+		if (data is ActiveSkillData activeSkillData)
+		{
+			Priority = activeSkillData.Priority;
+			IsRestrictMoving = activeSkillData.IsRestrictMoving;
+
+			BeforeDelay = activeSkillData.BeforeDelay;
+			AfterDelay = activeSkillData.AfterDelay;
+			RequireMP = activeSkillData.RequireMP;
+		}
+
+		return data;
+	}
+
 	protected void PlayEffect(string effName, float duration, Vector2 offset, float sign = 1)
 	{
 		StartCoroutine(PlayEffectCo(effName, duration, offset, sign));
@@ -109,30 +123,32 @@ public abstract class ActiveSkillBase : SkillBase, IActiveSkill
 
 	IEnumerator PlayEffectCo(string effName, float duration, Vector2 offset, float sign)
 	{
-
 		Transform parent = Owner.transform;
-		GameObject effect = Managers.Resource.Instantiate("Skills/"+effName, parent ); // paraent를 character.gameObject로
-		
-		if(effect){
+		GameObject effect =
+			Managers.Resource.Instantiate("Skills/" + effName, parent); // paraent를 character.gameObject로
+
+		if (effect)
+		{
 			effect.transform.localPosition = Vector3.zero;
-		}else{
+		}
+		else
+		{
 			Debug.LogError($"effect is null. effName :{effName}");
 		}
 
 		effect.transform.localPosition += (Vector3)offset;
-		effect.transform.localScale = new Vector3(sign * Owner.transform.localScale.x, Owner.transform.localScale.y, Owner.transform.localScale.z);
+		effect.transform.localScale = new Vector3(sign * Owner.transform.localScale.x, Owner.transform.localScale.y,
+			Owner.transform.localScale.z);
 
 		yield return new WaitForSeconds(duration); // 이펙트 재생 시간
 		Managers.Resource.Release(effect);
-		
 	}
 
-    protected void DebugRay(Vector2 from, Vector2 dir)
-    {
-        Debug.DrawLine(from + new Vector2(dir.x, dir.y) / 2, from + new Vector2(-dir.x, dir.y) / 2, Color.red, 1f);
-        Debug.DrawLine(from + new Vector2(-dir.x, -dir.y) / 2, from + new Vector2(dir.x, -dir.y) / 2, Color.red, 1f);
-        Debug.DrawLine(from + new Vector2(-dir.x, dir.y) / 2, from + new Vector2(-dir.x, -dir.y) / 2, Color.red, 1f);
-        Debug.DrawLine(from + new Vector2(dir.x, dir.y) / 2, from + new Vector2(dir.x, -dir.y) / 2, Color.red, 1f);
-    }
-
+	protected void DebugRay(Vector2 from, Vector2 dir)
+	{
+		Debug.DrawLine(from + new Vector2(dir.x, dir.y) / 2, from + new Vector2(-dir.x, dir.y) / 2, Color.red, 1f);
+		Debug.DrawLine(from + new Vector2(-dir.x, -dir.y) / 2, from + new Vector2(dir.x, -dir.y) / 2, Color.red, 1f);
+		Debug.DrawLine(from + new Vector2(-dir.x, dir.y) / 2, from + new Vector2(-dir.x, -dir.y) / 2, Color.red, 1f);
+		Debug.DrawLine(from + new Vector2(dir.x, dir.y) / 2, from + new Vector2(dir.x, -dir.y) / 2, Color.red, 1f);
+	}
 }

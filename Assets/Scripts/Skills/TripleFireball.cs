@@ -11,18 +11,7 @@ public class TripleFireball : ActiveSkillBase
 	{
 		base.Init();
 
-		_data = Managers.Resource.Load<TripleFireballData>("Data/TripleFireballData");
-		if (_data == null) { Debug.LogWarning($"Fail load Data/TripleFireballData"); return; }
-
-		Id = _data.Id;
-		Type = _data.Type;
-		Priority = _data.Priority;
-		IsRestrictMoving = _data.IsRestrictMoving;
-
-		Cooldown = _data.Cooldown;
-		BeforeDelay = _data.BeforeDelay;
-		AfterDelay = _data.AfterDelay;
-		RequireMP = _data.RequireMP;
+		_data = LoadData<TripleFireballData>();
 	}
 
 	public override void Execute()
