@@ -162,4 +162,14 @@ public class StatManager
 		}
 	}
 
+
+	public int GetCurrentHp(int playerIndex)
+	{
+		return _currentHps[playerIndex];
+	}
+
+	public int GetMaxHp(int playerIndex)
+	{
+		return _finalMaxHps[playerIndex];
+	}
 }

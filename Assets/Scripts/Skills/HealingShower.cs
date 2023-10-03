@@ -52,7 +52,21 @@ public class HealingShower : ActiveSkillBase, IActiveSkill
 	{
 		bool isEnemyInBox = !CheckEnemyInBox(_data.CheckBoxCenter, _data.CheckBoxSize);
 		bool isEnoughMP   = CheckEnoughMP(RequireMP);
+		bool isFullHP	  = CheckFullHp();
 
-		return isEnemyInBox && isEnoughMP;
+		return isEnemyInBox && isEnoughMP && !isFullHP ;
+	}
+
+	private bool CheckFullHp()
+	{
+		int CurrentHp = Managers.Stat.GetCurrentHp(Owner.playerIndex );
+		int MaxHp     = Managers.Stat.GetMaxHp(Owner.playerIndex );
+
+		if ( CurrentHp == MaxHp)
+		{
+			return true;
+		}
+
+		return false;
 	}
 }
