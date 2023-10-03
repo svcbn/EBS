@@ -169,11 +169,29 @@ public class GameManager : MonoBehaviour
 		_roundWinner = winner;
 		IsPlayer1Win = _roundWinner == player1;
 	}
-    #endregion
+
+	public void ShowRoundWinnerUI(float closeTime)
+	{
+		if (State != GameState.GameOver)
+		{
+			var winnerUI = Managers.UI.ShowPopupUI<UIRoundWinner>();
+			winnerUI.SetWinner(_roundWinner);
+
+			IEnumerator WaitUIClose()
+			{
+				yield return new WaitForSeconds(closeTime);
+				Managers.UI.ClosePopupUI(winnerUI);
+			}
+
+			StartCoroutine(WaitUIClose());
+		}
+	}
+
+	#endregion
 
 
-    #region private Method
-    private void Awake()
+	#region private Method
+	private void Awake()
     {
         #region Singleton
         if (Instance == null)
@@ -372,23 +390,11 @@ public class GameManager : MonoBehaviour
 
 		CurrentRound++;
 
-		if (State != GameState.GameOver)
-		{
-			var winnerUI = Managers.UI.ShowPopupUI<UIRoundWinner>();
-			winnerUI.SetWinner(_roundWinner);
+		ChangeState(GameState.PickSkill);
+	}
 
-			IEnumerator WaitUIClose()
-			{
-				yield return new WaitForSeconds(3);
-				Managers.UI.ClosePopupUI(winnerUI);
-				ChangeState(GameState.PickSkill);
-			}
 
-			StartCoroutine(WaitUIClose());
-		}
-    }
-    
-    private void OnGameOver()
+	private void OnGameOver()
     {
 	    var winner = _isPlayer1Defeat ? player2 : player1;
 	    var gameEndUI = Managers.UI.ShowPopupUI<UIGameEnd>();

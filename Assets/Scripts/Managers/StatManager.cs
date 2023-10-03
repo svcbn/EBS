@@ -1,6 +1,8 @@
+using BehaviorDesigner.Runtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class StatManager
 {
@@ -24,6 +26,8 @@ public class StatManager
 	public delegate void OnCharacterEvent(int actorIndex);
 	public event OnCharacterEvent onBlockDamage;
 	public event OnCharacterEvent onTakeDamage;
+
+	private Coroutine _roundEndCR;
 
 
 	public void Init()
@@ -72,6 +76,8 @@ public class StatManager
 
 	public void GiveDamage(int playerIndex, int baseDamage)
 	{
+		if (_roundEndCR != null) return; //캐릭터 하나 죽었을시 전부 무적
+
 		if (_invincibleTimers[playerIndex] > 0) //무적일 경우
 		{
 			onBlockDamage?.Invoke(playerIndex);
@@ -92,14 +98,14 @@ public class StatManager
 			{
 				GameManager.Instance.player2RoundHPUI.value = _currentHps[playerIndex];
 			}
-			Debug.Log($"Player {playerIndex} took total {finalDamage} damage.");
 			onTakeDamage?.Invoke(playerIndex);
 			//죽음 체크
 			if (_currentHps[playerIndex] <= 0)
 			{
-				GameManager.Instance.SetRoundWinner(_characters[(playerIndex + 1) % 2]);
-				GameManager.Instance.ChangeState(GameManager.GameState.RoundOver);
-				Debug.Log($"Player {playerIndex} died.");
+				if (_roundEndCR == null)
+				{
+					_roundEndCR = Managers.Instance.StartCoroutine(CR_RoundEnd(playerIndex));
+				}
 			}
 		}
 	}
@@ -142,6 +148,35 @@ public class StatManager
 			}
 			yield return null;
 		}
+	}
+
+	IEnumerator CR_RoundEnd(int playerIndex)
+	{
+		//죽은 캐릭터 투명하게
+		SpriteRenderer[] renderers = _characters[playerIndex].GetComponentsInChildren<SpriteRenderer>();
+		foreach (SpriteRenderer renderer in renderers) renderer.enabled = false;
+		//두 캐릭터 모두 모든 행동 멈추기
+		foreach (Character character in _characters)
+		{
+			character.GetComponent<BehaviorTree>().enabled = false;
+			character.GetComponent<BehaviorTree>().enabled = false;
+
+			character.GetComponent<CharacterMovement>().PlayerInput = Vector2.zero;
+			character.GetComponent<CharacterMovement>().PlayerInput = Vector2.zero;
+		}
+
+		float delay = 3f;
+		GameManager.Instance.SetRoundWinner(_characters[(playerIndex + 1) % 2]);
+		GameManager.Instance.ShowRoundWinnerUI(delay);
+
+		yield return new WaitForSeconds(delay);
+
+		foreach (SpriteRenderer renderer in renderers) renderer.enabled = true;
+
+		GameManager.Instance.ChangeState(GameManager.GameState.RoundOver);
+
+		Managers.Instance.StopCoroutine(_roundEndCR);
+		_roundEndCR = null;
 	}
 
 	private void LoadData()

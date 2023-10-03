@@ -87,7 +87,6 @@ public class CharacterStatus : MonoBehaviour
 		for (int i = 0; i < _spriteRenderers.Count; i++)
 		{
 			_originalColors.Add(_spriteRenderers[i].color);
-			Debug.Log(_spriteRenderers[i].name);
 		}
 	}
 
