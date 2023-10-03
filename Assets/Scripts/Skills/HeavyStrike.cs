@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class HeavyStrike : ActiveSkillBase, IActiveSkill
+public class HeavyStrike : ActiveSkillBase
 {
 	private HeavyStrikeData _data;
 
