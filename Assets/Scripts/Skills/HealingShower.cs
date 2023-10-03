@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // 마나샤워 이름 바꾸기 -> 힐링 샤워로 
-public class ManaShower : ActiveSkillBase, IActiveSkill
+public class HealingShower : ActiveSkillBase, IActiveSkill
 {
-	private ManaShowerData _data;
+	private HealingShowerData _data;
 
 	public override void Init()
 	{
 		base.Init();
 
-		_data = Managers.Resource.Load<ManaShowerData>("Data/ManaShowerData");
-		if (_data == null) { Debug.LogWarning($"Fail load Data/ManaShowerData"); return; }
+		_data = Managers.Resource.Load<HealingShowerData>("Data/HealingShowerData");
+		if (_data == null) { Debug.LogWarning($"Fail load Data/HealingShowerData"); return; }
 
 		Id               = _data.Id;
 		Type             = _data.Type;

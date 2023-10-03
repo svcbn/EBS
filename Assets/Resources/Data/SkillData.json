@@ -172,7 +172,7 @@
       "Id": 29,
       "Name": "치유의 손길",
       "Description": "정신을 집중해 체력을 회복한다.",
-      "SpriteName": "ManaShower"
+      "SpriteName": "HealingShower"
     },
     {
       "Id": 101,

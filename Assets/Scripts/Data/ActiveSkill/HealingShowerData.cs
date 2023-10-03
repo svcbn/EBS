@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = nameof(ManaShowerData), menuName = "ScriptableObjects/ActiveSkills/" + nameof(ManaShowerData))]
-public class ManaShowerData : ActiveSkillData
+[CreateAssetMenu(fileName = nameof(HealingShowerData), menuName = "ScriptableObjects/ActiveSkills/" + nameof(HealingShowerData))]
+public class HealingShowerData : ActiveSkillData
 {
 	[SerializeField] private int _amount;
 
