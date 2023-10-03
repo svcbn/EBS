@@ -30,6 +30,8 @@ public class KillerBoots : PassiveSkillBase
 		{
 			_activeTime = 0;
 
+			IsEnabled = true;
+
 			if (_hasteCR == null)
 				_hasteCR = StartCoroutine(nameof(HasteEffect));
 		}

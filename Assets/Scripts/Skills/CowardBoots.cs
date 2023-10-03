@@ -30,6 +30,8 @@ public class CowardBoots : PassiveSkillBase
 		{
 			_activeTime = 0;
 
+			IsEnabled = true;
+
 			if (_hasteCR == null)
 				_hasteCR = StartCoroutine(nameof(HasteEffect));
 		}
