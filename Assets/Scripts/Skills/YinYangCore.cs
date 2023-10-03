@@ -15,6 +15,7 @@ public class YinYangCore : PassiveSkillBase
 
 	public override void Init()
 	{
+		base.Init();
 
 		_data = Managers.Resource.Load<YinYangCoreData>("Data/YinYangCoreData");
 		if (_data == null) { Debug.LogWarning($"Fail load Data/YinYangCoreData"); return; }
