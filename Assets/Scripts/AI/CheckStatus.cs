@@ -92,9 +92,6 @@ public class CheckStatus : Action
 
 	public override TaskStatus OnUpdate()
 	{
-		//temp
-		Debug.Log("update");
-
 		return TaskStatus.Success;
 	}
 }

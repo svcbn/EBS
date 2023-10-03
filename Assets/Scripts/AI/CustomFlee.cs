@@ -19,6 +19,9 @@ public class CustomFlee : Action
 
 	[SerializeField]
 	private SharedBool _canMove;
+	
+	[SerializeField]
+	private SharedBool _hasCooldownSkill;
 
 	private SharedVector3 _selectedTarget;
 
@@ -42,27 +45,32 @@ public class CustomFlee : Action
 
 	public override TaskStatus OnUpdate()
 	{
-		if (Vector3.Distance(_selectedTarget.Value, transform.position) < _fleeDistance.Value/2)
-			return TaskStatus.Success;
 
-		if (Vector2.Distance(_target.Value.transform.position, transform.position) < _fleeDistance.Value
-			&& _canMove.Value == true)
+		if (Vector2.Distance(_target.Value.transform.position, transform.position) < _fleeDistance.Value * 0.9f
+			
+			&& _canMove.Value == true
+			&& _hasCooldownSkill.Value == false)
 		{
 			_movement.PlayerInput = (_selectedTarget.Value - transform.position).normalized;
 			
-			if (GetProbabilitySuccess(1f))
+			if (GetProbabilitySuccess(0.5f))
 				_jump.OnJump(_movement.PlayerInput);
+
+			if (Vector3.Distance(_selectedTarget.Value, transform.position) < _fleeDistance.Value * 0.5f 
+				|| IsHitWall() == true)
+			{
+				_selectedTarget = SelectFleeTarget();
+			}
 
 			return TaskStatus.Running;
 		}
 
-		_movement.PlayerInput = Vector2.zero;
 		return TaskStatus.Success;
 	}
 
 	public override void OnEnd()
 	{
-		_movement.PlayerInput = (_target.Value.transform.position - transform.position).normalized;
+		_movement.PlayerInput = Vector2.zero;
 	}
 
 	private SharedVector3 SelectFleeTarget()
@@ -76,14 +84,14 @@ public class CustomFlee : Action
 
 		if (Vector3.Distance(directionToLeftTarget.Value, transform.position) < Vector3.Distance(directionToRightTarget.Value, transform.position))
 		{
-			if (Physics2D.Raycast(transform.transform.position, Vector2.left, _wallCheckDistance.Value, _layerMask))
+			if (IsHitWall() == true)
 				selectedTarget = directionToRightTarget;
 			else
 				selectedTarget = directionToLeftTarget;
 		}
 		else
 		{
-			if (Physics2D.Raycast(transform.transform.position, Vector2.right, _wallCheckDistance.Value, _layerMask))
+			if (IsHitWall() == true)
 				selectedTarget = directionToLeftTarget;
 			else
 				selectedTarget = directionToRightTarget;
@@ -98,5 +106,16 @@ public class CustomFlee : Action
 			return true;
 		else 
 			return false;
+	}
+
+	private bool IsHitWall()
+	{
+		if (Physics2D.Raycast(transform.transform.position, Vector2.left, _wallCheckDistance.Value, _layerMask)
+			|| Physics2D.Raycast(transform.transform.position, Vector2.right, _wallCheckDistance.Value, _layerMask))
+		{ 
+			return true;
+		}
+		
+		return false;
 	}
 }
