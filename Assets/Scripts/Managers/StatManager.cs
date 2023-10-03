@@ -57,6 +57,8 @@ public class StatManager
 
 	public void SoftResetStats()
 	{
+		CalculateFinalHps();
+
 		for (int i = 0; i < 2; i++)
 		{
 			_currentHps[i] = _baseMaxHps[i];
@@ -78,7 +80,6 @@ public class StatManager
 			_baseMaxMps[i] = _data.startingMaxMp;
 		}
 
-		CalculateFinalHps();
 		SoftResetStats();
 	}
 
@@ -213,14 +214,15 @@ public class StatManager
 
 	private void CalculateFinalHps()
 	{
+
 		for (int i = 0; i < 2; i++)
 		{
-			int totalLowModifier = 0;
+			int totalModifier = 0;
 			for(int j = 0; j < _maxHpModifiers[i].Count; j++)
 			{
-				totalLowModifier += _maxHpModifiers[i][j];
+				totalModifier += _maxHpModifiers[i][j];
 			}
-			_finalMaxHps[i] = _baseMaxHps[i] + totalLowModifier;
+			_finalMaxHps[i] = _baseMaxHps[i] + totalModifier;
 		}
 	}
 
@@ -258,4 +260,9 @@ public class Modifier
 {
 	public string modifierName;
 	public float percentage;
+
+    public void AddMaxHp(int playerIndex, int amount)
+    {
+		_maxHpModifiers[playerIndex].Add(amount);
+    }
 }
