@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class Unstoppable : PassiveSkillBase
 {
-	Character _character;
 	CharacterStatus _status;
 
 	UnstoppableData _data;
 
 	public override void Init()
 	{
-		_character = GetComponent<Character>();
 		_status = GetComponent<CharacterStatus>();
 
 		_data = Managers.Resource.Load<UnstoppableData>("Data/UnstoppableData");

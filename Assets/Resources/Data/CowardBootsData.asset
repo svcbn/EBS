@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29a50fc38e73c8e4dae01d3ae7ef0617, type: 3}
   m_Name: CowardBootsData
   m_EditorClassIdentifier: 
-  _id: 0
+  _id: 118
   _cooldown: 0
   _effect: {fileID: 0}
-  _amount: 0
+  _presentNumber: 0
+  _hasPresentNumber: 0
