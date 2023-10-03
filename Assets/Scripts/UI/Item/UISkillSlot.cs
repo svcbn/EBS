@@ -87,7 +87,7 @@ public partial class UISkillSlot : UIBase
 		RegisterSkillEvents();
 		RemoveBorderRect();
 
-		Get<TextMeshProUGUI, Texts>(Texts.PresentText).enabled = _skill is IPassiveSkill;
+		Get<TextMeshProUGUI, Texts>(Texts.PresentText).enabled = _skill is IPassiveSkill { HasPresentNumber: true };
 	}
 
 	public void SetInfo(SkillInfo info)
