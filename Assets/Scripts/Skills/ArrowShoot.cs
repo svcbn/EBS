@@ -61,8 +61,6 @@ public class ArrowShoot : ActiveSkillBase
 			}
 		}
 
-        Debug.Log( " ArrowShoot.cs:  validTargets.Count: "+validTargets.Count );
-
 		if( validTargets.Count > 0)
 		{
 			for(int i = 0; i < _data.missileCount; i++)

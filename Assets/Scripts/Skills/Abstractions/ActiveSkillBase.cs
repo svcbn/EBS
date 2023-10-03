@@ -20,8 +20,6 @@ public abstract class ActiveSkillBase : MonoBehaviour, IActiveSkill
 			}
 
 			_owner = value;
-			Debug.Log( $"Active Owner : {_owner.name}" );
-
 		}
 	}
 

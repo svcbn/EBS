@@ -20,8 +20,6 @@ public class Character : MonoBehaviour
 	public event OnActiveSkillExcuteType OnActiveSkillExcute;
 	public void NotifyActiveSkillExcute()
 	{
-        Debug.Log( "NotifyActiveSkillExcute to Invoke" );
-
 		OnActiveSkillExcute?.Invoke();
 	}
 

@@ -25,7 +25,6 @@ public abstract class PassiveSkillBase : MonoBehaviour, IPassiveSkill
 			}
 
 			_owner = value;
-			Debug.Log( $"Passive Owner : {_owner.name}" );
 		}
 	}
 	
