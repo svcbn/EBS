@@ -177,7 +177,7 @@
     {
       "Id": 101,
       "Name": "마법학 전공책",
-      "Description": "액티브 스킬 사용마다 레이저 공격",
+      "Description": "액티브 스킬 사용마다 적에게 레이저 공격을 가한다.",
       "SpriteName": "MagicBook"
     },
     {
@@ -200,8 +200,8 @@
     },
     {
       "Id": 105,
-      "Name": "광기",
-      "Description": "n초마다 대미지 +10% 누적 증가",
+      "Name": "사신의 회중시계",
+      "Description": "25초 후 모든 대미지가 50%의 추가 피해를 입힌다. 그로부터 25초 후, 추가 피해량은 200%로 증가한다.",
       "SpriteName": "Overclock"
     },
     {
@@ -287,6 +287,12 @@
       "Name": "약탈자 신발",
       "Description": "타격마다 이속 증가",
       "SpriteName": "KillerBoots"
+    },
+    {
+      "Id": 120,
+      "Name": "가시 방패",
+      "Description": "최대 체력이 증가한다. 피해를 입을 때마다 적에게 피해를 입힌다. 피해량은 자신의 추가 체력에 비례한다.",
+      "SpriteName": "ThornShield"
     }
   ]
 }
