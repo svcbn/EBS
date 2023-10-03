@@ -49,6 +49,8 @@ public class StatManager
 
 	public void SoftResetStats()
 	{
+		CalculateFinalHps();
+
 		for (int i = 0; i < 2; i++)
 		{
 			_currentHps[i] = _baseMaxHps[i];
@@ -70,7 +72,6 @@ public class StatManager
 			_baseMaxMps[i] = _data.startingMaxMp;
 		}
 
-		CalculateFinalHps();
 		SoftResetStats();
 	}
 
