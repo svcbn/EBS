@@ -91,48 +91,24 @@ public class GameManager : MonoBehaviour
 	private SkillManager _skill = new();
 	private int _skillPickCount = 9;
 
-	[SerializeField] private int totalRounds;
 	private Character player1;
 	private Character player2;
 	[SerializeField] private Transform[] spawnPoints = new Transform[2];
 	private int _player1Life;
 	private int _player2Life;
-	//private int[] roundDamage = {0, 0, 4, 8, 12, 20, 30, 30, 30, 30};
+
 	private bool _isPlayer1Defeat = false;
 	private bool _isPlayer1Pick = false;
-	int _player1RoundHP;
-	int _player2RoundHP;
-
-	int Player1RoundHP
-	{
-		get
-		{
-			return _player1RoundHP;
-		}
-		set
-		{
-
-		}
-	}
-	int Player2RoundHP
-	{
-		get
-		{
-			return _player2RoundHP;
-		}
-		set
-		{
-
-		}
-	}
 
 	GameObject canvas;
-	public Slider player1RoundHPUI;
-	public Slider player2RoundHPUI;
+	Slider player1RoundHPUI;
+	Slider player2RoundHPUI;
 	TextMeshProUGUI roundText;
 	TextMeshProUGUI timerText;
 	TextMeshProUGUI player1LifeTxt;
 	TextMeshProUGUI player2LifeTxt;
+	TextMeshProUGUI player1RoundHpText;
+	TextMeshProUGUI player2RoundHpText;
 
 	float timer;
 
@@ -255,7 +231,8 @@ public class GameManager : MonoBehaviour
 		player2LifeTxt = GameObject.Find("Player2LifeTxt").GetComponent<TextMeshProUGUI>();
 		Player1Life = 10;
 		Player2Life = 10;
-
+		player1RoundHpText = GameObject.Find("Player1RoundHPTxt").GetComponent<TextMeshProUGUI>();
+		player2RoundHpText = GameObject.Find("Player2RoundHPTxt").GetComponent<TextMeshProUGUI>();
 
 		canvas.SetActive(false);
 	}
@@ -365,8 +342,11 @@ public class GameManager : MonoBehaviour
 		canvas.SetActive(true);
 		InitPlayerStartingPoint();
 		ResetPlayerSkills();
+		ResetPlayerRoundHPUI();
 
 		// do something
+
+
 
 		// ui refresh??
 		roundText.text = "Round" + CurrentRound;
@@ -389,15 +369,22 @@ public class GameManager : MonoBehaviour
 
 		// reset something
 
-		player1RoundHPUI.value = 100 + CurrentRound * 20;
-		player2RoundHPUI.value = 100 + CurrentRound * 20;
-
 		CurrentRound++;
 
 		ChangeState(GameState.PickSkill);
 	}
 
-    private void ResetPlayerSkills()
+	private void ResetPlayerRoundHPUI()
+	{
+		player1RoundHPUI.maxValue = Managers.Stat.GetCurrentHp(0);
+		player2RoundHPUI.maxValue = Managers.Stat.GetCurrentHp(1);
+		player1RoundHPUI.value = player1RoundHPUI.maxValue;
+		player2RoundHPUI.value = player2RoundHPUI.maxValue;
+		player1RoundHpText.text = player1RoundHPUI.value + "";
+		player2RoundHpText.text = player2RoundHPUI.value + "";
+	}
+
+	private void ResetPlayerSkills()
     {
 	    ResetSkills(player1);
 	    ResetSkills(player2);
@@ -477,6 +464,20 @@ public class GameManager : MonoBehaviour
 		if (spawnPoints?.Any() is not true)
 		{
 			Debug.LogWarning($"{nameof(spawnPoints)} is not assigned.");
+		}
+	}
+
+	public void SetHpUI(int playerIndex, int _value)
+	{
+		if(playerIndex == 0)
+		{
+			player1RoundHPUI.value = _value;
+			player1RoundHpText.text = _value.ToString();
+		}
+		else
+		{
+			player2RoundHPUI.value = _value;
+			player2RoundHpText.text = _value.ToString();
 		}
 	}
 	#endregion
