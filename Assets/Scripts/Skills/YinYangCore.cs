@@ -22,21 +22,9 @@ public class YinYangCore : PassiveSkillBase
 		Cooldown         = _data.Cooldown;         // 15초 
         HasPresentNumber = _data.HasPresentNumber; // false: 사용 횟수 없음
 
-        EnableYinYangCore();
-
-        Managers.Stat.onTakeDamage += Excute;
-
+        //EnableYinYangCore();
+        CurrentCooldown = 0;
 	}
-
-
-	void Excute(int playerIndex)
-    {
-		if (Owner.playerIndex != playerIndex)
-        {
-            
-        }
-
-    }
 
   
     private void Update() {
@@ -48,8 +36,6 @@ public class YinYangCore : PassiveSkillBase
         }
 
         EnableYinYangCore();
-
-        //CurrentCooldown = 0;
     }
 
 
