@@ -31,6 +31,10 @@ public partial class UISkillSlot : UIBase
 	private Image _border;
 
 	private Color _selectedColor = s_SelectedColor;
+	
+	private Coroutine _colorHandler;
+	
+	private Coroutine _scaleHandler;
 
 	public SkillInfo SkillInfo => _info;
 
@@ -54,6 +58,7 @@ public partial class UISkillSlot : UIBase
 	private void OnDisable()
 	{
 		UnregisterSkillEvents();
+		Utility.StopCoroutine(_colorHandler);
 		Utility.StopCoroutine(_scaleHandler);
 	}
 

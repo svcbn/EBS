@@ -8,8 +8,6 @@ public partial class UISkillSlot
 {
 	private const float Duration = 0.07f;
 	
-	private Coroutine _scaleHandler;
-	
 	public bool IsEnabled { get; private set; }
 
 	public void ShowChoiceEffect()

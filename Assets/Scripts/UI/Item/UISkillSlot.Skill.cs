@@ -52,9 +52,9 @@ partial class UISkillSlot
 		const float duration = 0.12f;
 		
 		var icon = Get<Image, Images>(Images.Icon);
-		Utility.Lerp(startScale, endScale, duration, vector => transform.localScale = vector,
+		_scaleHandler = Utility.Lerp(startScale, endScale, duration, vector => transform.localScale = vector,
 			() => Utility.Lerp(endScale, startScale, duration, vector => transform.localScale = vector));
-		Utility.Lerp(startAlpha, endAlpha, duration, alpha => icon.color = new(icon.color.r, icon.color.g, icon.color.b, alpha),
+		_colorHandler = Utility.Lerp(startAlpha, endAlpha, duration, alpha => icon.color = new(icon.color.r, icon.color.g, icon.color.b, alpha),
 			() => Utility.Lerp(endAlpha, startAlpha, duration, alpha => icon.color = new(icon.color.r, icon.color.g, icon.color.b, alpha)));
 	}
 
