@@ -15,19 +15,25 @@ public class BonusShot : PassiveSkillBase
 		Managers.Stat.onTakeDamage += Execute; // 누가 맞았음.
 	}
 
-	void Execute(int playerIndex, int finalDamage)
+	void Execute(int playerIndex, int takeDamage)
 	{
-		if (Owner.playerIndex != playerIndex) 	// 1조건 : 적을 타격시
-		{
-			bool isEnemyInBox = CheckEnemyInBox(_data.checkBoxCenter, _data.checkBoxSize);
-			if( isEnemyInBox ){ return; } 	// 2조건 : 적이 범위 안에 없을때
-			
-			StartCoroutine(ShotBonusArrow(finalDamage));
-		}
+		// 1조건 : 적을 타격시
+		if (Owner.playerIndex == playerIndex){ return; } 	
+		
+		// 2조건 : 적이 범위 안에 없을때
+		bool isEnemyInBox = CheckEnemyInBox(_data.checkBoxCenter, _data.checkBoxSize);
+		if( isEnemyInBox ){ return; }
+		
+		// 3조건 : 1 이상 값
+		int finalDamage = (int)( ((float)takeDamage) * _data.damageRate ); // 타격 데미지의 20% 
+		if (finalDamage < 1){ return; }
+
+		StartCoroutine(ShotBonusArrow(finalDamage));
+		
 	}
 
 
-	IEnumerator ShotBonusArrow(int finalDamage)
+	IEnumerator ShotBonusArrow(int damage)
 	{
         int colCount = 0;
         Collider2D[] cols = Physics2D.OverlapCircleAll(Owner.transform.position, _data.range, _data.targetLayer);
@@ -40,7 +46,8 @@ public class BonusShot : PassiveSkillBase
                 g.target = null;
                 g.bezierDelta  = _data.bezierDelta;
                 g.bezierDelta2 = _data.bezierDelta2;
-                g.Init(Owner);
+                g.Init(Owner , damage);
+
             }
             yield break;
         }
@@ -69,13 +76,10 @@ public class BonusShot : PassiveSkillBase
 					Debug.LogWarning("g is null");
 				}
 
-				g.GetComponent<TriggerAttackerBonusShot>().owner = Owner;
-				g.GetComponent<TriggerAttackerBonusShot>().damage = 1; // todo: 20% damage
-
 				g.target = validTargets[colCount].transform;
 				g.bezierDelta  = _data.bezierDelta;  // 상대 원
 				g.bezierDelta2 = _data.bezierDelta2; // 나 원
-				g.Init(Owner);
+                g.Init(Owner , damage);
 
 				colCount += 1;            
 			}

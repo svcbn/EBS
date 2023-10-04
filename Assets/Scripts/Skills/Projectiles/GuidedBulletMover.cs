@@ -26,11 +26,13 @@ public class GuidedBulletMover : Mover
 
     public float refindRadius = 20f;
 
-    private Character owner;
+    public Character owner;
+    public int damage;
 
-    public void Init(Character _owner)
+    public void Init(Character _owner, int _damage)
     {
         owner = _owner;
+        damage = _damage;
 
         reta = 1 / eta;
         startPos = transform.position;

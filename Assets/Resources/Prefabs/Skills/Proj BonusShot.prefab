@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDestroyedOnCollision: 1
-  useKnockback: 1
+  useKnockback: 0
   owner: {fileID: 0}
   damage: 1
 --- !u!114 &1941211119430951607
