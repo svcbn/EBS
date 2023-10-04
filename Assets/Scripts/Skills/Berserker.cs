@@ -52,7 +52,7 @@ public class Berserker : PassiveSkillBase
 
 	void Excute(int playerIndex, int finalDamage)
 	{
-		if ((Managers.Stat.GetCurrentHp(Owner.playerIndex) / (float)Managers.Stat.GetMaxHp(Owner.playerIndex)) <= 1f && _isActived == false)
+		if ((Managers.Stat.GetCurrentHp(Owner.playerIndex) / (float)Managers.Stat.GetMaxHp(Owner.playerIndex)) <= 0.5f && _isActived == false)
 		{
 			_isActived = true;
 			_effect.SetActive(true);
