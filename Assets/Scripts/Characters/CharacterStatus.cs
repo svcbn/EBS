@@ -114,10 +114,10 @@ public class CharacterStatus : MonoBehaviour
 		{
 			var a = effect.ToString();
 			GameObject go = Managers.Resource.Instantiate("Skills/Stat_" + effect.ToString(), transform);
-			Vector2 offset = Resources.Load<GameObject>("Prefabs/Skills/Stat_" + effect.ToString()).transform.position;
+			Transform offset = Resources.Load<GameObject>("Prefabs/Skills/Stat_" + effect.ToString()).transform;
 
-			go.transform.localPosition = offset;
-			go.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+			go.transform.localPosition = offset.position;
+			go.transform.localScale = offset.localScale;
 
 			StatusEffects.Add(effect, go);
 			go.SetActive(false);
@@ -158,7 +158,9 @@ public class CharacterStatus : MonoBehaviour
 		while (true)
 		{ 
 			foreach (var effect in CurrentStatus.Keys)
-			{ 
+			{
+				if (effect == StatusType.Knockback) continue;
+
 				if (CurrentStatus[effect] == true && StatusEffects[effect].activeSelf == false)
 					StatusEffects[effect].SetActive(true);
 				else if (CurrentStatus[effect] == false && StatusEffects[effect].activeSelf == true)
@@ -234,19 +236,8 @@ public class CharacterStatus : MonoBehaviour
 		{
 			CurrentStatus[StatusType.Faint] = true;
 
-			// 이펙트 표시
-			//if (_faintCR != null)
-			//{
-			//	StopCoroutine(_faintCR);
-			//}
-			//_faintCR = StartCoroutine(PlayEffectCo("Stat_Faint", 1, new Vector2(0, 1), _character.transform.localScale.x));
-
 			// 선딜 취소
-			var currentSkill = (ActiveSkillBase)_character.CurrentSkill;
-			if (currentSkill != null && currentSkill.IsBeforeDelay == true)
-			{
-				currentSkill.CancelInvoke();
-			}
+			CancleSkill();
 		}
 	}
 	#endregion
@@ -261,33 +252,51 @@ public class CharacterStatus : MonoBehaviour
 			var longerDuration = (duration > _currentKnockbackEffect.LeftDuration) ? duration : _currentKnockbackEffect.LeftDuration;
 			_currentKnockbackEffect = new KnockbackEffect(longerDuration, knockbackPower, _rigidbody2, transform.position, enemyPos);
 		}
+
+		// Knockback feedback effect
+		if (enemyPos.x - transform.position.x < 0)
+		{
+			//StatusEffects[StatusType.Knockback].transform.localScale = 
+		}
+		else
+		{ 
+		}
+
+		StatusEffects[StatusType.Knockback].SetActive(true);
 	}
 
 	private void ApplyKnockbackEffect()
 	{
 		if (_currentKnockbackEffect == null || _currentKnockbackEffect.GetRemainingRatio() <= 0)
 		{
-			CurrentStatus[StatusType.Knockback] = false;
+			//CurrentStatus[StatusType.Knockback] = false;
 			_currentKnockbackEffect = null;
 			return;
 		}
 
 		// 선딜 취소
-		CurrentStatus[StatusType.Knockback] = true;
-		var currentSkill = (ActiveSkillBase)_character.CurrentSkill;
-		if (currentSkill != null && currentSkill.IsBeforeDelay == true)
-		{
-			currentSkill.CancelInvoke();
-		}
+		//CurrentStatus[StatusType.Knockback] = true;
+		CancleSkill();
 
 		// 탄성 조절
 		if (_currentKnockbackEffect.GetRemainingRatio() > 1 - _stopBounceTimeRatio)
 		{
 			_rigidbody2.sharedMaterial.bounciness = _bouncinesss;
 		}
-		else 
+		else
 		{
 			_rigidbody2.sharedMaterial.bounciness = 0;
+		}
+	}
+
+	private void CancleSkill()
+	{
+		var currentSkill = (ActiveSkillBase)_character.CurrentSkill;
+		if (currentSkill != null && currentSkill.IsBeforeDelay == true)
+		{
+			currentSkill.CancelInvoke();
+
+			// TODO : 선딜 취소 이펙트
 		}
 	}
 	#endregion
