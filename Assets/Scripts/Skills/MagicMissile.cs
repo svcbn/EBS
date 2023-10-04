@@ -36,9 +36,6 @@ public class MagicMissile : ActiveSkillBase
             yield break;
         }
 
-		Debug.Log($"cols: {cols.Length}");
-
-
 		List<Collider2D> validTargets = new List<Collider2D>();
 		foreach (var col in cols)
 		{
@@ -81,7 +78,7 @@ public class MagicMissile : ActiveSkillBase
 
 	private void OnDrawGizmos() 
 	{
-		Gizmos.color = Color.red;
+		Gizmos.color = new Color(255f / 255f, 182f / 255f, 193f / 255f); // 연분홍색
 		Vector3 checkboxPos = Owner.transform.position;
 		Gizmos.DrawWireCube(checkboxPos + (Vector3)_data.CheckBoxCenter, (Vector3)_data.CheckBoxSize);	
 	}
