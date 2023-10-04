@@ -26,7 +26,7 @@ public class ArrowShoot : ActiveSkillBase
                 g.target = null;
                 g.bezierDelta  = _data.bezierDelta;
                 g.bezierDelta2 = _data.bezierDelta2;
-                g.Init(Owner);
+                g.Init(Owner,_data.Damage);
             }
             yield break;
         }
@@ -61,13 +61,10 @@ public class ArrowShoot : ActiveSkillBase
 					Debug.LogWarning("g is null");
 				}
 
-				g.GetComponent<TriggerAttackerSlow>().owner = Owner;
-				g.GetComponent<TriggerAttackerSlow>().damage = _data.Damage;
-
 				g.target = validTargets[colCount].transform;
 				g.bezierDelta  = _data.bezierDelta;  // 상대 원
 				g.bezierDelta2 = _data.bezierDelta2; // 나 원
-				g.Init(Owner);
+                g.Init(Owner,_data.Damage);
 
 				colCount += 1;            
 			}

@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class YinYangCore : PassiveSkillBase
+public class HolyBarrier : PassiveSkillBase
 {
-    private YinYangCoreData _data;
+    private HolyBarrierData _data;
 
     bool effectOn;
     GameObject effect;
@@ -10,7 +10,7 @@ public class YinYangCore : PassiveSkillBase
 	public override void Init()
 	{
 		base.Init();
-        _data = LoadData<YinYangCoreData>();
+        _data = LoadData<HolyBarrierData>();
 
         CurrentCooldown = 0;
 	}
@@ -24,20 +24,20 @@ public class YinYangCore : PassiveSkillBase
             return;
         }
 
-        EnableYinYangCore();
+        EnableHolyBarrier();
     }
 
 
-    private void EnableYinYangCore()
+    private void EnableHolyBarrier()
     {
         OnEffect();
         IsEnabled = true;
 
-        Managers.Stat.isYinYangCore[Owner.playerIndex] = true;
+        Managers.Stat.isHolyBarrier[Owner.playerIndex] = true;
     }
 
     
-    public void DisableYinYangCore() // Call by statmanager Function after Skill Use.
+    public void DisableHolyBarrier() // Call by statmanager Function after Skill Use.
     {
         CurrentCooldown = 0;
 
@@ -60,8 +60,7 @@ public class YinYangCore : PassiveSkillBase
             Debug.LogError($"effect is null. effName :{_data.Effect.name}");
         }
 
-        effect.transform.localPosition += new Vector3( 0f, 0.5f, 0f); // offset
-        effect.transform.localScale     = new Vector3( 0.3f, 0.3f, 0.3f ); // 크기 30%
+        effect.transform.localScale = new Vector3( 0.3f, 0.3f, 0.3f ); // 크기 30%
             
     }
     private void OffEffect()

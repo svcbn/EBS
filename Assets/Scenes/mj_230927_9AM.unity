@@ -573,12 +573,9 @@ MonoBehaviour:
     _color: {r: 0.27058825, g: 0.3254902, b: 1, a: 1}
   _firstPickCountList: 010000000200000001000000
   _otherPickCountList: 0100000001000000
-  totalRounds: 0
   spawnPoints:
   - {fileID: 7971570889885747924}
   - {fileID: 7971570889885747923}
-  player1RoundHPUI: {fileID: 0}
-  player2RoundHPUI: {fileID: 0}
 --- !u!4 &969127619
 Transform:
   m_ObjectHideFlags: 0

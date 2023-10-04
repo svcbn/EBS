@@ -53,9 +53,9 @@ partial class UISkillSlot
 		
 		var icon = Get<Image, Images>(Images.Icon);
 		_scaleHandler = Utility.Lerp(startScale, endScale, duration, vector => transform.localScale = vector,
-			() => Utility.Lerp(endScale, startScale, duration, vector => transform.localScale = vector));
+			() => _scaleHandler = Utility.Lerp(endScale, startScale, duration, vector => transform.localScale = vector));
 		_colorHandler = Utility.Lerp(startAlpha, endAlpha, duration, alpha => icon.color = new(icon.color.r, icon.color.g, icon.color.b, alpha),
-			() => Utility.Lerp(endAlpha, startAlpha, duration, alpha => icon.color = new(icon.color.r, icon.color.g, icon.color.b, alpha)));
+			() => _colorHandler = Utility.Lerp(endAlpha, startAlpha, duration, alpha => icon.color = new(icon.color.r, icon.color.g, icon.color.b, alpha)));
 	}
 
 	private void SetPresentText(IPassiveSkill skill)

@@ -13,10 +13,9 @@ MonoBehaviour:
   m_Name: BonusShotData
   m_EditorClassIdentifier: 
   _id: 108
+  _type: 2
   _cooldown: 0
   _effect: {fileID: 0}
-  _type: 2
-  _amount: 1
   _presentNumber: 0
   _hasPresentNumber: 0
   checkBoxCenter: {x: 0, y: 0}
@@ -27,6 +26,7 @@ MonoBehaviour:
     m_Bits: 256
   duration: 1
   missileCount: 1
+  damageRate: 0.2
   range: 30
   bezierDelta: 5
   bezierDelta2: 5

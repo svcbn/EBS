@@ -31,7 +31,7 @@ public class MagicMissile : ActiveSkillBase
                 g.target = null;
                 g.bezierDelta  = _data.bezierDelta;
                 g.bezierDelta2 = _data.bezierDelta2;
-                g.Init(Owner);
+                g.Init(Owner, _data.Damage);
             }
             yield break;
         }
@@ -51,13 +51,11 @@ public class MagicMissile : ActiveSkillBase
 			{
 				if (i%validTargets.Count==0) { colCount = 0; }
 				GuidedBulletMover g = Instantiate(_data.missilePrefab, Owner.transform.position, Quaternion.identity);
-				g.GetComponent<TriggerAttacker>().owner = Owner;
-				g.GetComponent<TriggerAttacker>().damage = _data.Damage;
 
 				g.target = validTargets[colCount].transform;
 				g.bezierDelta  = _data.bezierDelta;  // 상대 원
 				g.bezierDelta2 = _data.bezierDelta2; // 나 원
-				g.Init(Owner);
+                g.Init(Owner, _data.Damage);
 
 				colCount += 1;            
 			}

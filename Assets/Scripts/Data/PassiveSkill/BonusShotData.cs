@@ -14,6 +14,7 @@ public class BonusShotData : PassiveSkillData
     public float duration;
     public int missileCount;
     
+    public float damageRate;
     
     public float range;
     public float bezierDelta;
