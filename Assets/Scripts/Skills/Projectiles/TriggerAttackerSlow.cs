@@ -19,7 +19,7 @@ public class TriggerAttackerSlow : MonoBehaviour
             Managers.Stat.GiveDamage(1 - owner.playerIndex, damage);
 
             // 슬로우 효과
-            collision.gameObject.GetComponent<CharacterStatus>().SetSlowEffect(1f, 0.9f);
+            collision.gameObject.GetComponent<CharacterStatus>().SetSlowEffect(1.5f, 0.9f);
 
             Destroy(this.gameObject);
         }
