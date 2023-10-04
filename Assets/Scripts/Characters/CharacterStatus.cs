@@ -303,7 +303,7 @@ public class CharacterStatus : MonoBehaviour
 
 	#region Blink Effect
 
-	private void SetBlinkEffect(int index)
+	private void SetBlinkEffect(int index, int finalDamage)
 	{
 		if (index != _character.playerIndex)
 		{

@@ -29,7 +29,7 @@ public class StatManager
 	private Character[] _characters = new Character[2];
 	public Character[] Characters { get => _characters; }
 
-	public delegate void OnCharacterEvent(int actorIndex);
+	public delegate void OnCharacterEvent(int actorIndex, int value);
 	public event OnCharacterEvent onBlockDamage;
 	public event OnCharacterEvent onTakeDamage;
 
@@ -92,12 +92,6 @@ public class StatManager
 	{
 		if (_roundEndCR != null) return; //캐릭터 하나 죽었을시 전부 무적
 
-		if (_invincibleTimers[playerIndex] > 0) //무적일 경우
-		{
-			onBlockDamage?.Invoke(playerIndex);
-		}
-		else
-		{
 			/*------최종 대미지 계산 (적용 순서상 정렬)------*/
 			float totalPercentage = 0f;
 			//대미지 n%증가 버프 합연산
@@ -119,13 +113,20 @@ public class StatManager
 
 			/*------최종 대미지 계산 끝-----*/
 
+		if (_invincibleTimers[playerIndex] > 0) //무적일 경우
+		{
+			onBlockDamage?.Invoke(playerIndex, finalDamage);
+		}
+		else
+		{
+
 			//대미지 적용
 			GameManager.UI.ShowHealthPopup(_characters[playerIndex], -finalDamage);
 			_currentHps[playerIndex] -= finalDamage;
 			_currentHps[playerIndex] = Mathf.Clamp(_currentHps[playerIndex], 0, _finalMaxHps[playerIndex]);
 
 			GameManager.Instance.SetHpUI(playerIndex, _currentHps[playerIndex]);
-			onTakeDamage?.Invoke(playerIndex);
+			onTakeDamage?.Invoke(playerIndex, finalDamage);
 
 			//죽음 체크
 			if (_currentHps[playerIndex] <= 0)

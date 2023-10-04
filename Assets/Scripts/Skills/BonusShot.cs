@@ -15,19 +15,19 @@ public class BonusShot : PassiveSkillBase
 		Managers.Stat.onTakeDamage += Execute; // 누가 맞았음.
 	}
 
-	void Execute(int playerIndex)
+	void Execute(int playerIndex, int finalDamage)
 	{
 		if (Owner.playerIndex != playerIndex) 	// 1조건 : 적을 타격시
 		{
 			bool isEnemyInBox = CheckEnemyInBox(_data.checkBoxCenter, _data.checkBoxSize);
 			if( isEnemyInBox ){ return; } 	// 2조건 : 적이 범위 안에 없을때
 			
-			StartCoroutine(ShotBonusArrow());
+			StartCoroutine(ShotBonusArrow(finalDamage));
 		}
 	}
 
 
-	IEnumerator ShotBonusArrow()
+	IEnumerator ShotBonusArrow(int finalDamage)
 	{
         int colCount = 0;
         Collider2D[] cols = Physics2D.OverlapCircleAll(Owner.transform.position, _data.range, _data.targetLayer);
