@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: OverclockData
   m_EditorClassIdentifier: 
   _id: 105
-  _type: 0
+  _type: 2
   _cooldown: 0
   _effect: {fileID: 0}
   _presentNumber: 0
