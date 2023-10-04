@@ -6,6 +6,8 @@ public class TeleportEvacuate : ActiveSkillBase
 {
 	private TeleportEvacuateData _data;
 
+	Vector3 effectScale = new(0.6f, 0.6f, 0.6f);
+
 	public override void Init()
 	{
 		base.Init();
@@ -17,14 +19,14 @@ public class TeleportEvacuate : ActiveSkillBase
 	{		
 		base.Execute();
 
-		if (_data.beforeEffect != null) { PlayEffect("Teleport_Before", 1f, Vector2.zero); }
+		if (_data.beforeEffect != null) { PlayEffect("Teleport_Before", 1f, Vector2.zero, effectScale:effectScale); }
 	}
 
 	public override IEnumerator ExecuteImplCo()
 	{
 		Owner.transform.position = CalcTeleportPos();
 
-		if (_data.afterEffect != null) { PlayEffect("Teleport_After", 1f, _data.Offset); }
+		if (_data.afterEffect != null) { PlayEffect("Teleport_After", 1f, _data.Offset, effectScale:effectScale); }
 
 		yield return new WaitForSeconds(AfterDelay);
 	}

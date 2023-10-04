@@ -12,11 +12,17 @@ public class HolyBarrier : PassiveSkillBase
 		base.Init();
         _data = LoadData<HolyBarrierData>();
 
-        CurrentCooldown = 0;
 	}
 
-  
-    private void Update() {
+	public override void Reset()
+	{
+		base.Reset();
+
+        DisableHolyBarrier();
+	}
+
+
+	private void Update() {
         if( IsEnabled ) return;
 
         if( CurrentCooldown < Cooldown ){
