@@ -182,15 +182,20 @@ public class CharacterStatus : MonoBehaviour
 	{
 		if (_character.Skills.Any(skill => skill.Id == 117))
 		{
-			var immuneSkill = (PassiveSkillBase)_character.Skills.First(skill => skill.Id == 117);
-			immuneSkill.IsEnabled = true;
-
+			var unstoppable = (PassiveSkillBase)_character.Skills.First(skill => skill.Id == 117);
+			unstoppable.IsEnabled = true;
 			return;
 		}
 
-		slowRatio = Mathf.Clamp(slowRatio, 0, 1); 
+		if (IsBlocking())
+		{
+			return;
+		}
+
+		slowRatio = Mathf.Clamp(slowRatio, 0, 1);
 		_currentSlowEffects.Add(new SlowEffect(duration, slowRatio));
 	}
+
 
 	private void ApplySlowEffect()
 	{
@@ -218,6 +223,11 @@ public class CharacterStatus : MonoBehaviour
 	#region Faint Effect
 	public void SetFaintEffect(float duration)
 	{
+		if (IsBlocking())
+		{
+			return;
+		}
+
 		if (_currentFaintEffect == null)
 			_currentFaintEffect = new FaintEffect(duration);
 		else
@@ -246,6 +256,11 @@ public class CharacterStatus : MonoBehaviour
 	#region Knockback Effect
 	public void SetKnockbackEffect(float duration, float knockbackPower, Vector2 enemyPos)
 	{
+		if (IsBlocking())
+		{
+			return;
+		}
+		
 		if (_currentKnockbackEffect == null)
 			_currentKnockbackEffect = new KnockbackEffect(duration, knockbackPower, _rigidbody2, transform.position, enemyPos);
 		else
@@ -331,6 +346,12 @@ public class CharacterStatus : MonoBehaviour
 
 	#endregion
 
+	private bool IsBlocking()
+	{
+		return _character.GetComponentInChildren<Block>()?.IsBlocking == true;
+		// (ActiveSkillBase)_character.Skills.First(skill => skill.Id == );
+	}
+
 	private void CancleSkill()
 	{
 		var currentSkill = (ActiveSkillBase)_character.CurrentSkill;
@@ -338,7 +359,7 @@ public class CharacterStatus : MonoBehaviour
 		{
 			currentSkill.CancelInvoke();
 			_character.CurrentSkill = null;
-			// TODO : 선딜 취소 이펙트
+			// TODO : 선딜 취소 UI 이펙트
 
 		}
 	}
@@ -437,6 +458,7 @@ public class KnockbackEffect
 		LeftDuration -= Time.deltaTime;
 		return LeftDuration / _originDuration;
 	}
+
 }
 
 
