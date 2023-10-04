@@ -256,7 +256,7 @@
       "Id": 114,
       "Name": "신성한 보호막",
       "Description": "n초마다 1회 방어막",
-      "SpriteName": "HollyBarrier"
+      "SpriteName": "HolyBarrier"
     },
     {
       "Id": 115,
