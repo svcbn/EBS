@@ -15,8 +15,15 @@ public class YinYangCore : PassiveSkillBase
         CurrentCooldown = 0;
 	}
 
-  
-    private void Update() {
+	public override void Reset()
+	{
+		base.Reset();
+
+        DisableYinYangCore();
+	}
+
+
+	private void Update() {
         if( IsEnabled ) return;
 
         if( CurrentCooldown < Cooldown ){
