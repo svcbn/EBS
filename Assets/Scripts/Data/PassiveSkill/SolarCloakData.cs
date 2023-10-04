@@ -11,11 +11,11 @@ public class SolarCloakData : PassiveSkillData
 
 	[SerializeField] GameObject _defaultEffect;
 	[SerializeField] private int _maxHp;
-
+	[SerializeField] private float _damageScale;
 
 	public Vector2 HitBoxCenter => _hitBoxCenter;
 	public Vector2 HitBoxSize => _hitBoxSize;
 	public GameObject DefaultEffect => _defaultEffect;
 	public int MaxHp => _maxHp;
-
+	public float DamageScale => _damageScale;
 }
