@@ -1,3 +1,4 @@
+using Mono.Cecil;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ public enum StatusType
 public class CharacterStatus : MonoBehaviour
 {
 	public Dictionary<StatusType, bool> CurrentStatus = new();
+	private Dictionary<StatusType, GameObject> StatusEffects = new(); 
 
 	public float SlowRatio
 	{ 
@@ -38,7 +40,7 @@ public class CharacterStatus : MonoBehaviour
 	}
 	private float _hastRatio;
 
-	public float SpeedChangeBySkill
+	public float SpeedChange
 	{
 		get
 		{
@@ -48,6 +50,20 @@ public class CharacterStatus : MonoBehaviour
 				return (1 + HasteRatio) * (1 - SlowRatio);
 		}
 	}
+
+	
+	public float CooldownChange 
+	{
+		get 
+		{
+			return _coolDownChange;
+		}
+		set
+		{
+			_coolDownChange = value; 
+		}
+	}
+	private float _coolDownChange = 1;
 
 	[SerializeField, Range(0f, 1f)]
 	private float _stopBounceTimeRatio = 0.9f;
@@ -74,6 +90,7 @@ public class CharacterStatus : MonoBehaviour
 	{
 		SlowRatio = 0;
 		HasteRatio = 0;
+		CooldownChange = 1;
 
 		foreach (var status in CurrentStatus.Keys)
 		{
@@ -87,13 +104,29 @@ public class CharacterStatus : MonoBehaviour
 		_character = GetComponent<Character>();
 		_rigidbody2 = GetComponent<Rigidbody2D>();
 		GetRenderers();
+		
+		CurrentStatus.Add(StatusType.Slow, false);
+		CurrentStatus.Add(StatusType.Faint, false);
+		CurrentStatus.Add(StatusType.Knockback, false);
+		CurrentStatus.Add(StatusType.Haste, false);
+
+		foreach (var effect in CurrentStatus.Keys)
+		{
+			var a = effect.ToString();
+			GameObject go = Managers.Resource.Instantiate("Skills/Stat_" + effect.ToString(), transform);
+			Vector2 offset = Resources.Load<GameObject>("Prefabs/Skills/Stat_" + effect.ToString()).transform.position;
+
+			go.transform.localPosition = offset;
+			go.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+
+			StatusEffects.Add(effect, go);
+			go.SetActive(false);
+		}
 	}
 
 	private void Start()
 	{
-		CurrentStatus.Add(StatusType.Slow, false);
-		CurrentStatus.Add(StatusType.Faint, false);
-		CurrentStatus.Add(StatusType.Knockback, false);
+		StartCoroutine(NotifyStatusEffects());
 	}
 
 	private void OnEnable()
@@ -117,6 +150,21 @@ public class CharacterStatus : MonoBehaviour
 		for (int i = 0; i < _spriteRenderers.Count; i++)
 		{
 			_originalColors.Add(_spriteRenderers[i].color);
+		}
+	}
+
+	IEnumerator NotifyStatusEffects()
+	{
+		while (true)
+		{ 
+			foreach (var effect in CurrentStatus.Keys)
+			{ 
+				if (CurrentStatus[effect] == true && StatusEffects[effect].activeSelf == false)
+					StatusEffects[effect].SetActive(true);
+				else if (CurrentStatus[effect] == false && StatusEffects[effect].activeSelf == true)
+					StatusEffects[effect].SetActive(false);
+			}
+			yield return new WaitForSeconds(0.2f);
 		}
 	}
 
@@ -155,12 +203,12 @@ public class CharacterStatus : MonoBehaviour
 				_currentSlowEffects.Remove(currentSlowEffect);
 		}
 
-		// 슬로우 상태 이펙트 표시
-		if (_slowCR != null)
-		{
-			StopCoroutine(_slowCR); 
-		}
-		_slowCR = StartCoroutine(PlayEffectCo("Stat_Slow", 1, new Vector2(0,-1), _character.transform.localScale.x));
+		//// 슬로우 상태 이펙트 표시
+		//if (_slowCR != null)
+		//{
+		//	StopCoroutine(_slowCR); 
+		//}
+		//_slowCR = StartCoroutine(PlayEffectCo("Stat_Slow", 1, new Vector2(0,-1), _character.transform.localScale.x));
 	}
 	#endregion
 
@@ -186,11 +234,12 @@ public class CharacterStatus : MonoBehaviour
 		{
 			CurrentStatus[StatusType.Faint] = true;
 
-			if (_faintCR != null)
-			{
-				StopCoroutine(_faintCR);
-			}
-			_faintCR = StartCoroutine(PlayEffectCo("Stat_Faint", 1, new Vector2(0, 1), _character.transform.localScale.x));
+			// 이펙트 표시
+			//if (_faintCR != null)
+			//{
+			//	StopCoroutine(_faintCR);
+			//}
+			//_faintCR = StartCoroutine(PlayEffectCo("Stat_Faint", 1, new Vector2(0, 1), _character.transform.localScale.x));
 
 			// 선딜 취소
 			var currentSkill = (ActiveSkillBase)_character.CurrentSkill;
@@ -290,11 +339,11 @@ public class CharacterStatus : MonoBehaviour
 		CurrentStatus[StatusType.Haste] = true;
 
 		// Haste 상태 이펙트 표시
-		if (_hasteCR != null)
-		{
-			StopCoroutine(_hasteCR);
-		}
-		_hasteCR = StartCoroutine(PlayEffectCo("Stat_Haste", 1, new Vector2(0, -1), _character.transform.localScale.x));
+		//if (_hasteCR != null)
+		//{
+		//	StopCoroutine(_hasteCR);
+		//}
+		//_hasteCR = StartCoroutine(PlayEffectCo("Stat_Haste", 1, new Vector2(0, -1), _character.transform.localScale.x));
 	}
 
 	#endregion
