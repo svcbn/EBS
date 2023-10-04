@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Character : MonoBehaviour
@@ -99,6 +100,11 @@ public class Character : MonoBehaviour
 
 				if (CurrentSkill != null && CurrentSkill.IsActing == false)
 					CurrentSkill = null;
+			}
+
+			if (Skills.Any(skill => skill.Id == 104))
+			{
+				_hasCooldowmSkill = true;
 			}
 
 			yield return new WaitForSeconds(0.2f);

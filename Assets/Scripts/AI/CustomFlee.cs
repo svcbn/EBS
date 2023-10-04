@@ -47,7 +47,6 @@ public class CustomFlee : Action
 	{
 
 		if (Vector2.Distance(_target.Value.transform.position, transform.position) < _fleeDistance.Value * 0.9f
-			
 			&& _canMove.Value == true
 			&& _hasCooldownSkill.Value == false)
 		{
