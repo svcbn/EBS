@@ -473,11 +473,11 @@ public class GameManager : MonoBehaviour
 	{
 		if (IsPlayer1Win)
 		{
-			Player2Life -= Mathf.Max(CurrentRound - 1, 1); 
+			Player2Life -= CurrentRound; 
 		}
 		else
 		{
-			Player1Life -= Mathf.Max(CurrentRound - 1, 1); 
+			Player1Life -= CurrentRound; 
 		}
 
 		
