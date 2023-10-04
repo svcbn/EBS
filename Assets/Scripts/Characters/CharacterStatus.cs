@@ -254,15 +254,20 @@ public class CharacterStatus : MonoBehaviour
 		}
 
 		// Knockback feedback effect
-		if (enemyPos.x - transform.position.x < 0)
+		if (enemyPos.x - transform.position.x > 0)
 		{
-			//StatusEffects[StatusType.Knockback].transform.localScale = 
+			StatusEffects[StatusType.Knockback].transform.localScale = new Vector2(Mathf.Abs(StatusEffects[StatusType.Knockback].transform.localScale.x), StatusEffects[StatusType.Knockback].transform.localScale.y);
 		}
 		else
-		{ 
+		{
+			StatusEffects[StatusType.Knockback].transform.localScale = new Vector2(-Mathf.Abs(StatusEffects[StatusType.Knockback].transform.localScale.x), StatusEffects[StatusType.Knockback].transform.localScale.y);
 		}
 
-		StatusEffects[StatusType.Knockback].SetActive(true);
+		var go = Instantiate(StatusEffects[StatusType.Knockback], transform.position, transform.rotation);
+		go.transform.localScale = StatusEffects[StatusType.Knockback].transform.localScale;
+		//go.transform.SetParent(transform, false);
+		go.SetActive(true);
+		go.GetComponent<ParticleSystem>().Play();
 	}
 
 	private void ApplyKnockbackEffect()
@@ -289,16 +294,6 @@ public class CharacterStatus : MonoBehaviour
 		}
 	}
 
-	private void CancleSkill()
-	{
-		var currentSkill = (ActiveSkillBase)_character.CurrentSkill;
-		if (currentSkill != null && currentSkill.IsBeforeDelay == true)
-		{
-			currentSkill.CancelInvoke();
-
-			// TODO : 선딜 취소 이펙트
-		}
-	}
 	#endregion
 
 	#region Blink Effect
@@ -356,6 +351,18 @@ public class CharacterStatus : MonoBehaviour
 	}
 
 	#endregion
+
+	private void CancleSkill()
+	{
+		var currentSkill = (ActiveSkillBase)_character.CurrentSkill;
+		if (currentSkill != null && currentSkill.IsBeforeDelay == true)
+		{
+			currentSkill.CancelInvoke();
+			_character.CurrentSkill = null;
+			// TODO : 선딜 취소 이펙트
+
+		}
+	}
 
 	IEnumerator PlayEffectCo(string effName, float duration, Vector2 offset, float sign)
 	{
