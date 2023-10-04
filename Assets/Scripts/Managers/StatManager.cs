@@ -18,6 +18,9 @@ public class StatManager
 	private int[] _finalMaxHps = new int[2];
 	private int[] _finalMaxMps = new int[2];
 
+	private int roundHpIncrease = 20;
+
+
 	public List<Modifier>[] damageModifiers = new List<Modifier>[2];
 
 	private float[] _invincibleTimers = new float[2];
@@ -61,7 +64,7 @@ public class StatManager
 
 		for (int i = 0; i < 2; i++)
 		{
-			_currentHps[i] = _baseMaxHps[i];
+			_currentHps[i] = _finalMaxHps[i] + (GameManager.Instance.CurrentRound - 1) * roundHpIncrease;
 			_currentMps[i] = _baseMaxMps[i];
 		}
 	}
@@ -79,8 +82,6 @@ public class StatManager
 			_baseMaxHps[i] = _data.startingMaxHp;
 			_baseMaxMps[i] = _data.startingMaxMp;
 		}
-
-		SoftResetStats();
 	}
 
 	public void GiveDamage(int playerIndex, int baseDamage)
@@ -116,14 +117,8 @@ public class StatManager
 			GameManager.UI.ShowHealthPopup(_characters[playerIndex], -finalDamage);
 			_currentHps[playerIndex] -= finalDamage;
 			_currentHps[playerIndex] = Mathf.Clamp(_currentHps[playerIndex], 0, _finalMaxHps[playerIndex]);
-			if(playerIndex == 0)
-			{
-				GameManager.Instance.player1RoundHPUI.value = _currentHps[playerIndex];
-			}
-			else
-			{
-				GameManager.Instance.player2RoundHPUI.value = _currentHps[playerIndex];
-			}
+
+			GameManager.Instance.SetHpUI(playerIndex, _currentHps[playerIndex]);
 			onTakeDamage?.Invoke(playerIndex);
 
 			//죽음 체크
@@ -142,14 +137,8 @@ public class StatManager
 		GameManager.UI.ShowHealthPopup(_characters[playerIndex], baseAmount);
 		_currentHps[playerIndex] += baseAmount;
 		_currentHps[playerIndex] = Mathf.Clamp(_currentHps[playerIndex], 0, _finalMaxHps[playerIndex]);
-		if(playerIndex == 0)
-		{
-			GameManager.Instance.player1RoundHPUI.value = _currentHps[playerIndex];
-		}
-		else
-		{
-			GameManager.Instance.player2RoundHPUI.value = _currentHps[playerIndex];
-		}
+
+		GameManager.Instance.SetHpUI(playerIndex, _currentHps[playerIndex]);
 	}
 
 	public void GiveManaHeal(int playerIndex, int baseAmount)
