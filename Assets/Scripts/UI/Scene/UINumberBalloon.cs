@@ -15,6 +15,14 @@ public class UINumberBalloon : UIScene
 	private Coroutine _positionHandler;
 	
 	private Coroutine _colorHandler;
+	
+	private float _yOffset = 5f;
+
+	public Vector3 Position
+	{
+		get => _position;
+		set => _position = value;
+	}
 
 	private enum Texts
 	{
@@ -23,6 +31,7 @@ public class UINumberBalloon : UIScene
 
 	private void OnEnable()
 	{
+		_yOffset = 5f;
 		SetPositionEffect();
 	}
 
@@ -39,6 +48,8 @@ public class UINumberBalloon : UIScene
 			Utility.StopCoroutine(_colorHandler);
 			_colorHandler = null;
 		}
+
+		_position = Vector3.zero;
 	}
 
 	public override void Init()
@@ -80,11 +91,11 @@ public class UINumberBalloon : UIScene
 
 	private void SetPositionEffect()
 	{
-		Vector3 targetPosition = _position + Vector3.up * 5f;
-		_positionHandler = Utility.Lerp(_position, targetPosition, 1.5f, vector => transform.position = vector, () =>
+		float end = _yOffset;
+		_positionHandler = Utility.Lerp(0, end, 1.5f, yOffset => transform.position = _position + Vector3.up * yOffset, () =>
 		{
-			Managers.Resource.Release(gameObject);
 			_positionHandler = null;
+			Managers.Resource.Release(gameObject);
 		});
 	}
 
