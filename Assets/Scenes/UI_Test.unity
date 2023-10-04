@@ -158,6 +158,18 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2600167445854114997, guid: be07f44340fb0634db155948b11077b2, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2600167445854114997, guid: be07f44340fb0634db155948b11077b2, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2600167445854114997, guid: be07f44340fb0634db155948b11077b2, type: 3}
+      propertyPath: mBehaviorSource.behaviorDescription
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2600167445854114998, guid: be07f44340fb0634db155948b11077b2, type: 3}
       propertyPath: m_RootOrder
       value: 7

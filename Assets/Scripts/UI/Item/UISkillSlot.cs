@@ -147,7 +147,7 @@ public partial class UISkillSlot : UIBase
 	private void SetBorder()
 	{
 		Images borderType = Images.Square;
-		if (_skill is IPassiveSkill || _info?.SkillType == nameof(SkillType.Passive))
+		if (_skill is IPassiveSkill || _info?.SkillType == SkillType.Passive)
 		{
 			borderType = Images.Circle;
 			ShowMask();

@@ -26,6 +26,7 @@ public abstract class ActiveSkillBase : SkillBase, IActiveSkill
 	public Coroutine UsingSkillCo { get; protected set; }
 
 	protected CharacterStatus _status;
+	private Coroutine _cooldownHandler;
 
 	protected virtual void Awake()
 	{
@@ -48,6 +49,18 @@ public abstract class ActiveSkillBase : SkillBase, IActiveSkill
 		Invoke("ExecuteImpl", BeforeDelay);
 	}
 
+	public override void Reset()
+	{
+		base.Reset();
+
+		if (_cooldownHandler != null)
+		{
+			Owner.StopCoroutine(_cooldownHandler);
+			CurrentCooldown = Cooldown;
+			IsCoolReady = true;
+		}
+	}
+
 	void ExecuteImpl()
 	{
 		Owner.NotifyActiveSkillExcute();
@@ -63,7 +76,11 @@ public abstract class ActiveSkillBase : SkillBase, IActiveSkill
 
 	protected virtual void CalculateCooltime()
 	{
-		Owner.StartCoroutine(CoCalculateTime(Cooldown, time => CurrentCooldown = time, () => IsCoolReady = true, _status.CooldownChange));
+		_cooldownHandler = Owner.StartCoroutine(CoCalculateTime(Cooldown, time => CurrentCooldown = time, () =>
+		{
+			IsCoolReady = true;
+			_cooldownHandler = null;
+		}, _status.CooldownChange));
 		float delay = BeforeDelay + Duration + AfterDelay;
 		Owner.StartCoroutine(CoCalculateTime(delay, null, () => IsActing = false));
 	}

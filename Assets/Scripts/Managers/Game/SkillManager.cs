@@ -68,6 +68,12 @@ public class SkillManager
 			newSkillPool.Add(newSkill);
 		}
 
+		while (newSkillPool.Count(skill => skill.SkillType == SkillType.Attack) < 2
+			&& _skillData.Skills.Where(skill => skill.SkillType == SkillType.Attack).Count(newSkill => !_skills.Any(pool => pool.Value.Any(skill => skill.Id == newSkill.Id))) > 1)
+		{
+			newSkillPool = GeneratePool(count);
+		}
+
 		return newSkillPool;
 	}
 
