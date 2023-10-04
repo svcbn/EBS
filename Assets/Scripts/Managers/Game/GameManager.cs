@@ -379,7 +379,7 @@ public class GameManager : MonoBehaviour
     private void OnBattle()
     {
 		// change something
-		timer = 10f;
+		timer = 99f;
 		StartBattle();
     }
 
@@ -391,9 +391,11 @@ public class GameManager : MonoBehaviour
 
 		// reset something
 
-		CurrentRound++;
-
-		ChangeState(GameState.PickSkill);
+		if (State != GameState.GameOver)
+		{
+			CurrentRound++;
+			ChangeState(GameState.PickSkill);
+		}
 	}
 
 	private void ResetPlayerRoundHPUI()
