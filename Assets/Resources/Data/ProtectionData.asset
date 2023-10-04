@@ -9,16 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ef533dff9d3548428634d15f0d093da, type: 3}
-  m_Name: OverclockData
+  m_Script: {fileID: 11500000, guid: f5ccec1e4e1611c44b857fc3b86d9da9, type: 3}
+  m_Name: ProtectionData
   m_EditorClassIdentifier: 
-  _id: 105
+  _id: 115
   _type: 2
   _cooldown: 0
-  _effect: {fileID: 0}
+  _effect: {fileID: 4213909145983570421, guid: f7e5610d31d3cf74a9ab48e411ba1808, type: 3}
   _presentNumber: 0
-  _hasPresentNumber: 1
-  cooltime: 25
-  maxStack: 2
-  bonusDamagePerStack: 50
-  maxStackBonusMultiplier: 2
+  _hasPresentNumber: 0
+  absProtectionValue: 3
+  effectDuration: 0.5

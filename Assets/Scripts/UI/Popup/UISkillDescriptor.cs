@@ -50,7 +50,7 @@ public class UISkillDescriptor : UIPopup
 		}
 
 		Get<TextMeshProUGUI>((int)Elements.Name).text = _skillInfo.Name;
-		Get<TextMeshProUGUI>((int)Elements.SkillType).text = _skillInfo.SkillType == SkillType.Passive ? nameof(SkillType.Passive) : "Active";
+		Get<TextMeshProUGUI>((int)Elements.SkillType).text = _skillInfo.SkillType;
 		Get<TextMeshProUGUI>((int)Elements.Cooldown).text = $"쿨타임: {_skillInfo.CoolDown}초";
 		var beforeDelay = Get<TextMeshProUGUI, Elements>(Elements.BeforeDelay);
 		beforeDelay.gameObject.SetActive(_skillInfo.SkillType != SkillType.Passive);

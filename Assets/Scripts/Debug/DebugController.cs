@@ -118,6 +118,26 @@ public partial class DebugController : MonoBehaviour
 					}
 				}),
 			
+			new DebugCommand<int>(
+				id: "player1",
+				description: "Reset skill cooldown of player 1",
+				format: "player1 <skill index>",
+				execute: index =>
+				{
+					Managers.Stat.Characters[0].Skills[index].Reset();
+				},
+				parser: int.TryParse),
+			
+			new DebugCommand<int>(
+				id: "player2",
+				description: "Reset skill cooldown of player 2",
+				format: "player2 <skill index>",
+				execute: index =>
+				{
+					Managers.Stat.Characters[1].Skills[index].Reset();
+				},
+				parser: int.TryParse),
+			
 			new TransformObjectCommand(
 				id: "move",
 				description: "Move the position of specified GameObject",

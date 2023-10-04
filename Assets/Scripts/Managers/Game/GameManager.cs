@@ -220,8 +220,6 @@ public class GameManager : MonoBehaviour
 				StartCoroutine(SetTimeOutWinner());
 			}
 		}
-
-		
 	}
 
 	void SetBattleUI()
@@ -303,13 +301,15 @@ public class GameManager : MonoBehaviour
 		_pickCount = list[_pickCountIndex];
 
 		var skillPool = _skill.GeneratePool(_skillPickCount);
+		var input = _isPlayer1Pick ? _player1Input : _player2Input;
+		var otherInput = _isPlayer1Pick ? _player2Input : _player1Input;
 		_selector = new(skillPool)
 		{
 			Input = _isPlayer1Pick ? _player1Input : _player2Input
 		};
 		_selector.SkillSelected += PickSkill;
-		_ui.ShowSkillSelector(_selector);
-	}
+		_ui.ShowSkillSelector(_selector, list, new[] { input.Color, otherInput.Color });
+    }
 
 	private Character GetWinner()
 	{
@@ -473,11 +473,11 @@ public class GameManager : MonoBehaviour
 	{
 		if (IsPlayer1Win)
 		{
-			Player2Life -= Mathf.Max(CurrentRound - 1, 1); 
+			Player2Life -= CurrentRound; 
 		}
 		else
 		{
-			Player1Life -= Mathf.Max(CurrentRound - 1, 1); 
+			Player1Life -= CurrentRound; 
 		}
 
 		

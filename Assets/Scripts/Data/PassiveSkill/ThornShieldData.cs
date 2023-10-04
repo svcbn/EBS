@@ -6,6 +6,7 @@ using UnityEngine;
 public class ThornShieldData : PassiveSkillData
 {
 	[SerializeField] private int _maxHp;
-
+	[SerializeField] private float _damageScale;
 	public int MaxHp => _maxHp;
+	public float DamageScale => _damageScale;
 }

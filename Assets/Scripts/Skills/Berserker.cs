@@ -10,6 +10,8 @@ public class Berserker : PassiveSkillBase
 
 	bool _isActived;
 
+	GameObject _effect;
+
 	public override void Init()
 	{
 		_status = GetComponent<CharacterStatus>();
@@ -20,21 +22,42 @@ public class Berserker : PassiveSkillBase
 		Id = _data.Id;
 	
 		Managers.Stat.onTakeDamage += Excute;
+
+		_effect = Managers.Resource.Instantiate("Skills/Stat_Berserker", transform);
+		Transform offset = Resources.Load<GameObject>("Prefabs/Skills/Stat_Berserker").transform;
+		
+		_effect.transform.localPosition = offset.position;
+		_effect.transform.localScale = offset.localScale;
+
+		_effect.SetActive(false);
+
+		CurrentCooldown = 0;
 	}
 
 	public override void Reset()
 	{
 		base.Reset();
 
-		_isActived = false;
+		CurrentCooldown = 0;
+
+		if (_isActived == true)
+		{ 
+			_isActived = false;
+			_effect.SetActive(false);
+
+			_status.HasteRatio -= _data.SpeedUpRatio;
+			_status.CooldownChange -= _data.CooldownRatio;
+		}
 	}
 
 	void Excute(int playerIndex, int finalDamage)
 	{
-		if ((Managers.Stat.GetCurrentHp(Owner.playerIndex) / (float)Managers.Stat.GetMaxHp(Owner.playerIndex)) < 0.5f && _isActived == false)
+		if ((Managers.Stat.GetCurrentHp(Owner.playerIndex) / (float)Managers.Stat.GetMaxHp(Owner.playerIndex)) <= 0.5f && _isActived == false)
 		{
-			Debug.Log($"{Managers.Stat.GetCurrentHp(Owner.playerIndex)}, {Managers.Stat.GetMaxHp(Owner.playerIndex)}");
 			_isActived = true;
+			_effect.SetActive(true);
+
+			CurrentCooldown = _data.Cooldown;
 
 			IsEnabled = true;
 
@@ -43,6 +66,8 @@ public class Berserker : PassiveSkillBase
 
 			Modifier modifier = Managers.Stat.GetDamageModifier(Owner.playerIndex, GetType().Name);
 			modifier.value = _data.PowerUpRatio;
+
 		}
 	}
+
 }

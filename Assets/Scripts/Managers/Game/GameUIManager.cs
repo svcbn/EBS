@@ -12,7 +12,7 @@ public class GameUIManager
 
 	private UITimer _timer;
 
-	public void ShowSkillSelector(SkillSelector selector)
+	public void ShowSkillSelector(SkillSelector selector, List<int> order, Color[] colors)
 	{
 		if (_skillSelector != null)
 		{
@@ -21,6 +21,7 @@ public class GameUIManager
 
 		_skillSelector = Managers.UI.ShowPopupUI<UISkillSelector>();
 		_skillSelector.SetSelector(selector);
+		_skillSelector.SetOrderPresenter(order, colors);
 	}
 
 	public void HideSkillSelector()
