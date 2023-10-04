@@ -60,9 +60,13 @@ public class GameUIManager
 			_balloons.Add(character, balloons);
 		}
 
-		foreach (var balloon in balloons.Where(balloon => balloon.Position.y == 0).ToList())
+		for (int index = 0; index < balloons.Count; index++)
 		{
-			balloons.Remove(balloon);
+			if (balloons[index].Position.y == 0)
+			{
+				balloons.RemoveAt(index);
+				index--;
+			}
 		}
 
 		var adjacentBalloons = balloons.Where(balloon => balloon.Position.y != 0).
@@ -70,7 +74,7 @@ public class GameUIManager
 			ToList();
 		Vector3 characterPosition = character.transform.position;
 		Vector3 position = adjacentBalloons.Count == 0
-			? characterPosition + Vector3.up * 2f
+			? characterPosition + Vector3.up
 			: new(characterPosition.x, adjacentBalloons.Min(balloon => balloon.Position.y), characterPosition.z);
 
 		foreach (var balloon in adjacentBalloons)
@@ -101,6 +105,7 @@ public class GameUIManager
 		{
 			Managers.UI.ClosePopupUI(_menu);
 			_menu = null;
+			return;
 		}
 
 		_menu = Managers.UI.ShowPopupUI<UIMenu>(usePool: false);
@@ -123,13 +128,13 @@ public class GameUIManager
 		presenter.SetSkill(character);
 	}
 
-	public void UpdateTimer(float seconds)
+	public void UpdateTimer(int seconds)
 	{
 		if (_timer == null)
 		{
 			_timer = Managers.UI.ShowSceneUI<UITimer>();			
 		}
 		
-		_timer.SetTimerText($"{seconds:00.00}");
+		_timer.SetTimerText($"{seconds}");
 	}
 }
