@@ -1,6 +1,8 @@
 using BehaviorDesigner.Runtime.Tasks;
 using BehaviorDesigner.Runtime;
 using UnityEngine;
+using Mono.Cecil.Cil;
+using System.Linq;
 
 public class CheckStatus : Action
 {
@@ -45,6 +47,10 @@ public class CheckStatus : Action
 			&& _status.CurrentStatus[StatusType.Faint] == false
 			&& _status.CurrentStatus[StatusType.Knockback] == false)
 		{
+			_canUseSkill.Value = true;
+		}
+		else if (_character.Skills.Any(skill => skill.Id == 104))
+		{ 
 			_canUseSkill.Value = true;
 		}
 		else
