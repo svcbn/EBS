@@ -26,7 +26,7 @@ public class BonusShot : PassiveSkillBase
 		
 		// 3조건 : 1 이상 값
 		int finalDamage = (int)( ((float)takeDamage) * _data.damageRate ); // 타격 데미지의 20% 
-		if (finalDamage < 1){ return; }
+		if (finalDamage < 1){ finalDamage = 1; }                           // 최소 데미지 1
 
 		StartCoroutine(ShotBonusArrow(finalDamage));
 		
