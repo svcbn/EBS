@@ -64,8 +64,12 @@ public class StatManager
 
 		for (int i = 0; i < 2; i++)
 		{
-			_currentHps[i] = _finalMaxHps[i] + (GameManager.Instance.CurrentRound - 1) * roundHpIncrease;
-			_currentMps[i] = _baseMaxMps[i];
+			if (GameManager.Instance.CurrentRound != 1)
+			{
+				_finalMaxHps[i] += roundHpIncrease;
+			}
+			_currentHps[i] = _finalMaxHps[i];
+			//_currentMps[i] = _baseMaxMps[i];
 		}
 	}
 
@@ -77,10 +81,10 @@ public class StatManager
 		for (int i = 0; i < 2; i++) 
 		{
 			_maxHpModifiers[i].Clear();
-			_maxMpModifiers[i].Clear();
+			//_maxMpModifiers[i].Clear();
 
 			_baseMaxHps[i] = _data.startingMaxHp;
-			_baseMaxMps[i] = _data.startingMaxMp;
+			//_baseMaxMps[i] = _data.startingMaxMp;
 		}
 	}
 
