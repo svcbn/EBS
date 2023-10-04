@@ -220,7 +220,7 @@
       "Id": 108,
       "Name": "아르테미스의 활",
       "Description": "일정 거리 너머의 적에게 타격시 20%의 대미지를 가진 투사체 발사",
-      "SpriteName": "BonusShots"
+      "SpriteName": "BonusShot"
     },
     {
       "Id": 109,
