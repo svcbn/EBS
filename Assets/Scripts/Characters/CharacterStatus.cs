@@ -70,7 +70,9 @@ public class CharacterStatus : MonoBehaviour
 	
 	[SerializeField, Range(0f, 1f)]
 	private float _bouncinesss = 0.8f;
-	
+
+	private Vector2 _previousVelocity;
+
 	private List<SlowEffect> _currentSlowEffects = new();
 	private FaintEffect _currentFaintEffect;
 	private KnockbackEffect _currentKnockbackEffect;
@@ -144,6 +146,11 @@ public class CharacterStatus : MonoBehaviour
 		ApplyHasteEffect();
 	}
 
+	private void FixedUpdate()
+	{
+		_previousVelocity = _rigidbody2.velocity;
+	}
+
 	private void GetRenderers()
 	{
 		_spriteRenderers.AddRange(GetComponentsInChildren<SpriteRenderer>());
@@ -205,12 +212,6 @@ public class CharacterStatus : MonoBehaviour
 				_currentSlowEffects.Remove(currentSlowEffect);
 		}
 
-		//// 슬로우 상태 이펙트 표시
-		//if (_slowCR != null)
-		//{
-		//	StopCoroutine(_slowCR); 
-		//}
-		//_slowCR = StartCoroutine(PlayEffectCo("Stat_Slow", 1, new Vector2(0,-1), _character.transform.localScale.x));
 	}
 	#endregion
 
@@ -265,7 +266,6 @@ public class CharacterStatus : MonoBehaviour
 
 		var go = Instantiate(StatusEffects[StatusType.Knockback], transform.position, transform.rotation);
 		go.transform.localScale = StatusEffects[StatusType.Knockback].transform.localScale;
-		//go.transform.SetParent(transform, false);
 		go.SetActive(true);
 		go.GetComponent<ParticleSystem>().Play();
 	}
@@ -274,24 +274,14 @@ public class CharacterStatus : MonoBehaviour
 	{
 		if (_currentKnockbackEffect == null || _currentKnockbackEffect.GetRemainingRatio() <= 0)
 		{
-			//CurrentStatus[StatusType.Knockback] = false;
+			CurrentStatus[StatusType.Knockback] = false;
 			_currentKnockbackEffect = null;
 			return;
 		}
 
 		// 선딜 취소
-		//CurrentStatus[StatusType.Knockback] = true;
+		CurrentStatus[StatusType.Knockback] = true;
 		CancleSkill();
-
-		// 탄성 조절
-		if (_currentKnockbackEffect.GetRemainingRatio() > 1 - _stopBounceTimeRatio)
-		{
-			_rigidbody2.sharedMaterial.bounciness = _bouncinesss;
-		}
-		else
-		{
-			_rigidbody2.sharedMaterial.bounciness = 0;
-		}
 	}
 
 	#endregion
@@ -326,10 +316,6 @@ public class CharacterStatus : MonoBehaviour
 
 	#endregion
 
-	#region Freez Effect
-
-	#endregion
-
 	#region Haste Effect
 
 	private void ApplyHasteEffect()
@@ -341,13 +327,6 @@ public class CharacterStatus : MonoBehaviour
 			return;
 		}
 		CurrentStatus[StatusType.Haste] = true;
-
-		// Haste 상태 이펙트 표시
-		//if (_hasteCR != null)
-		//{
-		//	StopCoroutine(_hasteCR);
-		//}
-		//_hasteCR = StartCoroutine(PlayEffectCo("Stat_Haste", 1, new Vector2(0, -1), _character.transform.localScale.x));
 	}
 
 	#endregion
@@ -364,26 +343,17 @@ public class CharacterStatus : MonoBehaviour
 		}
 	}
 
-	IEnumerator PlayEffectCo(string effName, float duration, Vector2 offset, float sign)
+	private void OnCollisionEnter2D(Collision2D collision)
 	{
-
-		Transform parent = _character.transform;
-		GameObject effect = Managers.Resource.Instantiate("Skills/" + effName, parent); // paraent를 character.gameObject로
-
-		if (effect)
+		if ((1 << collision.gameObject.layer) == LayerMask.GetMask("Ground") && CurrentStatus[StatusType.Knockback] == true)
 		{
-			effect.transform.localPosition = Vector3.zero;
-		}
-		else
-		{
-			Debug.LogError($"effect is null. effName :{effName}");
+			_rigidbody2.velocity = new Vector2(_previousVelocity.x, _previousVelocity.y * -1) * _bouncinesss;
 		}
 
-		effect.transform.localPosition += (Vector3)offset;
-		effect.transform.localScale = new Vector3(sign * 0.2f, 0.2f, 0.2f);
-
-		yield return new WaitForSeconds(duration); // 이펙트 재생 시간
-		Managers.Resource.Release(effect);
+		if ((1 << collision.gameObject.layer) == LayerMask.GetMask("Boundary") /*&& CurrentStatus[StatusType.Knockback] == true*/)
+		{
+			_rigidbody2.velocity = new Vector2(_previousVelocity.x * -1, _previousVelocity.y) * _bouncinesss;
+		}
 	}
 }
 
