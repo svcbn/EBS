@@ -15,7 +15,7 @@ MonoBehaviour:
   _id: 29
   _type: 0
   _cooldown: 7
-  _effect: {fileID: 7623069860143548831, guid: 67203d99b9c257b45bc9d49d9f706169, type: 3}
+  _effect: {fileID: 8544434443688463031, guid: 7fbb7b8dbd54bdf42b2b5875fe14b8bf, type: 3}
   _priority: 3
   _isRestrictMoving: 1
   _beforeDelay: 1.2
