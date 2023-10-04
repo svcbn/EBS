@@ -16,4 +16,9 @@ public class Unstoppable : PassiveSkillBase
 
 		_status.HasteRatio += _data.SpeedUpRatio;
 	}
+
+	public override void Reset()
+	{
+		base.Reset();
+	}
 }

@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _id: 106
   _type: 2
-  _cooldown: 0
+  _cooldown: 1
   _effect: {fileID: 0}
   _presentNumber: 0
   _hasPresentNumber: 0
-  _speedUpRatio: 0.4
+  _speedUpRatio: 0.3
   _cooldownRatio: 0.2
-  _powerUpRatio: 0.2
+  _powerUpRatio: 0.3
