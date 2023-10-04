@@ -1,5 +1,6 @@
 using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
+using TMPro;
 using UnityEngine;
 
 
@@ -52,6 +53,12 @@ public class Move : Action
 	public override void OnEnd()
 	{
 		_movement.PlayerInput = Vector2.zero;
+
+		// 한 명이 적이 있는 방향의 반대방향을 바라본 채로 멈추는 현상 있음. 개선 시도한 코드.
+		// float x = (_target.Value.transform.position - transform.position).x < 0 ? -1 : 1;
+		// transform.localScale = new ( x * transform.localScale.x, 
+		// 								 transform.localScale.y, 
+		// 								 transform.localScale.z );
 	}
 
 	private bool GetProbabilitySuccess(float probability)
