@@ -116,12 +116,12 @@ public abstract class ActiveSkillBase : SkillBase, IActiveSkill
 		return data;
 	}
 
-	protected void PlayEffect(string effName, float duration, Vector2 offset, float sign = 1)
+	protected void PlayEffect(string effName, float duration, Vector2 offset, float sign = 1, Vector3 effectScale = default	)
 	{
-		StartCoroutine(PlayEffectCo(effName, duration, offset, sign));
+		StartCoroutine(PlayEffectCo(effName, duration, offset, sign, effectScale));
 	}
 
-	IEnumerator PlayEffectCo(string effName, float duration, Vector2 offset, float sign)
+	IEnumerator PlayEffectCo(string effName, float duration, Vector2 offset, float sign, Vector3 effectScale = default)
 	{
 		Transform parent = Owner.transform;
 		GameObject effect =
@@ -137,8 +137,16 @@ public abstract class ActiveSkillBase : SkillBase, IActiveSkill
 		}
 
 		effect.transform.localPosition += (Vector3)offset;
-		effect.transform.localScale = new Vector3(sign * Owner.transform.localScale.x, Owner.transform.localScale.y,
-			Owner.transform.localScale.z);
+
+		if( effectScale != default){
+			effect.transform.localScale = new Vector3(sign * effectScale.x,
+															 effectScale.y,
+															 effectScale.z );
+		}else{
+			effect.transform.localScale = new Vector3(sign * Owner.transform.localScale.x,
+															 Owner.transform.localScale.y,
+															 Owner.transform.localScale.z );
+		}
 
 		yield return new WaitForSeconds(duration); // 이펙트 재생 시간
 		Managers.Resource.Release(effect);
