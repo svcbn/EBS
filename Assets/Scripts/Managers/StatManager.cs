@@ -120,7 +120,7 @@ public class StatManager
 		else if (isHolyBarrier[playerIndex])
 		{
 			isHolyBarrier[playerIndex] = false;
-			//_characters[1 - playerIndex].GetComponentInChildren<HolyBarrier>().DisableHolyBarrier();
+			_characters[playerIndex].GetComponentInChildren<HolyBarrier>().DisableHolyBarrier();
 			onBlockDamage?.Invoke(playerIndex, finalDamage);
 		}
 		else

@@ -33,8 +33,7 @@ public class HolyBarrier : PassiveSkillBase
         OnEffect();
         IsEnabled = true;
 
-        //Managers.Stat.isYinYangCore[Owner.playerIndex] = true;
-        // TODO: Stat에서 콜
+        Managers.Stat.isHolyBarrier[Owner.playerIndex] = true;
     }
 
     
@@ -61,7 +60,7 @@ public class HolyBarrier : PassiveSkillBase
             Debug.LogError($"effect is null. effName :{_data.Effect.name}");
         }
 
-        effect.transform.localScale     = new Vector3( 0.3f, 0.3f, 0.3f ); // 크기 30%
+        effect.transform.localScale = new Vector3( 0.3f, 0.3f, 0.3f ); // 크기 30%
             
     }
     private void OffEffect()
