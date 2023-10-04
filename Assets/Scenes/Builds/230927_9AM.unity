@@ -146,6 +146,10 @@ PrefabInstance:
       propertyPath: playerIndex
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2600167445854114993, guid: be07f44340fb0634db155948b11077b2, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2600167445854114994, guid: be07f44340fb0634db155948b11077b2, type: 3}
       propertyPath: m_Name
       value: Player 2
@@ -234,8 +238,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 661827698}
-  - component: {fileID: 661827697}
   - component: {fileID: 661827696}
+  - component: {fileID: 661827697}
   m_Layer: 6
   m_Name: Square
   m_TagString: Untagged
@@ -389,8 +393,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 808661978}
-  - component: {fileID: 808661977}
   - component: {fileID: 808661976}
+  - component: {fileID: 808661977}
   m_Layer: 7
   m_Name: Square (1)
   m_TagString: Untagged
@@ -605,8 +609,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1174797845}
-  - component: {fileID: 1174797844}
   - component: {fileID: 1174797843}
+  - component: {fileID: 1174797844}
   m_Layer: 7
   m_Name: Square (2)
   m_TagString: Untagged
@@ -716,8 +720,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1432527675}
-  - component: {fileID: 1432527677}
   - component: {fileID: 1432527676}
+  - component: {fileID: 1432527677}
   m_Layer: 6
   m_Name: Square (3)
   m_TagString: Untagged
@@ -1170,6 +1174,10 @@ PrefabInstance:
       propertyPath: playerIndex
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2600167445854114993, guid: be07f44340fb0634db155948b11077b2, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2600167445854114994, guid: be07f44340fb0634db155948b11077b2, type: 3}
       propertyPath: m_Name
       value: Player 1
@@ -1179,9 +1187,13 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2600167445854114996, guid: be07f44340fb0634db155948b11077b2, type: 3}
+      propertyPath: m_BodyType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2600167445854114996, guid: be07f44340fb0634db155948b11077b2, type: 3}
       propertyPath: m_Material
       value: 
-      objectReference: {fileID: 6200000, guid: 1ab7ad2d1780ede4e8edc079b01732f7, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 2600167445854114998, guid: be07f44340fb0634db155948b11077b2, type: 3}
       propertyPath: m_RootOrder
       value: 6
