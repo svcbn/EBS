@@ -19,6 +19,7 @@ public class HolyBarrier : PassiveSkillBase
 		base.Reset();
 
         DisableHolyBarrier();
+		EnableHolyBarrier();
 	}
 
 
@@ -46,8 +47,8 @@ public class HolyBarrier : PassiveSkillBase
     public void DisableHolyBarrier() // Call by statmanager Function after Skill Use.
     {
         CurrentCooldown = 0;
-
-        OffEffect();
+		Managers.Stat.isHolyBarrier[Owner.playerIndex] = false;
+		OffEffect();
         IsEnabled = false;
     }
 

@@ -13,17 +13,20 @@ MonoBehaviour:
   m_Name: WhirlStrikeData
   m_EditorClassIdentifier: 
   _id: 11
+  _type: 1
   _cooldown: 24
   _effect: {fileID: 4295440196865602167, guid: a0661de1d0027544399fed12c668178b, type: 3}
   _priority: 1
-  _type: 1
   _isRestrictMoving: 1
   _beforeDelay: 1.4
   _afterDelay: 0.5
-  _requireMP: 10
-  _checkBoxCenter: {x: 0, y: 0}
-  _checkBoxSize: {x: 30, y: 8}
-  _hitBoxCenter: {x: 0, y: 0}
-  _hitBoxSize: {x: 30, y: 8}
+  _damage: 29
+  knockbackInfo:
+    duration: 2
+    power: 30
+  _checkBoxCenter: {x: 0, y: 1.1677}
+  _checkBoxSize: {x: 30, y: 12.46936}
+  _hitBoxCenter: {x: 0, y: 1.1677}
+  _hitBoxSize: {x: 30, y: 12.46936}
   _offset: {x: 0, y: 0}
-  _damage: 25
+  _requireMP: 10

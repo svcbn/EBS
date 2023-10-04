@@ -248,7 +248,7 @@ public class CharacterStatus : MonoBehaviour
 			CurrentStatus[StatusType.Faint] = true;
 
 			// 선딜 취소
-			CancleSkill();
+			CancelSkill();
 		}
 	}
 	#endregion
@@ -296,7 +296,7 @@ public class CharacterStatus : MonoBehaviour
 
 		// 선딜 취소
 		CurrentStatus[StatusType.Knockback] = true;
-		CancleSkill();
+		CancelSkill();
 	}
 
 	#endregion
@@ -352,7 +352,7 @@ public class CharacterStatus : MonoBehaviour
 		// (ActiveSkillBase)_character.Skills.First(skill => skill.Id == );
 	}
 
-	private void CancleSkill()
+	private void CancelSkill()
 	{
 		var currentSkill = (ActiveSkillBase)_character.CurrentSkill;
 		if (currentSkill != null && currentSkill.IsBeforeDelay == true)

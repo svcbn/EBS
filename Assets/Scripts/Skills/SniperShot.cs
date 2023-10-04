@@ -52,6 +52,7 @@ public class SniperShot : ActiveSkillBase
 			//StatManager 쪽에 데미지 연산 요청
 			Managers.Stat.GiveDamage(1 - Owner.playerIndex, _data.Damage);
 
+			Owner.Target.GetComponent<CharacterStatus>().SetKnockbackEffect(_data.knockbackInfo.duration, _data.knockbackInfo.power, Owner.transform.position);
 
 		}
 
@@ -62,7 +63,6 @@ public class SniperShot : ActiveSkillBase
 			effect2.transform.position = Owner.Target.transform.position;
 		}
 
-		Owner.Target.GetComponent<CharacterStatus>().SetKnockbackEffect(_data.knockbackInfo.duration, _data.knockbackInfo.power, Owner.transform.position);
 
 		// 후딜
 		yield return new WaitForSeconds(AfterDelay);

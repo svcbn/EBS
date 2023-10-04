@@ -24,8 +24,9 @@ public class ThornShield : PassiveSkillBase
 	public override void Reset()
 	{
 		base.Reset();
-		
-		Damage = (int)MathF.Ceiling(Managers.Stat.GetMaxHp(Owner.playerIndex) * _data.DamageScale);
+
+		Damage = Mathf.RoundToInt(Managers.Stat.GetExtraHp(Owner.playerIndex) * _data.DamageScale);
+		if (Damage <= 0) Damage = 1;
 		PresentNumber = Damage;
 	}
 
@@ -36,7 +37,7 @@ public class ThornShield : PassiveSkillBase
 			float x = Owner.Target.transform.position.x - Owner.transform.position.x >= 0 ? 1 : -1;
 
 			IsEnabled = true;
-			PlayEffect(_data.Effect.name, 1, x, Vector2.right * 3f);
+			PlayEffect(_data.Effect.name, 1, x, Vector2.zero, Owner.Target.transform);
 			Managers.Stat.GiveDamage(1 - Owner.playerIndex, Damage);
 		}
 	}

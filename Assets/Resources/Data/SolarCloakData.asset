@@ -22,4 +22,4 @@ MonoBehaviour:
   _hitBoxSize: {x: 30, y: 30}
   _defaultEffect: {fileID: 3716787501423605702, guid: d40d075809b5a3f4ab6151c684aed3f3, type: 3}
   _maxHp: 50
-  _damageScale: 0.03
+  _damageScale: 0.029

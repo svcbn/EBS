@@ -17,9 +17,6 @@ public class StatManager
 	private int[] _finalMaxHps = new int[2];
 	private int[] _finalMaxMps = new int[2];
 
-	private int roundHpIncrease = 20;
-
-
 	public List<Modifier>[] damageModifiers = new List<Modifier>[2];
 	public List<Modifier>[] absProtectionModifiers = new List<Modifier>[2];
 
@@ -66,10 +63,6 @@ public class StatManager
 
 		for (int i = 0; i < 2; i++)
 		{
-			if (GameManager.Instance.CurrentRound != 1)
-			{
-				_finalMaxHps[i] += roundHpIncrease;
-			}
 			_currentHps[i] = _finalMaxHps[i];
 			//_currentMps[i] = _baseMaxMps[i];
 		}
@@ -88,6 +81,12 @@ public class StatManager
 			_baseMaxHps[i] = _data.startingMaxHp;
 			//_baseMaxMps[i] = _data.startingMaxMp;
 		}
+	}
+
+	public void AddRoundHpGrowth()
+	{
+		_baseMaxHps[0] += _data.hpGrowthPerRound;
+		_baseMaxHps[1] += _data.hpGrowthPerRound;
 	}
 
 	public void GiveDamage(int playerIndex, int baseDamage)
@@ -227,15 +226,9 @@ public class StatManager
 
 	private void CalculateFinalHps()
 	{
-
 		for (int i = 0; i < 2; i++)
 		{
-			int totalModifier = 0;
-			for(int j = 0; j < _maxHpModifiers[i].Count; j++)
-			{
-				totalModifier += _maxHpModifiers[i][j];
-			}
-			_finalMaxHps[i] = _baseMaxHps[i] + totalModifier;
+			_finalMaxHps[i] = _baseMaxHps[i] + GetExtraHp(i);
 		}
 	}
 
@@ -248,6 +241,16 @@ public class StatManager
 	public int GetMaxHp(int playerIndex)
 	{
 		return _finalMaxHps[playerIndex];
+	}
+
+	public int GetExtraHp(int playerIndex)
+	{
+		int totalModifier = 0;
+		for (int j = 0; j < _maxHpModifiers[playerIndex].Count; j++)
+		{
+			totalModifier += _maxHpModifiers[playerIndex][j];
+		}
+		return totalModifier;
 	}
 
 	public Modifier GetDamageModifier(int playerIndex, string modifierName)

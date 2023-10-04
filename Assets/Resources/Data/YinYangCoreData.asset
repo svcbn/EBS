@@ -13,11 +13,8 @@ MonoBehaviour:
   m_Name: YinYangCoreData
   m_EditorClassIdentifier: 
   _id: 102
+  _type: 2
   _cooldown: 15
   _effect: {fileID: 4199699508883824982, guid: 29ee0942d346b8e4faa0c7a7b1c9bfbb, type: 3}
-  _type: 2
-  _amount: 0
   _presentNumber: 0
   _hasPresentNumber: 0
-  damage: 0
-  effectDuration: 0

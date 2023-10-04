@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _id: 9
   _type: 1
-  _cooldown: 25
+  _cooldown: 16
   _effect: {fileID: 2068385400978660933, guid: 1bea30a78bdd01a4daec2934038b56f5, type: 3}
   _priority: 1
   _isRestrictMoving: 1
   _beforeDelay: 0.3
-  _afterDelay: 0.5
-  _damage: 5
+  _afterDelay: 0.4
+  _damage: 9
   knockbackInfo:
     duration: 0
     power: 0
@@ -30,4 +30,5 @@ MonoBehaviour:
   _hitBoxSize: {x: 18, y: 16}
   _offset: {x: 0, y: 0}
   _requireMP: 5
-  _amount: 4
+  _percentageDamage: 19
+  _faintTime: 4

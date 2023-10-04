@@ -19,6 +19,12 @@ public class Protection : PassiveSkillBase
 		}
 	}
 
+	public override void Reset()
+	{
+		base.Reset();
+		PresentNumber = _data.PresentNumber;
+	}
+
 	void Excute()
 	{
 		Modifier modifier = Managers.Stat.GetAbsProtectionModifier(Owner.playerIndex, GetType().Name);

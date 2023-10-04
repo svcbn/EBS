@@ -32,30 +32,24 @@ public class SoulStrike : ActiveSkillBase
 			effect.transform.position = Owner.transform.position;
 		}
 
-		for (int i = 0; i < 3; i++)
+		// 실제 피해
+		Vector2 centerInWorld = (Vector2)Owner.transform.position + new Vector2(x * _data.HitBoxCenter.x, _data.HitBoxCenter.y);
+		var boxes = Physics2D.OverlapBoxAll(centerInWorld, _data.HitBoxSize, 0);
+		DebugRay(centerInWorld, _data.HitBoxSize);
+
+		foreach (var box in boxes)
 		{
-			// 실제 피해
-			yield return new WaitForSeconds(0);
-			Vector2 centerInWorld = (Vector2)Owner.transform.position + new Vector2(x * _data.HitBoxCenter.x, _data.HitBoxCenter.y);
-			var boxes = Physics2D.OverlapBoxAll(centerInWorld, _data.HitBoxSize, 0);
-			DebugRay(centerInWorld, _data.HitBoxSize);
-
-			foreach (var box in boxes)
+			if (!box.TryGetComponent<Character>(out var character) || character == Owner)
 			{
-				if (!box.TryGetComponent<Character>(out var character) || character == Owner)
-				{
-					continue;
-				}
-
-				// Todo : statmanager 쪽에 연산 요청
-				Managers.Stat.GiveDamage(1 - Owner.playerIndex, _data.Damage);
-
-				// Todo : playerStatus 쪽에 스턴 요청
-				character.Status.SetFaintEffect(4);
-
-				// Todo : statmanager 쪽에 마나 뺏기 요청
-				Managers.Stat.GiveHeal(Owner.playerIndex, _data.Amount);
+				continue;
 			}
+
+			// Todo : statmanager 쪽에 연산 요청
+			int dmg = Mathf.RoundToInt(Managers.Stat.GetMaxHp(1 - Owner.playerIndex) * (_data.PercentageDamage / 100f));
+			Managers.Stat.GiveDamage(1 - Owner.playerIndex, dmg);
+
+			// Todo : playerStatus 쪽에 스턴 요청
+			character.Status.SetFaintEffect(_data.FaintTime);
 
 		}
 

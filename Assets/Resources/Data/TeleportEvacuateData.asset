@@ -13,19 +13,23 @@ MonoBehaviour:
   m_Name: TeleportEvacuateData
   m_EditorClassIdentifier: 
   _id: 3
+  _type: 0
   _cooldown: 7
   _effect: {fileID: 0}
   _priority: 1
-  _type: 0
   _isRestrictMoving: 1
   _beforeDelay: 0.5
   _afterDelay: 0.1
-  _requireMP: 0
-  _checkBoxCenter: {x: -2, y: 0}
-  _checkBoxSize: {x: 6, y: 4}
+  _damage: 0
+  knockbackInfo:
+    duration: 0
+    power: 0
+  _checkBoxCenter: {x: 0, y: 0}
+  _checkBoxSize: {x: 12, y: 10}
   _hitBoxCenter: {x: 0, y: 0}
   _hitBoxSize: {x: 8, y: 4}
-  _damage: 0
+  _offset: {x: 0, y: 0}
+  _requireMP: 0
   beforeEffect: {fileID: 81308183512584115, guid: bd67c6c4e41cbb246be5a248ac4486c7, type: 3}
   afterEffect: {fileID: 8733514384126542105, guid: 4ca2213c03f44ca439c6b93726461349, type: 3}
   telpoDistance: 20

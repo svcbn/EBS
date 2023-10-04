@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: IceHandsData
   m_EditorClassIdentifier: 
   _id: 107
+  _type: 2
   _cooldown: 0
   _effect: {fileID: 0}
-  _type: 2
-  _amount: 0
   _presentNumber: 0
   _hasPresentNumber: 0
-  _speedDownRatio: 0.9
+  _speedDownRatio: 0.2
   _effectDurationTime: 2

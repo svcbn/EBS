@@ -13,17 +13,21 @@ MonoBehaviour:
   m_Name: SlashData
   m_EditorClassIdentifier: Assembly-CSharp::SlashData
   _id: 1
+  _type: 1
   _cooldown: 10
   _effect: {fileID: 8370813354424140250, guid: 6f94f4460f3f91b45bcbb6d760e7c6f3, type: 3}
   _priority: 1
-  _type: 1
   _isRestrictMoving: 1
-  _beforeDelay: 0.5
+  _beforeDelay: 0.2
   _afterDelay: 0.5
-  _requireMP: 0
+  _damage: 0
+  knockbackInfo:
+    duration: 0
+    power: 0
   _checkBoxCenter: {x: 3, y: 0}
   _checkBoxSize: {x: 4, y: 7}
   _hitBoxCenter: {x: 3, y: 0}
   _hitBoxSize: {x: 4, y: 7}
   _offset: {x: 3, y: 0}
-  _damage: 15
+  _requireMP: 0
+  _percentageDamage: 9

@@ -19,4 +19,4 @@ MonoBehaviour:
   _presentNumber: 0
   _hasPresentNumber: 1
   _maxHp: 50
-  _damageScale: 0.02
+  _damageScale: 0.019

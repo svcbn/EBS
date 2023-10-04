@@ -363,11 +363,16 @@ public class GameManager : MonoBehaviour
 		else
 		{
 			// pick end
-			_ui.HideSkillSelector();
-			_selector.SkillSelected -= PickSkill;
-			_selector = null;
+			HideSkillPickUI();
 			ChangeState(GameState.PreRound);
 		}
+	}
+
+	public void HideSkillPickUI()
+	{
+		_ui.HideSkillSelector();
+		_selector.SkillSelected -= PickSkill;
+		_selector = null;
 	}
 
 	private void OnPreRound()
@@ -379,8 +384,6 @@ public class GameManager : MonoBehaviour
 		ResetPlayerRoundHPUI();
 
 		// do something
-
-
 
 		// ui refresh??
 		roundText.text = "Round" + CurrentRound;
@@ -407,6 +410,7 @@ public class GameManager : MonoBehaviour
 		if (State != GameState.GameOver)
 		{
 			CurrentRound++;
+			Managers.Stat.AddRoundHpGrowth();
 			ChangeState(GameState.PickSkill);
 		}
 	}

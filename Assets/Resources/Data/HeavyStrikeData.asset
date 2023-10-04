@@ -13,16 +13,20 @@ MonoBehaviour:
   m_Name: HeavyStrikeData
   m_EditorClassIdentifier: 
   _id: 5
+  _type: 1
   _cooldown: 22
   _effect: {fileID: 4438304891251975632, guid: e27068f661a96e84b87aae11c884e34e, type: 3}
   _priority: 1
-  _type: 1
   _isRestrictMoving: 1
-  _beforeDelay: 1.5
+  _beforeDelay: 1
   _afterDelay: 0.5
-  _requireMP: 0
+  _damage: 28
+  knockbackInfo:
+    duration: 0
+    power: 0
   _checkBoxCenter: {x: 4, y: 2}
   _checkBoxSize: {x: 10, y: 10}
   _hitBoxCenter: {x: 4, y: 2}
   _hitBoxSize: {x: 10, y: 12}
-  _damage: 28
+  _offset: {x: 0, y: 0}
+  _requireMP: 0

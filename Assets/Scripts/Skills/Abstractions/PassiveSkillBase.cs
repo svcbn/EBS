@@ -41,7 +41,7 @@ public abstract class PassiveSkillBase : SkillBase, IPassiveSkill
 		if (data is PassiveSkillData passiveSkillData)
 		{
 			HasPresentNumber = passiveSkillData.HasPresentNumber;
-			_presentNumber   = passiveSkillData.PresentNumber;
+			PresentNumber   = passiveSkillData.PresentNumber;
 		}
 
 		return data;
@@ -76,15 +76,17 @@ public abstract class PassiveSkillBase : SkillBase, IPassiveSkill
 		
 	}
 
-	protected void PlayEffect(string effName, float duration, float sign = 1, Vector2 offset = default)
+	protected void PlayEffect(string effName, float duration, float sign = 1, Vector2 offset = default, Transform parent = default)
 	{
-		StartCoroutine(PlayEffectCo(effName, duration, sign, offset));
+		StartCoroutine(PlayEffectCo(effName, duration, sign, offset, parent));
 	}
 
-	IEnumerator PlayEffectCo(string effName, float duration, float sign, Vector2 offset)
+	IEnumerator PlayEffectCo(string effName, float duration, float sign, Vector2 offset, Transform parent)
 	{
-		
-		Transform parent = Owner.transform;
+		if (parent == default)
+		{
+			parent = Owner.transform;
+		}
 		GameObject effect = Managers.Resource.Instantiate("Skills/" + effName, parent); // paraent를 character.gameObject로
 
 		if (effect)

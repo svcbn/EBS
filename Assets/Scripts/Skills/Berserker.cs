@@ -47,6 +47,7 @@ public class Berserker : PassiveSkillBase
 
 			_status.HasteRatio -= _data.SpeedUpRatio;
 			_status.CooldownChange -= _data.CooldownRatio;
+			Managers.Stat.GetDamageModifier(Owner.playerIndex, GetType().Name).value = 0f;
 		}
 	}
 
@@ -63,6 +64,7 @@ public class Berserker : PassiveSkillBase
 
 			_status.HasteRatio += _data.SpeedUpRatio;
 			_status.CooldownChange += _data.CooldownRatio;
+			Managers.Stat.GetDamageModifier(Owner.playerIndex, GetType().Name).value = _data.PowerUpRatio * 100f;
 
 			Modifier modifier = Managers.Stat.GetDamageModifier(Owner.playerIndex, GetType().Name);
 			modifier.value = _data.PowerUpRatio;

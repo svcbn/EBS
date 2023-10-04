@@ -11,7 +11,7 @@ public class KillerBoots : PassiveSkillBase
 	private Coroutine _hasteCR;
 
 	private float _activeTime;
-
+	
 	public override void Init()
 	{
 		_status = GetComponent<CharacterStatus>();

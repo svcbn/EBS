@@ -24,11 +24,6 @@ public class Overclock : PassiveSkillBase
 		_data = LoadData<OverclockData>();
 	}
 
-	private void OnEnable()
-	{
-		//TODO: 새로운 라운드 시작 이벤트에 함수 구독
-	}
-
 	public override void Reset()
 	{
 		base.Reset();
@@ -43,7 +38,12 @@ public class Overclock : PassiveSkillBase
 
 	IEnumerator CR_StackCycle()
 	{
-		yield return new WaitForSeconds(_data.cooltime);
+		CurrentCooldown = 0;
+		while (CurrentCooldown < Cooldown)
+		{
+			CurrentCooldown += Time.deltaTime;
+			yield return null;
+		}
 		if(CurrentStack < _data.maxStack)
 		{
 			CurrentStack++;

@@ -28,6 +28,7 @@ public class YinYangCore : PassiveSkillBase
 
         if( CurrentCooldown < Cooldown ){
             CurrentCooldown += Time.deltaTime;
+			PresentNumber = Mathf.CeilToInt(Cooldown -  CurrentCooldown);
             return;
         }
 
@@ -47,8 +48,8 @@ public class YinYangCore : PassiveSkillBase
     public void DisableYinYangCore() // Call by statmanager Function after Skill Use.
     {
         CurrentCooldown = 0;
-
-        OffEffect();
+		Managers.Stat.isYinYangCore[Owner.playerIndex] = false;
+		OffEffect();
         IsEnabled = false;
     }
 
@@ -67,8 +68,8 @@ public class YinYangCore : PassiveSkillBase
             Debug.LogError($"effect is null. effName :{_data.Effect.name}");
         }
 
-        effect.transform.localPosition += new Vector3( 0f, 0.5f, 0f); // offset
-        effect.transform.localScale     = new Vector3( 0.3f, 0.3f, 0.3f ); // 크기 30%
+        effect.transform.localPosition += new Vector3( 0f, 0.75f, 0f); // offset
+        effect.transform.localScale     = new Vector3( 0.3f, 0.4f, 0.3f ); // 크기
             
     }
     private void OffEffect()

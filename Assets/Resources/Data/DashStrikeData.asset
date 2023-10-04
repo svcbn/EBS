@@ -13,16 +13,22 @@ MonoBehaviour:
   m_Name: DashStrikeData
   m_EditorClassIdentifier: 
   _id: 8
-  _cooldown: 15
+  _type: 1
+  _cooldown: 10
   _effect: {fileID: 4152039297200343374, guid: 9409f0784f6c8e64686008edcd08e208, type: 3}
   _priority: 1
-  _type: 1
   _isRestrictMoving: 1
-  _beforeDelay: 0.5
-  _afterDelay: 1
+  _beforeDelay: 0.1
+  _afterDelay: 0.1
+  _damage: 8
+  knockbackInfo:
+    duration: 0
+    power: 0
+  _checkBoxCenter: {x: 0, y: 0}
+  _checkBoxSize: {x: 45, y: 5}
+  _hitBoxCenter: {x: 4, y: 0}
+  _hitBoxSize: {x: 15, y: 4}
+  _offset: {x: 0, y: 0}
   _requireMP: 0
-  _checkBoxCenter: {x: 4, y: 0}
-  _checkBoxSize: {x: 14, y: 3}
-  _hitBoxCenter: {x: -4, y: 0}
-  _hitBoxSize: {x: 14, y: 3}
-  _damage: 15
+  dashDistance: 9.5
+  faintDuration: 1.5
