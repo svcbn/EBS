@@ -85,6 +85,8 @@ public class GameManager : MonoBehaviour
 	[SerializeField]
 	private List<int> _firstPickCountList;
 	[SerializeField]
+	private List<int> _secondPickCountList;
+	[SerializeField]
 	private List<int> _otherPickCountList;
 	private int _pickCount;
 	private int _pickCountIndex;
@@ -296,7 +298,13 @@ public class GameManager : MonoBehaviour
 		_currentPicker = CurrentRound == 1 ? player1 : loser;
 		_isPlayer1Pick = CurrentRound == 1 || loser == player1;
 
-		var list = CurrentRound == 1 ? _firstPickCountList : _otherPickCountList;
+		var list = CurrentRound switch
+		{
+			1 => _firstPickCountList,
+			2 => _secondPickCountList,
+			>= 3 => _otherPickCountList,
+		};
+
 		_pickCountIndex = 0;
 		_pickCount = list[_pickCountIndex];
 
@@ -342,7 +350,12 @@ public class GameManager : MonoBehaviour
 		_selector.Input = _isPlayer1Pick ? _player2Input : _player1Input;
 		_isPlayer1Pick = !_isPlayer1Pick;
 
-		var list = CurrentRound == 1 ? _firstPickCountList : _otherPickCountList;
+		var list = CurrentRound switch
+		{
+			1 => _firstPickCountList,
+			2 => _secondPickCountList,
+			>= 3 => _otherPickCountList,
+		};
 		if (_pickCountIndex < list.Count - 1 && _selector.CanSelect)
 		{
 			_pickCount = list[++_pickCountIndex];

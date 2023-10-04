@@ -12,5 +12,4 @@ public class ScriptableSkillData : ScriptableObject
 	public SkillType Type => _type;
 	public float Cooldown => _cooldown;
 	public GameObject Effect => _effect;
-
 }
