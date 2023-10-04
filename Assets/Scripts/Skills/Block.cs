@@ -34,9 +34,14 @@ public class Block : ActiveSkillBase
 		if(enemy              == null){ return false; }
 		if(enemy.CurrentSkill == null){ return false; }
 
-		bool isEnemyInBeforeDelay = ((ActiveSkillBase)enemy.CurrentSkill).IsBeforeDelay; 
+		bool isEnemyInBeforeDelay = ((ActiveSkillBase)enemy.CurrentSkill).IsBeforeDelay;
+		float delayLeft = enemy.CurrentSkill.Cooldown - enemy.CurrentSkill.CurrentCooldown;
+		if (isEnemyInBeforeDelay && delayLeft <= _data.beforehandTime)
+		{
+			return true;
+		}
 
-		return isEnemyInBeforeDelay;
+		return false;
 	}
 }
 

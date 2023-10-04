@@ -28,24 +28,10 @@ public class BloodStrike : ActiveSkillBase
 		}
 
 		// 실제 피해
+		Managers.Stat.GiveDamage(1 - Owner.playerIndex, _data.Damage);
 
-		Vector2 centerInWorld = (Vector2)Owner.transform.position + new Vector2(x * _data.HitBoxCenter.x, _data.HitBoxCenter.y);
-		var boxes = Physics2D.OverlapBoxAll(centerInWorld, _data.HitBoxSize, 0);
-		DebugRay(centerInWorld, _data.HitBoxSize);
-
-		foreach (var box in boxes)
-		{
-			if (!box.TryGetComponent<Character>(out var character) || character == Owner)
-			{
-				continue;
-			}
-
-			//StatManager 쪽에 데미지 연산 요청
-			Managers.Stat.GiveDamage(1 - Owner.playerIndex, _data.Damage);
-
-			// todo : 흡혈 요청
-		}
-
+		// 흡혈
+		Managers.Stat.GiveHeal(Owner.playerIndex, _data.Amount);
 
 		// 후딜
 		yield return new WaitForSeconds(AfterDelay);

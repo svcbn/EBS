@@ -47,10 +47,11 @@ public class GameUIManager
 		{
 			color = number <= -10 ? Color.red : Color.white;
 		}
-		else
+		else if (number > 0)
 		{
 			color = Color.green;
 		}
+		else { color = Color.gray; }
 
 		number = Mathf.Abs(number);
 

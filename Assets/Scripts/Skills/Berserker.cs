@@ -42,7 +42,7 @@ public class Berserker : PassiveSkillBase
 			_status.CooldownChange += _data.CooldownRatio;
 
 			Modifier modifier = Managers.Stat.GetDamageModifier(Owner.playerIndex, GetType().Name);
-			modifier.percentage = _data.PowerUpRatio;
+			modifier.value = _data.PowerUpRatio;
 		}
 	}
 }
