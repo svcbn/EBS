@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-
 using UnityEngine;
 
 public class YinYangCore : PassiveSkillBase
@@ -16,7 +12,6 @@ public class YinYangCore : PassiveSkillBase
 		base.Init();
         _data = LoadData<YinYangCoreData>();
 
-        //EnableYinYangCore();
         CurrentCooldown = 0;
 	}
 
