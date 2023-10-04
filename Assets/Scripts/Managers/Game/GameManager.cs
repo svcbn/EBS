@@ -385,8 +385,6 @@ public class GameManager : MonoBehaviour
 
 		// do something
 
-
-
 		// ui refresh??
 		roundText.text = "Round" + CurrentRound;
 		timerText.text = (int)timer + ""; 
@@ -412,6 +410,7 @@ public class GameManager : MonoBehaviour
 		if (State != GameState.GameOver)
 		{
 			CurrentRound++;
+			Managers.Stat.AddRoundHpGrowth();
 			ChangeState(GameState.PickSkill);
 		}
 	}

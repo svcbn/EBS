@@ -20,7 +20,7 @@ MonoBehaviour:
   _isRestrictMoving: 1
   _beforeDelay: 0.15
   _afterDelay: 0.1
-  _damage: 9
+  _damage: 8
   knockbackInfo:
     duration: 0
     power: 0

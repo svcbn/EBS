@@ -14,11 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _id: 105
   _type: 2
-  _cooldown: 0
+  _cooldown: 25
   _effect: {fileID: 0}
   _presentNumber: 0
   _hasPresentNumber: 1
-  cooltime: 25
   maxStack: 2
   bonusDamagePerStack: 50
   maxStackBonusMultiplier: 2

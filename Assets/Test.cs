@@ -21,6 +21,11 @@ public class Test : MonoBehaviour
 			GameManager.Instance.HideSkillPickUI();
 			GameManager.Instance.ChangeState(GameManager.GameState.PreRound);
 		}
+		if (Input.GetKeyDown(KeyCode.Alpha3))
+		{
+			Managers.Stat.GiveDamage(1, 50);
+		}
+
 #endif
 	}
 }
