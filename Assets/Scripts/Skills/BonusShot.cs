@@ -10,26 +10,17 @@ public class BonusShot : PassiveSkillBase
 	public override void Init()
 	{
 		base.Init();
-
-		_data = Managers.Resource.Load<BonusShotData>("Data/BonusShotData");
-		if (_data == null){ Debug.LogWarning($"Fail load Data/BonusShotData"); return;  }
-
-		Id                = _data.Id;
-		Cooldown          = _data.Cooldown;
+		_data = LoadData<BonusShotData>();
 
 		Managers.Stat.onTakeDamage += Execute; // 누가 맞았음.
-
 	}
 
-
-	// 1조건 : 적을 타격시
-	// 2조건 : 적이 범위 안에 없을때
 	void Execute(int playerIndex)
 	{
-		if (Owner.playerIndex != playerIndex) // 적이 맞음
+		if (Owner.playerIndex != playerIndex) 	// 1조건 : 적을 타격시
 		{
 			bool isEnemyInBox = CheckEnemyInBox(_data.checkBoxCenter, _data.checkBoxSize);
-			if( isEnemyInBox ){ return; } // 박스안에 없어야 됨
+			if( isEnemyInBox ){ return; } 	// 2조건 : 적이 범위 안에 없을때
 			
 			StartCoroutine(ShotBonusArrow());
 		}
@@ -89,8 +80,6 @@ public class BonusShot : PassiveSkillBase
 				colCount += 1;            
 			}
 		}
-
-
 	}
 
 	
@@ -112,8 +101,5 @@ public class BonusShot : PassiveSkillBase
 		Vector3 checkboxPos = Owner.transform.position;
 		Gizmos.DrawWireCube(checkboxPos + (Vector3)_data.checkBoxCenter, (Vector3)_data.checkBoxSize);	
 	}
-
-
-
 }
 
