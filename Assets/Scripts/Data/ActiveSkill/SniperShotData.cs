@@ -9,3 +9,10 @@ public class SniperShotData : ActiveSkillData
 
 	public GameObject HitEffect => _hitEffect;
 }
+
+[System.Serializable]
+public struct KnockbackInfo
+{
+	public float duration;
+	public float power;
+}
