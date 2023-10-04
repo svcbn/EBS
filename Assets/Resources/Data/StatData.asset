@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: StatData
   m_EditorClassIdentifier: 
   startingMaxHp: 100
-  hpGrowthPerRound: 20
+  hpGrowthPerRound: 10
   startingMaxMp: 100
   mpGrowthPerRound: 0

@@ -228,12 +228,7 @@ public class StatManager
 	{
 		for (int i = 0; i < 2; i++)
 		{
-			int totalModifier = 0;
-			for(int j = 0; j < _maxHpModifiers[i].Count; j++)
-			{
-				totalModifier += _maxHpModifiers[i][j];
-			}
-			_finalMaxHps[i] = _baseMaxHps[i] + totalModifier;
+			_finalMaxHps[i] = _baseMaxHps[i] + GetExtraHp(i);
 		}
 	}
 
@@ -246,6 +241,16 @@ public class StatManager
 	public int GetMaxHp(int playerIndex)
 	{
 		return _finalMaxHps[playerIndex];
+	}
+
+	public int GetExtraHp(int playerIndex)
+	{
+		int totalModifier = 0;
+		for (int j = 0; j < _maxHpModifiers[playerIndex].Count; j++)
+		{
+			totalModifier += _maxHpModifiers[playerIndex][j];
+		}
+		return totalModifier;
 	}
 
 	public Modifier GetDamageModifier(int playerIndex, string modifierName)

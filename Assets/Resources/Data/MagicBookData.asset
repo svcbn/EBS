@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: MagicBookData
   m_EditorClassIdentifier: 
   _id: 101
+  _type: 2
   _cooldown: 0
   _effect: {fileID: 6310641275879425502, guid: f7957767ee4f0f64a833df42cf3b959a, type: 3}
-  _type: 2
-  _amount: 0
-  damage: 1
+  _presentNumber: 0
+  _hasPresentNumber: 0
+  damage: 4
   effectDuration: 1
-  HasPresentNumber: 0

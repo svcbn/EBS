@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _id: 5
   _type: 1
-  _cooldown: 19
+  _cooldown: 22
   _effect: {fileID: 4438304891251975632, guid: e27068f661a96e84b87aae11c884e34e, type: 3}
   _priority: 1
   _isRestrictMoving: 1
-  _beforeDelay: 1.7
+  _beforeDelay: 1
   _afterDelay: 0.5
   _damage: 28
   knockbackInfo:

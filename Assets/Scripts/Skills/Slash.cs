@@ -39,7 +39,8 @@ public class Slash : ActiveSkillBase
 			}
 
 			//StatManager 쪽에 데미지 연산 요청
-			Managers.Stat.GiveDamage(1 - Owner.playerIndex, _data.Damage);
+			int dmg = Mathf.RoundToInt(Managers.Stat.GetMaxHp(1 - Owner.playerIndex) * (_data.PercentageDamage / 100f));
+			Managers.Stat.GiveDamage(1 - Owner.playerIndex, dmg);
 			character.Status.SetKnockbackEffect(.2f, 3f, transform.position);
 		}
 

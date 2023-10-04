@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _id: 4
   _type: 0
-  _cooldown: 12
+  _cooldown: 25
   _effect: {fileID: 7180918455190229007, guid: bff970e8de41a004e8774b6d907b113f, type: 3}
   _priority: 1
   _isRestrictMoving: 1
-  _beforeDelay: 0
+  _beforeDelay: 0.15
   _afterDelay: 0.7
   _damage: 0
   knockbackInfo:
@@ -30,5 +30,5 @@ MonoBehaviour:
   _hitBoxSize: {x: 1, y: 1}
   _offset: {x: 0, y: 0}
   _requireMP: 1
-  beforehandTime: 0.2
-  Duration: 2
+  beforehandTime: 0.3
+  Duration: 2.1
