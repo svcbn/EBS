@@ -71,7 +71,7 @@ public class GuidedBulletMover : Mover
         List<Collider2D> validTargets = new List<Collider2D>();
         foreach (var col in t)
         {
-            Debug.Log($"MagicMissile: {col.gameObject.name}");
+            Debug.Log($"GuidedBulletMover: {col.gameObject.name}");
             //if (col.gameObject != owner.gameObject) // Owner is the self gameObject
             if (col.GetComponent<Character>() != owner)
             {

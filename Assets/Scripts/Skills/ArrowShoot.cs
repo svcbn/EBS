@@ -31,9 +31,6 @@ public class ArrowShoot : ActiveSkillBase
             yield break;
         }
 
-		Debug.Log($"cols: {cols.Length}");
-
-
 		List<Collider2D> validTargets = new List<Collider2D>();
 		foreach (var col in cols)
 		{
@@ -82,21 +79,6 @@ public class ArrowShoot : ActiveSkillBase
 	}
 
 	
-	IEnumerator PlayEffect(Transform pos)
-	{
-		GameObject effect = null;
-		if (_data.Effect != null)
-		{
-			effect = Managers.Resource.Instantiate("Skills/"+_data.Effect.name);
-			effect.transform.position = Owner.transform.position;
-		}
-
-		yield return null; //new WaitForSeconds(0.5f); // 이펙트 재생 시간
-
-		Managers.Resource.Release(effect);
-	}
-
-
 	public override bool CheckCanUse()
 	{
 		bool isEnemyInBox = CheckEnemyInBox(_data.CheckBoxCenter, _data.CheckBoxSize);
@@ -107,7 +89,7 @@ public class ArrowShoot : ActiveSkillBase
 
 	private void OnDrawGizmos() 
 	{
-		Gizmos.color = Color.red;
+		Gizmos.color = Color.green;
 		Vector3 checkboxPos = Owner.transform.position;
 		Gizmos.DrawWireCube(checkboxPos + (Vector3)_data.CheckBoxCenter, (Vector3)_data.CheckBoxSize);	
 	}

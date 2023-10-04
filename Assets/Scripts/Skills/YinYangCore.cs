@@ -8,8 +8,6 @@ public class YinYangCore : PassiveSkillBase
 {
     private YinYangCoreData _data;
 
-    float CooldownTimer;
-
     bool effectOn;
     GameObject effect;
 
@@ -17,36 +15,57 @@ public class YinYangCore : PassiveSkillBase
 	{
 		base.Init();
 
-		_data = LoadData<YinYangCoreData>();
+		_data = Managers.Resource.Load<YinYangCoreData>("Data/YinYangCoreData");
+		if (_data == null) { Debug.LogWarning($"Fail load Data/YinYangCoreData"); return; }
+
+		Id               = _data.Id;
+		Cooldown         = _data.Cooldown;         // 15초 
+        HasPresentNumber = _data.HasPresentNumber; // false: 사용 횟수 없음
 
         EnableYinYangCore();
+
+        Managers.Stat.onTakeDamage += Excute;
+
 	}
+
+
+	void Excute(int playerIndex)
+    {
+		if (Owner.playerIndex != playerIndex)
+        {
+            
+        }
+
+    }
 
   
     private void Update() {
         if( IsEnabled ) return;
 
-        if( CooldownTimer > 0 ){
-            CooldownTimer -= Time.deltaTime;
+        if( CurrentCooldown < Cooldown ){
+            CurrentCooldown += Time.deltaTime;
             return;
         }
 
         EnableYinYangCore();
 
-        CooldownTimer = Cooldown;
+        //CurrentCooldown = 0;
     }
+
 
     private void EnableYinYangCore()
     {
         OnEffect();
         IsEnabled = true;
 
-        // TODO: Call statmanager Function to double damage
+        Managers.Stat.isYinYangCore[Owner.playerIndex] = true;
     }
 
     
-    private void DisableYinYangCore() // TODO: Call by statmanager Function after Skill Use.
+    public void DisableYinYangCore() // Call by statmanager Function after Skill Use.
     {
+        CurrentCooldown = 0;
+
         OffEffect();
         IsEnabled = false;
     }

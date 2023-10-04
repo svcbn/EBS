@@ -106,8 +106,10 @@ public class StatManager
 			{
 				finalDamage *= 2;
 				isYinYangCore[1 - playerIndex] = false;
-				//TODO: YinYangCore 타이머 재시작 함수 호출
-				//_characters[1-playerIndex].GetComponentInChildren<YinYangCore>().~~
+				
+				// YinYangCore 타이머 재시작 함수 호출
+				_characters[1-playerIndex].GetComponentInChildren<YinYangCore>().DisableYinYangCore();
+
 			}
 
 			/*------최종 대미지 계산 끝-----*/
