@@ -33,7 +33,7 @@ public class SolarCloak : PassiveSkillBase
 	public override void Reset()
 	{
 		base.Reset();
-		Damage = (int)MathF.Ceiling(Managers.Stat.GetMaxHp(Owner.playerIndex) * 0.03f);
+		Damage = (int)MathF.Ceiling(Managers.Stat.GetMaxHp(Owner.playerIndex) * _data.DamageScale);
 		PresentNumber = Damage;
 	}
 

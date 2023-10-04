@@ -25,7 +25,7 @@ public class ThornShield : PassiveSkillBase
 	{
 		base.Reset();
 		
-		Damage = (int)MathF.Ceiling(Managers.Stat.GetMaxHp(Owner.playerIndex) * 0.02f);
+		Damage = (int)MathF.Ceiling(Managers.Stat.GetMaxHp(Owner.playerIndex) * _data.DamageScale);
 		PresentNumber = Damage;
 	}
 
