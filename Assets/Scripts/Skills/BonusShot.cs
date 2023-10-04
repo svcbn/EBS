@@ -35,6 +35,7 @@ public class BonusShot : PassiveSkillBase
 
 	IEnumerator ShotBonusArrow(int damage)
 	{
+		IsEnabled = true;
         int colCount = 0;
         Collider2D[] cols = Physics2D.OverlapCircleAll(Owner.transform.position, _data.range, _data.targetLayer);
         if (cols.Length == 0) // 타겟이 없을때 
