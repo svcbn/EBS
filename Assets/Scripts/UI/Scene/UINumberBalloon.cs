@@ -54,6 +54,9 @@ public class UINumberBalloon : UIScene
 
 	public override void Init()
 	{
+		var canvas = GetComponent<Canvas>();
+		canvas.sortingOrder = 99;
+		
 		Bind<TextMeshProUGUI, Texts>();
 		SetInnerText();
 	}

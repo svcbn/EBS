@@ -220,8 +220,6 @@ public class GameManager : MonoBehaviour
 				StartCoroutine(SetTimeOutWinner());
 			}
 		}
-
-		
 	}
 
 	void SetBattleUI()
