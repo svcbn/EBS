@@ -37,6 +37,7 @@ public class StatManager
 
 	//Skill Specific
 	public bool[] isYinYangCore = new bool[2];
+	public bool[] isHolyBarrier = new bool[2];
 
 
 	public void Init()
@@ -110,11 +111,16 @@ public class StatManager
 				_characters[1-playerIndex].GetComponentInChildren<YinYangCore>().DisableYinYangCore();
 
 			}
-
 			/*------최종 대미지 계산 끝-----*/
 
 		if (_invincibleTimers[playerIndex] > 0) //무적일 경우
 		{
+			onBlockDamage?.Invoke(playerIndex, finalDamage);
+		}
+		else if (isHolyBarrier[playerIndex])
+		{
+			isHolyBarrier[playerIndex] = false;
+			//_characters[1 - playerIndex].GetComponentInChildren<HolyBarrier>().DisableHolyBarrier();
 			onBlockDamage?.Invoke(playerIndex, finalDamage);
 		}
 		else
