@@ -34,7 +34,7 @@ public class Overclock : PassiveSkillBase
 		base.Reset();
 		CurrentStack = 0;
 		Modifier modifier = Managers.Stat.GetDamageModifier(Owner.playerIndex, GetType().Name);
-		modifier.percentage = _data.bonusDamagePerStack * CurrentStack;
+		modifier.value = _data.bonusDamagePerStack * CurrentStack;
 
 		if(_stackCycleCR != null) { StopCoroutine(_stackCycleCR); }
 		_stackCycleCR = StartCoroutine(CR_StackCycle());
@@ -49,9 +49,9 @@ public class Overclock : PassiveSkillBase
 			CurrentStack++;
 			//스택에 맞게 버프 적용
 			Modifier modifier = Managers.Stat.GetDamageModifier(Owner.playerIndex, GetType().Name);
-			modifier.percentage = _data.bonusDamagePerStack * CurrentStack;
+			modifier.value = _data.bonusDamagePerStack * CurrentStack;
 			//최대 스택일때 특수 처리
-			if (CurrentStack >= _data.maxStack) modifier.percentage *= _data.maxStackBonusMultiplier;
+			if (CurrentStack >= _data.maxStack) modifier.value *= _data.maxStackBonusMultiplier;
 		}
 		if (_stackCycleCR != null) { StopCoroutine(_stackCycleCR); }
 		_stackCycleCR = StartCoroutine(CR_StackCycle());

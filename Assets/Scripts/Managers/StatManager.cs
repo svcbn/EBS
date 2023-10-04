@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class StatManager
 {
@@ -22,6 +21,7 @@ public class StatManager
 
 
 	public List<Modifier>[] damageModifiers = new List<Modifier>[2];
+	public List<Modifier>[] absProtectionModifiers = new List<Modifier>[2];
 
 	private float[] _invincibleTimers = new float[2];
 	private Coroutine _invincibleCR;
@@ -48,6 +48,7 @@ public class StatManager
 			_maxMpModifiers[i] = new List<int>();
 
 			damageModifiers[i] = new List<Modifier>();
+			absProtectionModifiers[i] = new List<Modifier>();
 		}
 		LoadData();
 		HardResetStats();
@@ -93,32 +94,42 @@ public class StatManager
 	{
 		if (_roundEndCR != null) return; //캐릭터 하나 죽었을시 전부 무적
 
-			/*------최종 대미지 계산 (적용 순서상 정렬)------*/
-			float totalPercentage = 0f;
-			//대미지 n%증가 버프 합연산
-			foreach (var modifier in damageModifiers[1 - playerIndex])
-			{
-				totalPercentage += modifier.percentage;
-			}
-			int finalDamage = Mathf.CeilToInt(baseDamage * ((100f + totalPercentage)/100f));
-			//YinYanCore 효과 적용
-			if (isYinYangCore[1 - playerIndex])
-			{
-				finalDamage *= 2;
-				isYinYangCore[1 - playerIndex] = false;
+		/*----------최종 대미지 계산 (적용 순서상 정렬)----------*/
+		float totalPercentage = 0f;
+		//대미지 n%증가 버프 합연산
+		foreach (var modifier in damageModifiers[1 - playerIndex])
+		{
+			totalPercentage += modifier.value;
+		}
+		int finalDamage = Mathf.CeilToInt(baseDamage * ((100f + totalPercentage)/100f));
+		//YinYanCore 효과 적용
+		if (isYinYangCore[1 - playerIndex])
+		{
+			finalDamage *= 2;
+			isYinYangCore[1 - playerIndex] = false;
 				
-				// YinYangCore 타이머 재시작 함수 호출
-				_characters[1-playerIndex].GetComponentInChildren<YinYangCore>().DisableYinYangCore();
+			// YinYangCore 타이머 재시작 함수 호출
+			_characters[1-playerIndex].GetComponentInChildren<YinYangCore>().DisableYinYangCore();
+		}
+		//고정 방어치 적용
+		int totalAbsProtection = 0;
+		foreach (var modifier in absProtectionModifiers[playerIndex])
+		{
+			totalAbsProtection += Mathf.RoundToInt(modifier.value);
+		}
+		finalDamage -= totalAbsProtection;
 
-			}
-			/*------최종 대미지 계산 끝-----*/
+		if (finalDamage < 0) { finalDamage = 0; }
+		/*---------------------최종 대미지 계산 끝--------------------*/
 
 		if (_invincibleTimers[playerIndex] > 0) //무적일 경우
 		{
+			GameManager.UI.ShowHealthPopup(_characters[playerIndex], 0);
 			onBlockDamage?.Invoke(playerIndex, finalDamage);
 		}
 		else if (isHolyBarrier[playerIndex])
 		{
+			GameManager.UI.ShowHealthPopup(_characters[playerIndex], 0);
 			isHolyBarrier[playerIndex] = false;
 			_characters[playerIndex].GetComponentInChildren<HolyBarrier>().DisableHolyBarrier();
 			onBlockDamage?.Invoke(playerIndex, finalDamage);
@@ -239,7 +250,7 @@ public class StatManager
 		return _finalMaxHps[playerIndex];
 	}
 
-	public Modifier GetDamageModifier(int playerIndex, string modifierName) 
+	public Modifier GetDamageModifier(int playerIndex, string modifierName)
 	{
 		List<Modifier> modifiers = damageModifiers[playerIndex];
 		Modifier modifier = modifiers.SingleOrDefault(modifer => modifer.modifierName == modifierName);
@@ -249,7 +260,23 @@ public class StatManager
 			modifier = new Modifier()
 			{
 				modifierName = modifierName,
-				percentage = 0
+				value = 0
+			};
+			modifiers.Add(modifier);
+		}
+		return modifier;
+	}
+	public Modifier GetAbsProtectionModifier(int playerIndex, string modifierName)
+	{
+		List<Modifier> modifiers = absProtectionModifiers[playerIndex];
+		Modifier modifier = modifiers.SingleOrDefault(modifer => modifer.modifierName == modifierName);
+		if (modifier == null)
+		{
+			//modifier 더하기
+			modifier = new Modifier()
+			{
+				modifierName = modifierName,
+				value = 0
 			};
 			modifiers.Add(modifier);
 		}
@@ -265,5 +292,5 @@ public class StatManager
 public class Modifier
 {
 	public string modifierName;
-	public float percentage;
+	public float value;
 }

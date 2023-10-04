@@ -23,7 +23,7 @@ MonoBehaviour:
   _damage: 32
   knockbackInfo:
     duration: 2
-    power: 30
+    power: 40
   _checkBoxCenter: {x: 0, y: 0}
   _checkBoxSize: {x: 50, y: 50}
   _hitBoxCenter: {x: 0, y: 0}
