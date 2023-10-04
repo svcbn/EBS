@@ -15,7 +15,6 @@ public class MagicBook : PassiveSkillBase
 	{
 		_data = LoadData<MagicBookData>();
 
-        IsEnabled = true;
 
         if( !isRegistered )
         {
@@ -29,8 +28,11 @@ public class MagicBook : PassiveSkillBase
     // Do Something
     void OnActiveSkillExecute()
     {
-        if(_data.Effect != null){
-            GameObject enemy = Owner.GetTarget();
+        if(_data.Effect != null)
+		{
+			IsEnabled = true;
+
+			GameObject enemy = Owner.GetTarget();
             PlayEffect(_data.Effect.name, _data.effectDuration, enemy.transform, Vector3.zero );
         }
 

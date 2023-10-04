@@ -7,6 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -208,12 +209,15 @@ public class GameManager : MonoBehaviour
 		
 		if(State == GameState.Battle)
 		{
-			timer -= Time.deltaTime;
-			timerText.text = (int)timer + "";
-			if (timer <= 0)
+			if (timer > 0)
 			{
-				ChangeState(GameState.RoundOver);
+				timer -= Time.deltaTime;
+				timerText.text = (int)timer + "";
+			}
+			else if (timer < 0)
+			{
 				timer = 0;
+				StartCoroutine(SetTimeOutWinner());
 			}
 		}
 
@@ -244,6 +248,23 @@ public class GameManager : MonoBehaviour
 		_skill.SetCharacters(player1, player2);
 		canvas.SetActive(true);
 		ChangeState(GameState.PickSkill);
+	}
+
+	private IEnumerator SetTimeOutWinner()
+	{
+		player1.GetComponent<BehaviorTree>().enabled = false;
+		player2.GetComponent<BehaviorTree>().enabled = false;
+
+		player1.GetComponent<CharacterMovement>().PlayerInput = Vector2.zero;
+		player2.GetComponent<CharacterMovement>().PlayerInput = Vector2.zero;
+
+		var winner = Managers.Stat.GetCurrentHp(0) > Managers.Stat.GetCurrentHp(1) ? player1 : player2;
+		SetRoundWinner(winner);
+		ShowRoundWinnerUI(3f);
+
+		yield return new WaitForSeconds(3f);
+
+		ChangeState(GameState.RoundOver);
 	}
 
 	private void PreparePlayer()
@@ -358,13 +379,14 @@ public class GameManager : MonoBehaviour
     private void OnBattle()
     {
 		// change something
-		timer = 99f;
+		timer = 10f;
 		StartBattle();
     }
 
     private void OnRoundOver()
     {
 	    InitPlayerStartingPoint();
+
 		CalculateRoundDamage();
 
 		// reset something
