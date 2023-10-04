@@ -29,16 +29,8 @@ public class DashStrike : ActiveSkillBase
 			effect.transform.position = Owner.transform.position;
 		}
 
-		// 이동
-		Vector2 dir = (Owner.Target.transform.position - Owner.transform.position).normalized;
-		transform.position += new Vector3(dir.x, dir.y, 0) * 4f;
-		if(Owner.transform.position.y < 1f)
-		{
-			Owner.transform.position = new Vector3(Owner.transform.position.x, 1f, Owner.transform.position.z);
-		}
 
 		// 실제 피해
-
 		Vector2 centerInWorld = (Vector2)Owner.transform.position + new Vector2(x * _data.HitBoxCenter.x, _data.HitBoxCenter.y);
 		var boxes = Physics2D.OverlapBoxAll(centerInWorld, _data.HitBoxSize, 0);
 		DebugRay(centerInWorld, _data.HitBoxSize);
@@ -54,9 +46,18 @@ public class DashStrike : ActiveSkillBase
 			Managers.Stat.GiveDamage(1 - Owner.playerIndex, _data.Damage);
 
 			// Todo : charactorstatus 쪽에 스턴 요청
-			Owner.Target.GetComponent<CharacterStatus>().SetFaintEffect(3);
+			Owner.Target.GetComponent<CharacterStatus>().SetFaintEffect(_data.faintDuration);
 		}
 
+		// 이동
+		Vector2 dir = (Owner.Target.transform.position - Owner.transform.position).normalized;
+		dir = dir.x < 0 ? Vector3.left : Vector3.right;
+		//transform.GetComponent<Rigidbody2D>().MovePosition(transform.position + new Vector3(dir.x, dir.y, 0) * _data.dashDistance);
+		transform.position += new Vector3(dir.x, dir.y, 0) * _data.dashDistance;
+		if (Owner.transform.position.y < 1f)
+		{
+			Owner.transform.position = new Vector3(Owner.transform.position.x, 1f, Owner.transform.position.z);
+		}
 
 		// 후딜
 		yield return new WaitForSeconds(AfterDelay);
@@ -68,9 +69,9 @@ public class DashStrike : ActiveSkillBase
 	{
 		bool isEnemyInBox = CheckEnemyInBox(_data.CheckBoxCenter, _data.CheckBoxSize);
 
-		bool isEnoughMP = CheckEnoughMP(RequireMP);
+		//bool isEnoughMP = CheckEnoughMP(RequireMP);
 
-		return isEnemyInBox && isEnoughMP;
+		return isEnemyInBox;
 	}
 
 }

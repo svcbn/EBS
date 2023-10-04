@@ -47,8 +47,8 @@ public class WhirlStrike : ActiveSkillBase
 			// StatManager 쪽에 데미지 연산 요청
 			Managers.Stat.GiveDamage(1 - Owner.playerIndex, _data.Damage);
 
-			// todo : playerstatus 쪽에 넉백 요청
-			Owner.Target.GetComponent<CharacterStatus>().SetKnockbackEffect(3f, 30f, Owner.transform.position);
+			//playerstatus 쪽에 넉백 요청
+			Owner.Target.GetComponent<CharacterStatus>().SetKnockbackEffect(_data.knockbackInfo.duration, _data.knockbackInfo.power, Owner.transform.position);
 		}
 
 

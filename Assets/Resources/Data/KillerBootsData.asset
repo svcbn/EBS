@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: KillerBootsData
   m_EditorClassIdentifier: 
   _id: 119
+  _type: 2
   _cooldown: 0
   _effect: {fileID: 0}
-  _type: 2
-  _amount: 0
   _presentNumber: 0
   _hasPresentNumber: 0
   _speedUpRatio: 0.5
-  _effectDurationTime: 5
+  _effectDurationTime: 4

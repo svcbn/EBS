@@ -363,11 +363,16 @@ public class GameManager : MonoBehaviour
 		else
 		{
 			// pick end
-			_ui.HideSkillSelector();
-			_selector.SkillSelected -= PickSkill;
-			_selector = null;
+			HideSkillPickUI();
 			ChangeState(GameState.PreRound);
 		}
+	}
+
+	public void HideSkillPickUI()
+	{
+		_ui.HideSkillSelector();
+		_selector.SkillSelected -= PickSkill;
+		_selector = null;
 	}
 
 	private void OnPreRound()

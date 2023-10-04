@@ -18,5 +18,5 @@ MonoBehaviour:
   _effect: {fileID: 930131930442724809, guid: 687240d9133f3e149a2376fc151fef88, type: 3}
   _presentNumber: 0
   _hasPresentNumber: 1
-  _maxHp: 50
+  _maxHp: 60
   _damageScale: 0.02

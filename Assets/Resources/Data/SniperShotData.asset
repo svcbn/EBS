@@ -18,9 +18,9 @@ MonoBehaviour:
   _effect: {fileID: 4912058192475521253, guid: 412b8d604ec33b44cb4aa2c5c0d82ec7, type: 3}
   _priority: 1
   _isRestrictMoving: 1
-  _beforeDelay: 2.5
+  _beforeDelay: 3
   _afterDelay: 2
-  _damage: 32
+  _damage: 35
   knockbackInfo:
     duration: 2
     power: 40

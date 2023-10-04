@@ -16,6 +16,11 @@ public class Test : MonoBehaviour
 		{
 			GameManager.Instance.ChangeState(GameManager.GameState.PickSkill);
 		}
+		if (Input.GetKeyDown(KeyCode.Alpha2))
+		{
+			GameManager.Instance.HideSkillPickUI();
+			GameManager.Instance.ChangeState(GameManager.GameState.PreRound);
+		}
 #endif
 	}
 }

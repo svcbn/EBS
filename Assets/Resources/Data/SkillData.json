@@ -170,7 +170,7 @@
     },
     {
       "Id": 29,
-      "Name": "치유의 손길",
+      "Name": "치유의 기도",
       "Description": "정신을 집중해 체력을 회복한다.",
       "SpriteName": "HealingShower"
     },
@@ -182,7 +182,7 @@
     },
     {
       "Id": 102,
-      "Name": "정제된 분노",
+      "Name": "과충전 술식",
       "Description": "15초마다 다음 공격 대미지 두배",
       "SpriteName": "YinYangCore"
     },
@@ -260,7 +260,7 @@
     },
     {
       "Id": 115,
-      "Name": "두꺼운 피부",
+      "Name": "두꺼운 갑옷",
       "Description": "피격마다 n만큼 피해 감소",
       "SpriteName": "Protection"
     },

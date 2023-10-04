@@ -21,7 +21,7 @@ public class MagicMissile : ActiveSkillBase
 	public override IEnumerator ExecuteImplCo()
 	{
         int colCount = 0;
-        Collider2D[] cols = Physics2D.OverlapCircleAll(Owner.transform.position, _data.range, _data.targetLayer);
+        Collider2D[] cols = Physics2D.OverlapCircleAll(Owner.transform.position, 40f, _data.targetLayer);
         if (cols.Length == 0) // 타겟이 없을때 
         {
             for (int i = 0; i < _data.missileCount; i++)
@@ -69,9 +69,9 @@ public class MagicMissile : ActiveSkillBase
 	
 	public override bool CheckCanUse()
 	{
-		bool isEnemyInBox = CheckEnemyInBox(_data.CheckBoxCenter, _data.CheckBoxSize);
+		bool isEnemyInRange = Vector2.Distance(Owner.Target.transform.position, Owner.transform.position) <= _data.range;
 
-		return isEnemyInBox;
+		return isEnemyInRange;
 	}
 
 	private void OnDrawGizmos() 

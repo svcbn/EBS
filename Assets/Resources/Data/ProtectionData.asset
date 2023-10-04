@@ -16,7 +16,7 @@ MonoBehaviour:
   _type: 2
   _cooldown: 0
   _effect: {fileID: 4213909145983570421, guid: f7e5610d31d3cf74a9ab48e411ba1808, type: 3}
-  _presentNumber: 0
-  _hasPresentNumber: 0
+  _presentNumber: 3
+  _hasPresentNumber: 1
   absProtectionValue: 3
   effectDuration: 0.5

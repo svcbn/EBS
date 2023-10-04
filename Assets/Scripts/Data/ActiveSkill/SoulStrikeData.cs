@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = nameof(SoulStrikeData), menuName = "ScriptableObjects/ActiveSkills/" + nameof(SoulStrikeData))]
 public class SoulStrikeData : ActiveSkillData
 {
-	[SerializeField] private int _amount;
+	[SerializeField] private float _faintTime;
 
-	public int Amount => _amount;
+	public float FaintTime => _faintTime;
 }

@@ -14,18 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _id: 29
   _type: 0
-  _cooldown: 7
+  _cooldown: 18
   _effect: {fileID: 8544434443688463031, guid: 7fbb7b8dbd54bdf42b2b5875fe14b8bf, type: 3}
   _priority: 3
   _isRestrictMoving: 1
-  _beforeDelay: 1.2
+  _beforeDelay: 3
   _afterDelay: 0.5
-  _requireMP: 0
+  _damage: 23
+  knockbackInfo:
+    duration: 0
+    power: 0
   _checkBoxCenter: {x: 0, y: 0}
   _checkBoxSize: {x: 10, y: 10}
   _hitBoxCenter: {x: 0, y: 0}
   _hitBoxSize: {x: 0, y: 0}
   _offset: {x: 0, y: 0}
-  _damage: 20
-  _amount: 10
+  _requireMP: 0
+  _amount: 23
   effectDuration: 0.5

@@ -51,10 +51,7 @@ public class SoulStrike : ActiveSkillBase
 				Managers.Stat.GiveDamage(1 - Owner.playerIndex, _data.Damage);
 
 				// Todo : playerStatus 쪽에 스턴 요청
-				character.Status.SetFaintEffect(4);
-
-				// Todo : statmanager 쪽에 마나 뺏기 요청
-				Managers.Stat.GiveHeal(Owner.playerIndex, _data.Amount);
+				character.Status.SetFaintEffect(_data.FaintTime);
 			}
 
 		}

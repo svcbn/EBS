@@ -36,7 +36,7 @@ public class ThornShield : PassiveSkillBase
 			float x = Owner.Target.transform.position.x - Owner.transform.position.x >= 0 ? 1 : -1;
 
 			IsEnabled = true;
-			PlayEffect(_data.Effect.name, 1, x, Vector2.right * 3f);
+			PlayEffect(_data.Effect.name, 1, x, Vector2.zero, Owner.Target.transform);
 			Managers.Stat.GiveDamage(1 - Owner.playerIndex, Damage);
 		}
 	}
