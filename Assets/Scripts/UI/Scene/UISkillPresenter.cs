@@ -32,6 +32,7 @@ public class UISkillPresenter : UIScene
 		{
 			transform.position = _character.transform.position + Vector3.up * 2f;
 			UpdateCooldown();
+			SetIcon();
 		}
 	}
 
@@ -51,10 +52,33 @@ public class UISkillPresenter : UIScene
 		//SetIcon();
 	}
 
+	private void UpdateCooldown()
+	{
+		if (_character.CurrentSkill == null)
+		{
+			return;
+		}
+		
+		if (!_isCoroutineRunning && !_isFeedbackFinished && _mask.fillAmount >= 1f)
+		{
+			_isCoroutineRunning = true;
+			//_isSkillChanged = false;
+			Utility.Lerp(_icon.color.a, 0.1f, 0.15f,
+				value => _icon.color = new(_icon.color.r, _icon.color.g, _icon.color.b, value), () => _mask.fillAmount = 0);
+			Utility.Lerp(transform.localScale, Vector3.one * 2f, 0.15f, value => transform.localScale = value, () =>
+			{
+				_isCoroutineRunning = false;
+				_isFeedbackFinished = true;
+				_mask.color = new(_mask.color.r, _mask.color.g, _mask.color.b, 0);
+			});
+		}
+	}
+
 	private void SetIcon()
 	{
 		if (_character == null || _character.CurrentSkill == null)
 		{
+			_mask.color = new(_mask.color.r, _mask.color.g, _mask.color.b, 0);
 			return;
 		}
 
@@ -76,26 +100,4 @@ public class UISkillPresenter : UIScene
 		}
 	}
 
-	private void UpdateCooldown()
-	{
-		SetIcon();
-		if (_character.CurrentSkill == null)
-		{
-			return;
-		}
-		
-		if (!_isCoroutineRunning && !_isFeedbackFinished && _mask.fillAmount >= 1f)
-		{
-			_isCoroutineRunning = true;
-			//_isSkillChanged = false;
-			Utility.Lerp(_icon.color.a, 0.1f, 0.15f,
-				value => _icon.color = new(_icon.color.r, _icon.color.g, _icon.color.b, value), () => _mask.fillAmount = 0);
-			Utility.Lerp(transform.localScale, Vector3.one * 2f, 0.15f, value => transform.localScale = value, () =>
-			{
-				_isCoroutineRunning = false;
-				_isFeedbackFinished = true;
-				_mask.color = new(_mask.color.r, _mask.color.g, _mask.color.b, 0);
-			});
-		}
-	}
 }

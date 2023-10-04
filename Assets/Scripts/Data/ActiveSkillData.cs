@@ -2,12 +2,14 @@ using UnityEngine;
 
 public class ActiveSkillData : ScriptableSkillData
 {
+	[Header("Essentials")]
 	[SerializeField] private int _priority;
 	[SerializeField] private bool _isRestrictMoving;
 	[SerializeField] private float _beforeDelay;
 	[SerializeField] private float _afterDelay;
-	[SerializeField] private int _requireMP;
-
+	[Header("Damage & CC effects")]
+	[SerializeField] private int _damage;
+	public KnockbackInfo knockbackInfo;
 
 	[Header("OverlapBox")]
 	[Header("Check")]
@@ -20,8 +22,8 @@ public class ActiveSkillData : ScriptableSkillData
 
 	[SerializeField] private Vector2 _offset;
 
+	[SerializeField] private int _requireMP;
 	
-	[SerializeField] private int _damage;
 
 
 	public int Priority => _priority;

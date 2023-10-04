@@ -32,8 +32,8 @@ public class SniperShot : ActiveSkillBase
 			effect.transform.localScale = new Vector3(x, Owner.transform.localScale.y, Owner.transform.localScale.z);
 			effect.transform.position = Owner.transform.position;
 		}
-
-		Owner.GetComponent<CharacterStatus>().SetKnockbackEffect(0.5f, 10f, Owner.Target.transform.position);
+		//셀프 넉백
+		//Owner.GetComponent<CharacterStatus>().SetKnockbackEffect(_data.knockbackInfo.duration, _data.knockbackInfo.power, Owner.Target.transform.position);
 
 		// 실제 피해
 
@@ -62,7 +62,7 @@ public class SniperShot : ActiveSkillBase
 			effect2.transform.position = Owner.Target.transform.position;
 		}
 
-		Owner.Target.GetComponent<CharacterStatus>().SetKnockbackEffect(0.5f, 10f, Owner.transform.position);
+		Owner.Target.GetComponent<CharacterStatus>().SetKnockbackEffect(_data.knockbackInfo.duration, _data.knockbackInfo.power, Owner.transform.position);
 
 		// 후딜
 		yield return new WaitForSeconds(AfterDelay);

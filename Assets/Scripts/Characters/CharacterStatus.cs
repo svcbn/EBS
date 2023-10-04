@@ -294,16 +294,6 @@ public class CharacterStatus : MonoBehaviour
 		}
 	}
 
-	private void CancleSkill()
-	{
-		var currentSkill = (ActiveSkillBase)_character.CurrentSkill;
-		if (currentSkill != null && currentSkill.IsBeforeDelay == true)
-		{
-			currentSkill.CancelInvoke();
-
-			// TODO : 선딜 취소 이펙트
-		}
-	}
 	#endregion
 
 	#region Blink Effect
@@ -361,6 +351,18 @@ public class CharacterStatus : MonoBehaviour
 	}
 
 	#endregion
+
+	private void CancleSkill()
+	{
+		var currentSkill = (ActiveSkillBase)_character.CurrentSkill;
+		if (currentSkill != null && currentSkill.IsBeforeDelay == true)
+		{
+			currentSkill.CancelInvoke();
+			_character.CurrentSkill = null;
+			// TODO : 선딜 취소 이펙트
+
+		}
+	}
 
 	IEnumerator PlayEffectCo(string effName, float duration, Vector2 offset, float sign)
 	{
