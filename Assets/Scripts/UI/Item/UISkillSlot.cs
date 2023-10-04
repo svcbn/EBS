@@ -8,6 +8,9 @@ public partial class UISkillSlot : UIBase
 {
 	private enum Images
 	{
+		Circle,
+		Square,
+		Mask,
 		Icon,
 		Dim,
 		CooldownIndicator,
@@ -41,8 +44,6 @@ public partial class UISkillSlot : UIBase
 	protected override void Awake()
 	{
 		base.Awake();
-
-		_border = GetComponent<Image>();
 	}
 
 	private void OnEnable()
@@ -52,21 +53,34 @@ public partial class UISkillSlot : UIBase
 		{
 			_border.color = s_UnselectedColor;
 		}
+		SetBorder();
 		Get<Image>((int)Images.Dim).gameObject.SetActive(false);
 	}
 
 	private void OnDisable()
 	{
 		UnregisterSkillEvents();
-		Utility.StopCoroutine(_colorHandler);
-		Utility.StopCoroutine(_scaleHandler);
+		if (_colorHandler != null)
+		{
+			Utility.StopCoroutine(_colorHandler);
+		}
+
+		if (_scaleHandler != null)
+		{
+			Utility.StopCoroutine(_scaleHandler);
+		}
+
+		if (_border != null)
+		{
+			_border.enabled = false;
+		}
 	}
 
 	public override void Init()
 	{
 		Bind<Image, Images>();
 		Bind<TextMeshProUGUI, Texts>();
-
+		
 		if (_info != null)
 		{
 			SetSkillIcon();
@@ -76,6 +90,8 @@ public partial class UISkillSlot : UIBase
 		{
 			RemoveBorderRect();
 		}
+		
+		SetBorder();
 	}
 
 	public void SetSkill(ISkill skill)
@@ -84,8 +100,9 @@ public partial class UISkillSlot : UIBase
 		_skill = skill;
 		RegisterSkillEvents();
 		RemoveBorderRect();
+		SetBorder();
 
-		Get<Image, Images>(Images.CooldownIndicator).fillAmount = _skill is IPassiveSkill ? 0 : 1;
+		Get<Image, Images>(Images.CooldownIndicator).fillAmount = 0;
 		Get<TextMeshProUGUI, Texts>(Texts.PresentText).enabled = _skill is IPassiveSkill { HasPresentNumber: true };
 	}
 
@@ -93,9 +110,10 @@ public partial class UISkillSlot : UIBase
 	{
 		_info = info;
 		SetSkillIcon();
+		SetBorder();
 	}
 	
-	public void SetBorderColor(Color color, bool overrideAlpha = false)
+	public void SetBorderColor(Color color, bool overrideAlpha = true)
 	{
 		if (_border is null)
 		{
@@ -117,12 +135,47 @@ public partial class UISkillSlot : UIBase
 
 	private void RemoveBorderRect()
 	{
-		var rect = Get<Image>((int)Images.Icon).GetComponent<RectTransform>();
+		var rect = Get<Image>((int)Images.Mask).GetComponent<RectTransform>();
 		if (rect == null)
 		{
 			return;
 		}
 
 		rect.offsetMin = rect.offsetMax = Vector2.zero;
+	}
+
+	private void SetBorder()
+	{
+		Images borderType = Images.Square;
+		if (_skill is IPassiveSkill || _info?.SkillType == nameof(SkillType.Passive))
+		{
+			borderType = Images.Circle;
+			ShowMask();
+		}
+		else
+		{
+			HideMask();
+		}
+
+		Get<Image, Images>(Images.Circle).enabled = false;
+		Get<Image, Images>(Images.Square).enabled = false;
+
+		_border = Get<Image, Images>(borderType);
+		_border.enabled = true;
+		Get<Image, Images>(Images.Mask).transform.SetParent(_border.transform);
+	}
+
+	private void ShowMask()
+	{
+		var mask = Get<Image, Images>(Images.Mask);
+		mask.color = new(mask.color.r, mask.color.g, mask.color.b, 1f);
+		mask.GetComponent<Mask>().enabled = true;
+	}
+
+	private void HideMask()
+	{
+		var mask = Get<Image, Images>(Images.Mask);
+		mask.color = new(mask.color.r, mask.color.g, mask.color.b, 0f);
+		mask.GetComponent<Mask>().enabled = false;
 	}
 }
