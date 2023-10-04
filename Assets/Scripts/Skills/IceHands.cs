@@ -17,7 +17,7 @@ public class IceHands : PassiveSkillBase
 		Managers.Stat.onTakeDamage += Excute;
 	}
 
-	void Excute(int playerIndex)
+	void Excute(int playerIndex, int finalDamage)
 	{
 		if (Owner.playerIndex != playerIndex)
 		{
