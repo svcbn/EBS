@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: HealingShowerData
   m_EditorClassIdentifier: 
   _id: 29
+  _type: 0
   _cooldown: 7
   _effect: {fileID: 7623069860143548831, guid: 67203d99b9c257b45bc9d49d9f706169, type: 3}
   _priority: 3
-  _type: 0
   _isRestrictMoving: 1
   _beforeDelay: 1.2
   _afterDelay: 0.5
@@ -25,5 +25,7 @@ MonoBehaviour:
   _checkBoxSize: {x: 10, y: 10}
   _hitBoxCenter: {x: 0, y: 0}
   _hitBoxSize: {x: 0, y: 0}
+  _offset: {x: 0, y: 0}
   _damage: 20
-  _amount: 7
+  _amount: 10
+  effectDuration: 0.5

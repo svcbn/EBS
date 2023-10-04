@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -52,14 +54,41 @@ public class GameUIManager
 
 		number = Mathf.Abs(number);
 
-		float xRange = Random.Range(-1, 1f);
-		float yRange = Random.Range(2f, 2.5f);
-		Vector3 offset = new(xRange, yRange, 0f);
-		Vector3 position = character.transform.position + offset;
-		var balloon = Managers.UI.ShowSceneUI<UINumberBalloon>();
-		balloon.SetInitialPosition(position);
-		balloon.SetText(number.ToString(), color);
+		if (!_balloons.TryGetValue(character, out var balloons))
+		{
+			balloons = new();
+			_balloons.Add(character, balloons);
+		}
+
+		for (int index = 0; index < balloons.Count; index++)
+		{
+			if (balloons[index].Position.y == 0)
+			{
+				balloons.RemoveAt(index);
+				index--;
+			}
+		}
+
+		var adjacentBalloons = balloons.Where(balloon => balloon.Position.y != 0).
+			Where(balloon => Mathf.Abs(balloon.Position.x - character.transform.position.x) < 5f).
+			ToList();
+		Vector3 characterPosition = character.transform.position;
+		Vector3 position = adjacentBalloons.Count == 0
+			? characterPosition + Vector3.up
+			: new(characterPosition.x, adjacentBalloons.Min(balloon => balloon.Position.y), characterPosition.z);
+
+		foreach (var balloon in adjacentBalloons)
+		{
+			balloon.Position += Vector3.up * 0.5f;
+		}
+		
+		var newBalloon = Managers.UI.ShowSceneUI<UINumberBalloon>();
+		newBalloon.SetInitialPosition(position);
+		newBalloon.SetText(number.ToString(), color);
+		_balloons[character].Add(newBalloon);
 	}
+	
+	private Dictionary<Character, List<UINumberBalloon>> _balloons = new();
 
 	public void ShowTitle(Action onStart)
 	{
@@ -76,6 +105,7 @@ public class GameUIManager
 		{
 			Managers.UI.ClosePopupUI(_menu);
 			_menu = null;
+			return;
 		}
 
 		_menu = Managers.UI.ShowPopupUI<UIMenu>(usePool: false);
@@ -98,13 +128,13 @@ public class GameUIManager
 		presenter.SetSkill(character);
 	}
 
-	public void UpdateTimer(float seconds)
+	public void UpdateTimer(int seconds)
 	{
 		if (_timer == null)
 		{
 			_timer = Managers.UI.ShowSceneUI<UITimer>();			
 		}
 		
-		_timer.SetTimerText($"{seconds:00.00}");
+		_timer.SetTimerText($"{seconds}");
 	}
 }

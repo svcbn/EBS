@@ -12,8 +12,6 @@ public class UITimer : UIScene
 	
 	private TextMeshProUGUI _timerText;
 
-	private string _text;
-
 	public override void Init()
 	{
 		base.Init();
@@ -24,12 +22,11 @@ public class UITimer : UIScene
 	
 	public void SetTimerText(string text)
 	{
-		if (_text == null)
+		if (text == null)
 		{
 			return;
 		}
 		
-		_text = text;
-		_timerText.text = _text;
+		_timerText.text = text;
 	}
 }
