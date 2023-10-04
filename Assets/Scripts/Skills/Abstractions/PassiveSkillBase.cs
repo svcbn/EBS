@@ -41,7 +41,7 @@ public abstract class PassiveSkillBase : SkillBase, IPassiveSkill
 		if (data is PassiveSkillData passiveSkillData)
 		{
 			HasPresentNumber = passiveSkillData.HasPresentNumber;
-			_presentNumber = passiveSkillData.PresentNumber;
+			_presentNumber   = passiveSkillData.PresentNumber;
 		}
 
 		return data;

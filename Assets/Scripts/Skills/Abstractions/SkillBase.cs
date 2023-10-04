@@ -63,7 +63,7 @@ public abstract class SkillBase : MonoBehaviour, ISkill
 		}
 
 		Id = data.Id;
-		Cooldown = data.Cooldown;
+		Cooldown  = data.Cooldown;
 		SkillType = data.Type;
 
 		return data;
