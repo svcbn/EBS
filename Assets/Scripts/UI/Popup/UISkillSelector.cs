@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UISkillSelector : UIPopup
 {
@@ -10,7 +11,8 @@ public class UISkillSelector : UIPopup
 	{
 		Items,
 		Card,
-		Descriptor
+		Descriptor,
+		OrderPresenter
 	}
 
 	private enum Texts
@@ -93,6 +95,8 @@ public class UISkillSelector : UIPopup
 		slot.SetBorderColor(_color);
 		slot.ShowChoiceEffect();
 		slot.Disable();
+		var presenter = Get<GameObject, Elements>(Elements.OrderPresenter);
+		Managers.Resource.Release(presenter.transform.GetChild(0).gameObject);
 	}
 
 	private void HandleDirectionInput()
@@ -163,6 +167,32 @@ public class UISkillSelector : UIPopup
 		_color = _input.Color.a > 0 ? _input.Color : s_Colors[_playerIndex];
 		SetInputText();
 		InitializeSlots();
+	}
+	
+	public void SetOrderPresenter(List<int> order, Color[] colors)
+	{
+		var presenter = Get<GameObject, Elements>(Elements.OrderPresenter);
+		if (presenter == null)
+		{
+			return;
+		}
+		
+		foreach (Transform child in presenter.transform)
+		{
+			Managers.Resource.Release(child.gameObject);
+		}
+
+		int playerIndex = 0;
+		foreach (var index in order)
+		{
+			foreach (var _ in Enumerable.Range(0, index))
+			{
+				var go = Managers.Resource.Instantiate("UI/Popup/UIOrderPresenter");
+				go.transform.SetParent(presenter.transform);
+				go.GetOrAddComponent<Image>().color = colors[playerIndex];
+			}
+			playerIndex = ++playerIndex % colors.Length;
+		}
 	}
 
 	private void SetInputText()
