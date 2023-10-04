@@ -28,7 +28,7 @@ public class ThornShield : PassiveSkillBase
 		PresentNumber = Damage;
 	}
 
-	void Execute(int playerIndex)
+	void Execute(int playerIndex, int damage)
 	{
 		if(Owner.playerIndex == playerIndex)
 		{
