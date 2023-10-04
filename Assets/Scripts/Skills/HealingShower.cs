@@ -24,15 +24,13 @@ public class HealingShower : ActiveSkillBase
 	{
 		float x = Owner.transform.localScale.x < 0 ? -1 : 1;
 
-		// 애니메이션 재생
 		if (_data.Effect != null){
-			PlayEffect( _data.Effect.name, Duration, Vector3.zero, x );
+			Vector3 effectScale = new(0.6f, 0.6f, 0.6f);
+			PlayEffect( _data.Effect.name, Duration, Vector3.zero, x, effectScale: effectScale);
 		}
 
-		// Todo : statmanager 쪽에 마나 회복 요청
 		Managers.Stat.GiveHeal(Owner.playerIndex, _data.Amount);
 
-		// 후딜
 		yield return new WaitForSeconds(AfterDelay);
 	}
 

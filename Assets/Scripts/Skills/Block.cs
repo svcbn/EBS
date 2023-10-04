@@ -16,11 +16,13 @@ public class Block : ActiveSkillBase
 
 	public override IEnumerator ExecuteImplCo()
 	{
-		if (_data.Effect != null){ PlayEffect("Block_Green", Duration, Vector2.zero); }
+		if (_data.Effect != null){
+			Vector3 effectScale = new(0.4f, 0.4f, 0.4f);
+			PlayEffect("Block", Duration, Vector2.zero, effectScale: effectScale); 
+		}
 
 		Managers.Stat.BeInvincible(Owner.playerIndex ,Duration);
 
-		// 후딜
 		yield return new WaitForSeconds(AfterDelay);
 	}
 
