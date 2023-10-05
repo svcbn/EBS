@@ -1,6 +1,8 @@
 using UnityEngine;
 using BehaviorDesigner.Runtime.Tasks;
 using System.Collections.Generic;
+using BehaviorDesigner.Runtime;
+using Unity.VisualScripting;
 
 public class Execute : Action
 {
@@ -8,6 +10,9 @@ public class Execute : Action
 	private CharacterMovement _movement;
 
 	private IActiveSkill _selectedSkill;
+
+	[SerializeField]
+	private SharedBool _canUseSkill;
 
 	public override void OnAwake()
 	{
@@ -27,8 +32,9 @@ public class Execute : Action
 
 	public override TaskStatus OnUpdate()
 	{
-		if (_selectedSkill != null)
+		if (_selectedSkill != null && _canUseSkill.Value == true)
 		{
+			_canUseSkill.Value = false;
 			_selectedSkill.Execute();
 			_character.CurrentSkill = _selectedSkill;
 			_character.CanUseSkills.Remove(_selectedSkill);
