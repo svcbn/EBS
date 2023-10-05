@@ -580,6 +580,7 @@ MonoBehaviour:
     _owner: Player 2
     _color: {r: 0.27058825, g: 0.3254902, b: 1, a: 1}
   _firstPickCountList: 010000000200000001000000
+  _secondPickCountList: 
   _otherPickCountList: 0100000001000000
   spawnPoints:
   - {fileID: 7971570889885747924}
