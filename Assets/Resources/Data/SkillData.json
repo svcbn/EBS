@@ -15,7 +15,7 @@
     {
       "Id": 3,
       "Name": "블링크",
-      "Description": "적이 근접하면 순간이동해 도망간다.",
+      "Description": "적이 근접하면 순간이동해 적을 속박시키며 거리를 벌린다.",
       "SpriteName": "TeleportEvacuate"
     },
     {
@@ -218,8 +218,8 @@
     },
     {
       "Id": 108,
-      "Name": "아르테미스의 활",
-      "Description": "일정 거리 너머의 적에게 타격시 타격 피해량의 20%의 피해량을 가진 투사체를 발사한다.",
+      "Name": "지원 사격",
+      "Description": "일정 거리 너머의 적에게 타격시 타격 피해량의 50%의 피해를 주는 투사체를 추가로 발사한다.",
       "SpriteName": "BonusShot"
     },
     {

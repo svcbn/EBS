@@ -21,23 +21,23 @@ public class BonusShot : PassiveSkillBase
 		if (Owner.playerIndex == playerIndex){ return; } 	
 		
 		// 2조건 : 적이 범위 안에 없을때
-		bool isEnemyInBox = CheckEnemyInBox(_data.checkBoxCenter, _data.checkBoxSize);
-		if( isEnemyInBox ){ return; }
+		bool isEnemyInRange = Vector2.Distance(Owner.transform.position, Owner.Target.transform.position) <= _data.range ;
+		if( isEnemyInRange ){ return; }
 		
 		// 3조건 : 1 이상 값
-		int finalDamage = (int)( ((float)takeDamage) * _data.damageRate ); // 타격 데미지의 20% 
+		int finalDamage = Mathf.RoundToInt(takeDamage * _data.damageRate ); // 타격 데미지의 n% 
 		if (finalDamage < 1){ finalDamage = 1; }                           // 최소 데미지 1
 
-		StartCoroutine(ShotBonusArrow(finalDamage));
+		StartCoroutine(ShootBonusArrow(finalDamage));
 		
 	}
 
 
-	IEnumerator ShotBonusArrow(int damage)
+	IEnumerator ShootBonusArrow(int damage)
 	{
 		IsEnabled = true;
         int colCount = 0;
-        Collider2D[] cols = Physics2D.OverlapCircleAll(Owner.transform.position, _data.range, _data.targetLayer);
+        Collider2D[] cols = Physics2D.OverlapCircleAll(Owner.transform.position, 50f, _data.targetLayer);
         if (cols.Length == 0) // 타겟이 없을때 
         {
             for (int i = 0; i < _data.missileCount; i++)
