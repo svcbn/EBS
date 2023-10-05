@@ -25,6 +25,17 @@ public class Test : MonoBehaviour
 		{
 			Managers.Stat.GiveDamage(1, 50);
 		}
+		if (Input.GetKeyDown(KeyCode.Alpha4))
+		{
+			Character[] characters = FindObjectsOfType<Character>();
+			foreach (Character character in characters)
+			{
+				if (character.playerIndex == 0)
+				{
+					character.GetComponent<CharacterStatus>().SetFaintEffect(20f);
+				}
+			}
+		}
 
 #endif
 	}

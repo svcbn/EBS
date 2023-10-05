@@ -18,16 +18,16 @@ MonoBehaviour:
   _effect: {fileID: 5547178872104827699, guid: 193fa2328d817404a8ee54454c30da6a, type: 3}
   _priority: 1
   _isRestrictMoving: 1
-  _beforeDelay: 0.5
+  _beforeDelay: 1
   _afterDelay: 0.5
-  _damage: 10
+  _damage: 17
   knockbackInfo:
     duration: 0
     power: 0
   _checkBoxCenter: {x: 0, y: 0}
-  _checkBoxSize: {x: 12, y: 12}
+  _checkBoxSize: {x: 20, y: 12}
   _hitBoxCenter: {x: 0, y: 0}
   _hitBoxSize: {x: 12, y: 12}
   _offset: {x: 0, y: 0}
-  _requireMP: 15
+  _requireMP: 0
   _amount: 8
