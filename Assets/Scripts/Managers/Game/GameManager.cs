@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
 		{
 			_player1Life = value;
 			player1LifeTxt.text = "LIFE : " + _player1Life;
-			if (value < 0)
+			if (value <= 0)
 			{
 				_isPlayer1Defeat = true;
 				ChangeState(GameState.GameOver);
@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
 		{
 			_player2Life = value;
 			player2LifeTxt.text = "LIFE : " + _player2Life;
-			if (value < 0)
+			if (value <= 0)
 			{
 				_isPlayer1Defeat = false;
 				ChangeState(GameState.GameOver);

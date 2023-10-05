@@ -37,24 +37,11 @@ public class SniperShot : ActiveSkillBase
 
 		// 실제 피해
 
-		Vector2 centerInWorld = (Vector2)Owner.transform.position + new Vector2(x * _data.HitBoxCenter.x, _data.HitBoxCenter.y);
-		var boxes = Physics2D.OverlapBoxAll(centerInWorld, _data.HitBoxSize, 0);
-		DebugRay(centerInWorld, _data.HitBoxSize);
+		//StatManager 쪽에 데미지 연산 요청
+		Managers.Stat.GiveDamage(1 - Owner.playerIndex, _data.Damage);
 
+		Owner.Target.GetComponent<CharacterStatus>().SetKnockbackEffect(_data.knockbackInfo.duration, _data.knockbackInfo.power, Owner.transform.position);
 
-		foreach (var box in boxes)
-		{
-			if (!box.TryGetComponent<Character>(out var character) || character == Owner)
-			{
-				continue;
-			}
-
-			//StatManager 쪽에 데미지 연산 요청
-			Managers.Stat.GiveDamage(1 - Owner.playerIndex, _data.Damage);
-
-			Owner.Target.GetComponent<CharacterStatus>().SetKnockbackEffect(_data.knockbackInfo.duration, _data.knockbackInfo.power, Owner.transform.position);
-
-		}
 
 		if (_data.HitEffect != null)
 		{
