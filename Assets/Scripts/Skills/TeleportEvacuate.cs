@@ -26,6 +26,8 @@ public class TeleportEvacuate : ActiveSkillBase
 	{
 		Owner.transform.position = CalcTeleportPos();
 
+		Owner.Target.GetComponent<CharacterStatus>().SetSlowEffect(_data.SlowTime, _data.SlowRatio);
+
 		if (_data.afterEffect != null) { PlayEffect("Teleport_After", 1f, _data.Offset, effectScale:effectScale); }
 
 		yield return new WaitForSeconds(AfterDelay);
