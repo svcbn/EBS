@@ -359,6 +359,7 @@ public class CharacterStatus : MonoBehaviour
 		{
 			currentSkill.CancelInvoke();
 			_character.CurrentSkill = null;
+
 			// TODO : 선딜 취소 UI 이펙트
 
 		}

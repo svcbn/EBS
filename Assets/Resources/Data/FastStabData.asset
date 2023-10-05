@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _id: 14
   _type: 1
-  _cooldown: 3
+  _cooldown: 2.9
   _effect: {fileID: 5364570079357445507, guid: 2eb0a2b64ca03f849800352bde66defa, type: 3}
   _priority: 1
   _isRestrictMoving: 0

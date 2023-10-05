@@ -25,7 +25,7 @@ MonoBehaviour:
     duration: 2
     power: 40
   _checkBoxCenter: {x: 0, y: 0}
-  _checkBoxSize: {x: 50, y: 50}
+  _checkBoxSize: {x: 80, y: 80}
   _hitBoxCenter: {x: 0, y: 0}
   _hitBoxSize: {x: 50, y: 50}
   _offset: {x: 0, y: 0}
