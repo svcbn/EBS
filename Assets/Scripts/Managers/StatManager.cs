@@ -89,7 +89,7 @@ public class StatManager
 		_baseMaxHps[1] += _data.hpGrowthPerRound;
 	}
 
-	public void GiveDamage(int playerIndex, int baseDamage)
+	public void GiveDamage(int playerIndex, int baseDamage, bool isBonusShot = false)
 	{
 		if (_roundEndCR != null) return; //캐릭터 하나 죽었을시 전부 무적
 
@@ -142,7 +142,10 @@ public class StatManager
 			_currentHps[playerIndex] = Mathf.Clamp(_currentHps[playerIndex], 0, _finalMaxHps[playerIndex]);
 
 			GameManager.Instance.SetHpUI(playerIndex, _currentHps[playerIndex]);
-			onTakeDamage?.Invoke(playerIndex, finalDamage);
+
+			if( !isBonusShot ){
+				onTakeDamage?.Invoke(playerIndex, finalDamage);
+			}
 
 			//죽음 체크
 			if (_currentHps[playerIndex] <= 0)

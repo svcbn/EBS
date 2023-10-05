@@ -11,7 +11,7 @@ public class TriggerAttackerBonusShot : MonoBehaviour
         if (collision.GetComponent<Character>().playerIndex == owner.playerIndex){ return; }
         
         
-        Managers.Stat.GiveDamage(1 - owner.playerIndex, damage);
+        Managers.Stat.GiveDamage(1 - owner.playerIndex, damage, true);
 
         Destroy(this.gameObject);
     }
